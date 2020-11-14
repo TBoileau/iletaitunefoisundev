@@ -9,13 +9,13 @@ translations:
 
 .PHONY: tests
 tests:
-	sh vendor/bin/simple-phpunit
+	php bin/phpunit
 
 analyze:
 	npm audit
 	composer valid
 	php bin/console doctrine:schema:valid --env=test
-	sh vendor/bin/phpcs
+	php bin/phpcs
 
 prepare-dev:
 	npm install
