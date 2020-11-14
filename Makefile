@@ -3,24 +3,24 @@ build:
 	$(MAKE) analyze
 	$(MAKE) tests
 
-it:
-	$(MAKE) prepare-dev
-	$(MAKE) analyze
+.PHONY: translations
+translations:
+	php bin/console translation:update --force fr
 
+.PHONY: tests
 tests:
-	$(MAKE) prepare-test
-	vendor/bin/simple-phpunit
+	sh vendor/bin/simple-phpunit
 
 analyze:
 	npm audit
 	composer valid
-	php bin/console doctrine:schema:valid
-	vendor/bin/phpcs
+	php bin/console doctrine:schema:valid --env=test
+	sh vendor/bin/phpcs
 
 prepare-dev:
 	npm install
 	npm run dev
-	composer install --no-suggest --prefer-dist
+	composer install --prefer-dist
 	php bin/console doctrine:database:drop --if-exists -f --env=dev
 	php bin/console doctrine:database:create --env=dev
 	php bin/console doctrine:schema:update -f --env=dev
@@ -29,7 +29,7 @@ prepare-dev:
 prepare-test:
 	npm install
 	npm run dev
-	composer install --no-suggest --prefer-dist
+	composer install --prefer-dist
 	php bin/console cache:clear --env=test
 	php bin/console doctrine:database:drop --if-exists -f --env=test
 	php bin/console doctrine:database:create --env=test
