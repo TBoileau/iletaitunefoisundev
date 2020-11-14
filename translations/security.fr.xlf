@@ -73,6 +73,10 @@
         <source>Invalid or expired login link.</source>
         <target>Lien de connexion invalide ou expiré.</target>
       </trans-unit>
+      <trans-unit id="security.account_suspended" resname="Your account is suspended.">
+        <source>Your account is suspended.</source>
+        <target>Votre compte est suspendu.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

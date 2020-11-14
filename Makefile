@@ -14,7 +14,7 @@ tests:
 analyze:
 	npm audit
 	composer valid
-	php bin/console doctrine:schema:valid --env=test
+	php bin/console doctrine:schema:valid --skip-sync --env=test
 	php bin/phpcs
 
 prepare-dev:

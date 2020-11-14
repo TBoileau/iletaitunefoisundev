@@ -21,7 +21,7 @@ class LoginTest extends WebTestCase
         $crawler = $client->request(Request::METHOD_GET, $router->generate("security_login"));
 
         $form = $crawler->filter("form[name=login]")->form([
-            "email" => "email@email.com",
+            "email" => "admin@email.com",
             "password" => "password"
         ]);
 
@@ -63,7 +63,7 @@ class LoginTest extends WebTestCase
     public function provideInvalidCredentials(): iterable
     {
         yield ["fail@email.com", "password"];
-        yield ["email@email.com", "fail"];
+        yield ["admin@email.com", "fail"];
     }
 
     public function testIfCsrfTokenIsInvalid(): void
@@ -77,7 +77,7 @@ class LoginTest extends WebTestCase
 
         $form = $crawler->filter("form[name=login]")->form([
             "_csrf_token" => "fail",
-            "email" => "email@email.com",
+            "email" => "admin@email.com",
             "password" => "password"
         ]);
 
@@ -88,5 +88,28 @@ class LoginTest extends WebTestCase
         $client->followRedirect();
 
         $this->assertSelectorTextContains("form[name=login] > div.alert", "Jeton CSRF invalide.");
+    }
+
+    public function testIfAccountIsSuspended(): void
+    {
+        $client = static::createClient();
+
+        /** @var RouterInterface $router */
+        $router = $client->getContainer()->get("router");
+
+        $crawler = $client->request(Request::METHOD_GET, $router->generate("security_login"));
+
+        $form = $crawler->filter("form[name=login]")->form([
+            "email" => "user+suspended@email.com",
+            "password" => "password"
+        ]);
+
+        $client->submit($form);
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+
+        $client->followRedirect();
+
+        $this->assertSelectorTextContains("form[name=login] > div.alert", "Votre compte est suspendu.");
     }
 }

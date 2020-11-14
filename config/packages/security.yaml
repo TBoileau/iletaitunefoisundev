@@ -15,6 +15,7 @@ security:
             anonymous: true
             lazy: true
             provider: user_provider
+            user_checker: App\Security\UserChecker\UserChecker
             guard:
                 authenticators:
                     - App\Security\Guard\WebAuthenticator
