@@ -30,7 +30,7 @@ jobs:
         run: make composer-install
 
       - name: Code quality
-        run: make code-quality
+        run: make analyse
 
   tests:
     runs-on: ubuntu-latest
