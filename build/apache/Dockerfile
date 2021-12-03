@@ -16,6 +16,8 @@ RUN set -xe; \
     mkdir -p /usr/local/src; \
     cd /usr/local/src; \
     composer require \
+            phpunit/phpunit \
+            symfony/test-pack \
             phpstan/phpstan \
             phpstan/phpstan-dibi \
             phpstan/phpstan-doctrine \
