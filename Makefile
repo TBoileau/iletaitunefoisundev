@@ -2,7 +2,41 @@ DOCKER_COMPOSE = docker-compose
 EXEC_APACHE = $(DOCKER_COMPOSE) exec apache
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec apache php bin/console
 
-analyse: composer-unused container-linter security-checker phpmd phpcpd churn-php phpstan phpinsights
+install: build up composer-install
+
+reset: down install
+
+build:
+	@echo "\nBuilding local images...\e[0m"
+	@$(DOCKER_COMPOSE) build
+
+up:
+	@echo "\nUp environment...\e[0m"
+	@$(DOCKER_COMPOSE) up -d --remove-orphans
+
+down:
+	@echo "\nDown environment...\e[0m"
+	@$(DOCKER_COMPOSE) kill
+	@$(DOCKER_COMPOSE) down --remove-orphans
+
+start:
+	@echo "\nStart containers...\e[0m"
+	@$(DOCKER_COMPOSE) unpause || true
+	@$(DOCKER_COMPOSE) start || true
+
+stop:
+	@echo "\nStop containers...\e[0m"
+	@$(DOCKER_COMPOSE) pause || true
+
+composer-install:
+	@echo "\nInstall dependencies...\e[0m"
+	@$(EXEC_APACHE) composer install
+
+composer-update:
+	@echo "\nInstall dependencies...\e[0m"
+	@$(EXEC_APACHE) composer update
+
+analyse: composer-valid composer-unused container-linter security-checker phpmd phpcpd churn-php phpstan phpinsights
 
 phpstan:
 	@echo "\nRunning phpstan...\e[0m"
@@ -35,6 +69,10 @@ container-linter:
 security-checker:
 	@echo "\nRunning container linter...\e[0m"
 	@$(EXEC_APACHE) symfony check:requirements
+
+composer-valid:
+	@echo "\nRunning container linter...\e[0m"
+	@$(EXEC_APACHE) composer valid
 
 fix:
 	@echo "\nRunning php-cs-fixer...\e[0m"
