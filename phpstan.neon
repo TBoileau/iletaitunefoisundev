@@ -1,0 +1,13 @@
+includes:
+    - /usr/local/src/vendor/phpstan/phpstan-symfony/extension.neon
+    - /usr/local/src/vendor/phpstan/phpstan-symfony/rules.neon
+
+parameters:
+    symfony:
+        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+        console_application_loader: bin/console
+    scanDirectories:
+        - var/cache/dev/Symfony/Config
+    level: 9
+    paths:
+        - src
