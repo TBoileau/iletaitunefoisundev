@@ -2,6 +2,8 @@ DOCKER_COMPOSE = docker-compose
 EXEC_APACHE = $(DOCKER_COMPOSE) exec apache
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec apache php bin/console
 
+.PHONY: build tests
+
 install: build up composer-install
 
 reset: down install
@@ -77,4 +79,8 @@ composer-valid:
 fix:
 	@echo "\nRunning php-cs-fixer...\e[0m"
 	@$(EXEC_APACHE) php-cs-fixer fix src
+
+tests:
+	@echo "\nRunning tests...\e[0m"
+	@$(EXEC_APACHE) phpunit
 
