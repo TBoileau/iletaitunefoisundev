@@ -1,6 +1,6 @@
 DOCKER_COMPOSE = docker-compose
-EXEC_APACHE = $(DOCKER_COMPOSE) exec apache
-EXEC_SYMFONY = $(DOCKER_COMPOSE) exec apache php bin/console
+EXEC_APACHE = $(DOCKER_COMPOSE) exec -T apache
+EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T apache php bin/console
 
 .PHONY: build tests
 
