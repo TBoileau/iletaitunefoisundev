@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<ruleset name="My first PHPMD rule set"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0
+                     http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="
+                     http://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        This ruleset contains a collection of rules.
+    </description>
+    <exclude-pattern>src/Kernel.php</exclude-pattern>
+
+    <rule ref="rulesets/controversial.xml" />
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="LongVariable" />
+        <exclude name="ShortVariable" />
+        <exclude name="ShortMethodName" />
+        <exclude name="LongClassName" />
+    </rule>
+
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="minimum" value="2" /><!-- Default: 3 -->
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <properties>
+            <property name="maximum" value="30" /><!-- Default: 20 -->
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/LongClassName">
+        <properties>
+            <property name="maximum" value="50" /><!-- Default: 20 -->
+        </properties>
+    </rule>
+</ruleset>

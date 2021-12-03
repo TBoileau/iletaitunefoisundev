@@ -15,15 +15,15 @@ services:
     image: schickling/mailcatcher
     container_name: mailer
     ports:
-      - "1080:1080"
+      - "9001:1080"
     networks:
       - dev
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "9002:5672"
+      - "9003:15672"
     volumes:
       - queue-data:/var/lib/rabbitmq/
       - queue-log:/var/log/rabbitmq
@@ -33,7 +33,7 @@ services:
     image: redis:alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - "9004:6379"
     networks:
       - dev
   database:
@@ -44,7 +44,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:rw
     ports:
-      - "3307:3306"
+      - "9005:3306"
     networks:
       - dev
 volumes:
