@@ -10,6 +10,7 @@
         </include>
         <exclude>
             <file>src/Kernel.php</file>
+            <file>src/Command/InstallCommand.php</file>
         </exclude>
         <report>
             <clover outputFile="var/coverage/clover.xml"/>
@@ -51,4 +52,8 @@
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
 </phpunit>
