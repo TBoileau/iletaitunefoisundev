@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\HelperInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -77,7 +77,7 @@ final class InstallCommand extends Command
         return self::SUCCESS;
     }
 
-    private function askEnvironment(HelperInterface $helper, InputInterface $input, OutputInterface $output): void
+    private function askEnvironment(QuestionHelper $helper, InputInterface $input, OutputInterface $output): void
     {
         if (null !== $input->getOption('environment')) {
             return;
@@ -97,7 +97,7 @@ final class InstallCommand extends Command
     }
 
     private function askDatabaseDriver(
-        HelperInterface $helper,
+        QuestionHelper $helper,
         InputInterface $input,
         OutputInterface $output
     ): void {
@@ -132,7 +132,7 @@ final class InstallCommand extends Command
     }
 
     private function askDatabaseUrl(
-        HelperInterface $helper,
+        QuestionHelper $helper,
         InputInterface $input,
         OutputInterface $output
     ): void {
@@ -150,7 +150,9 @@ final class InstallCommand extends Command
             $question->setAutocompleterCallback(static function (string $path) use ($projectDir): array {
                 $inputPath = preg_replace('%(/|^)[^/]*$%', '$1', $path);
 
-                $foundFilesAndDirs = @scandir($projectDir.'/'.$inputPath) ?: [];
+                if (($foundFilesAndDirs = scandir($projectDir.'/'.$inputPath)) === false) {
+                    $foundFilesAndDirs = [];
+                }
 
                 return array_map(static function ($dirOrFile) use ($inputPath): string {
                     return $inputPath.$dirOrFile;
@@ -208,6 +210,7 @@ final class InstallCommand extends Command
         $filesystem->copy(sprintf('%s/.env.dist', $this->projectDir), $envAbsolutePath);
         $output->writeln(sprintf('<info>Create %s</info>', $envFilename));
 
+        /** @var string $content */
         $content = file_get_contents($envAbsolutePath);
 
         /** @var string $databaseDriver */
