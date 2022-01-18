@@ -3,7 +3,7 @@
 PHP_XDEBUG = php
 PHP = XDEBUG_MODE=off php
 
-install: composer-install
+install: composer-install install-app
 
 composer-install:
 	@echo "\nInstall dependencies...\e[0m"
@@ -12,6 +12,10 @@ composer-install:
 composer-update:
 	@echo "\Update dependencies...\e[0m"
 	composer update
+
+install-app:
+	@echo "\Install application...\e[0m"
+	$(PHP) bin/console app:install
 
 analyse: composer-valid container-linter phpcpd churn-php phpstan
 
@@ -70,3 +74,13 @@ functional-tests:
 end-to-end-tests:
 	@echo "\nRunning end to end tests...\e[0m"
 	@$(PHP) bin/phpunit --testsuite=end-to-end
+
+database:
+	@echo "\nSetup database...\e[0m"
+	@$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
+	@$(PHP) bin/console doctrine:database:create --env=$(env)
+	@$(PHP) bin/console doctrine:schema:update --force --env=$(env)
+
+fixtures:
+	@echo "\nLoad fixtures...\e[0m"
+	@$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
