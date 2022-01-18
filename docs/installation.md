@@ -1,6 +1,6 @@
 # Installation
 
-[Retour au sommaire](/docs/index.md)
+[Retour au sommaire](index.md)
 
 ## Git
 Dans un premier temps, il est nécessaire de cloner le projet :

@@ -1,6 +1,6 @@
 # Qualité du code
 
-[Retour au sommaire](/docs/index.md)
+[Retour au sommaire](index.md)
 
 *Disclaimer : Attention, l'utilisation des outils d'analayse statique présentés ci-dessous ne sont pas garant d'un code de qualité.*
 

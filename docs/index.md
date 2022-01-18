@@ -1,5 +1,5 @@
 # Sommaire
 
-* [Installation](/docs/installation.md)
-* [Tests](/docs/tests.md)
-* [Qualité du code](/docs/code_quality.md)
+* [Installation](installation.md)
+* [Tests](tests.md)
+* [Qualité du code](code_quality.md)

@@ -1,7 +1,7 @@
 # iletaitunefoisundev
 
 ## Documentation
-La documentation est disponible [ici](/docs/index.md).
+La documentation est disponible [ici](https://incentive-factory.github.io/iletaitunefoisundev/).
 
 ## Contribuer
 Veuillez prendre un moment pour lire le [guide sur la contribution](/CONTRIBUTING.md).

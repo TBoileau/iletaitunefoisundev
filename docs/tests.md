@@ -1,6 +1,6 @@
 # Tests
 
-[Retour au sommaire](/docs/index.md)
+[Retour au sommaire](index.md)
 
 ## Pyramide de tests
 
