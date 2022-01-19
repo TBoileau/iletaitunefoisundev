@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Doctrine\Repository;
 
 use App\Domain\Security\Entity\User;
+use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use App\Infrastructure\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -38,7 +38,11 @@ final class UserRepositoryTest extends KernelTestCase
         /** @var UserRepository $userRepository */
         $userRepository = self::getContainer()->get(UserRepository::class);
 
+        /** @var UuidGeneratorInterface $uuidGenerator */
+        $uuidGenerator = self::getContainer()->get(UuidGeneratorInterface::class);
+
         $user = new User();
+        $user->setId($uuidGenerator->generate());
         $user->setEmail('user+6@email.com');
         $user->setPassword('password');
 

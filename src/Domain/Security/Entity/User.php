@@ -26,14 +26,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: Types::STRING, nullable: true)]
     private ?string $password;
 
-    public function __construct()
-    {
-        $this->id = Uuid::v4();
-    }
-
     public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
     }
 
     public function getEmail(): string
