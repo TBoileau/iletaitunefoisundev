@@ -80,11 +80,11 @@ end-to-end-tests:
 	@$(PHP) bin/phpunit --testsuite=end-to-end
 
 database:
-	@echo "\nSetup database...\e[0m"
-	@$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
-	@$(PHP) bin/console doctrine:database:create --env=$(env)
-	@$(PHP) bin/console doctrine:schema:update --force --env=$(env)
+	echo "\nSetup database...\e[0m"
+	$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
+	$(PHP) bin/console doctrine:database:create --env=$(env)
+	$(PHP) bin/console doctrine:schema:update --force --env=$(env)
 
 fixtures:
 	@echo "\nLoad fixtures...\e[0m"
-	@$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
+	$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)

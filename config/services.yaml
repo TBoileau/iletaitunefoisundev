@@ -6,6 +6,7 @@ services:
         autoconfigure: true
         bind:
             string $projectDir: '%kernel.project_dir%'
+            string $environment: '%kernel.environment%'
 
     App\:
         resource: '../src/'
