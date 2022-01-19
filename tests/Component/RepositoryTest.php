@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Domain\Security\Entity\User;
+use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Repository;
+namespace App\Infrastructure\Repository;
 
-use App\Entity\User;
+use App\Domain\Security\Entity\User;
+use App\Domain\Security\Gateway\UserGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
@@ -15,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @template-extends ServiceEntityRepository<User>
  */
-final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
+final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface, UserGateway
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -25,5 +26,11 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
     public function loadUserByIdentifier(string $identifier): ?UserInterface
     {
         return $this->findOneBy(['email' => $identifier]);
+    }
+
+    public function register(User $user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 }
