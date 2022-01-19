@@ -14,8 +14,8 @@ final class RoutingTest extends KernelTestCase
 {
     /**
      * @param array<array-key, string> $methods
-     * @param array<string, string> $requirements
-     * @param array<string, mixed> $defaults
+     * @param array<string, string>    $requirements
+     * @param array<string, mixed>     $defaults
      *
      * @dataProvider provideRoutes
      */
@@ -43,7 +43,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_GET],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s::%s', SecurityController::class, 'login')
+                '_controller' => sprintf('%s::%s', SecurityController::class, 'login'),
             ],
         ];
         yield 'security logout' => [
@@ -52,7 +52,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_GET],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s::%s', SecurityController::class, 'logout')
+                '_controller' => sprintf('%s::%s', SecurityController::class, 'logout'),
             ],
         ];
     }
