@@ -22,6 +22,7 @@
         "symfony/proxy-manager-bridge": "6.0.*",
         "symfony/runtime": "6.0.*",
         "symfony/security-bundle": "6.0.*",
+        "symfony/translation": "6.0.*",
         "symfony/twig-bundle": "6.0.*",
         "symfony/uid": "6.0.*",
         "symfony/yaml": "6.0.*",
