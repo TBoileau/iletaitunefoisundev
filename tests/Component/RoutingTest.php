@@ -13,13 +13,15 @@ use Symfony\Component\Routing\RouterInterface;
 final class RoutingTest extends KernelTestCase
 {
     /**
+     * @test
+     *
      * @param array<array-key, string> $methods
      * @param array<string, string>    $requirements
      * @param array<string, mixed>     $defaults
      *
      * @dataProvider provideRoutes
      */
-    public function testRoutes(string $route, string $path, array $methods, array $requirements = [], array $defaults = []): void
+    public function shouldMatch(string $route, string $path, array $methods, array $requirements = [], array $defaults = []): void
     {
         self::bootKernel();
 
@@ -35,12 +37,24 @@ final class RoutingTest extends KernelTestCase
         self::assertEquals($defaults, $route->getDefaults());
     }
 
+    /**
+     * @return Generator<
+     *      string,
+     *      array{
+     *          route: string,
+     *          path: string,
+     *          methods: array<array-key, string>,
+     *          requirements: array<array-key, string>,
+     *          defaults: array<array-key, mixed>
+     *      }
+     * >
+     */
     public function provideRoutes(): Generator
     {
         yield 'security login' => [
             'route' => 'security_login',
             'path' => '/login',
-            'methods' => [Request::METHOD_GET],
+            'methods' => [Request::METHOD_GET, Request::METHOD_POST],
             'requirements' => [],
             'defaults' => [
                 '_controller' => sprintf('%s::%s', SecurityController::class, 'login'),
