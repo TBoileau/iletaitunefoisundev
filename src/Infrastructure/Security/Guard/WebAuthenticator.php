@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Guard;
+namespace App\Infrastructure\Security\Guard;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

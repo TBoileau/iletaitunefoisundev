@@ -154,9 +154,6 @@
     "php-cs-fixer/diff": {
         "version": "v2.0.2"
     },
-    "php-webdriver/webdriver": {
-        "version": "1.12.0"
-    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -360,6 +357,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v6.0.2"
+    },
     "symfony/framework-bundle": {
         "version": "6.0",
         "recipe": {
@@ -379,29 +379,26 @@
             "src/Kernel.php"
         ]
     },
-    "symfony/http-client": {
-        "version": "v6.0.2"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v3.0.0"
-    },
     "symfony/http-foundation": {
         "version": "v6.0.0"
     },
     "symfony/http-kernel": {
         "version": "v6.0.0"
     },
-    "symfony/options-resolver": {
-        "version": "v6.0.0"
-    },
-    "symfony/panther": {
-        "version": "2.0",
+    "symfony/messenger": {
+        "version": "6.0",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "master",
-            "version": "1.0",
-            "ref": "877d853a05c6713665a2f4b954734592680abff6"
-        }
+            "version": "4.3",
+            "ref": "25e3c964d3aee480b3acc3114ffb7940c89edfed"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
+    "symfony/options-resolver": {
+        "version": "v6.0.0"
     },
     "symfony/password-hasher": {
         "version": "v6.0.2"
@@ -423,6 +420,9 @@
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.23.1"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.24.0"
     },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.23.0"
@@ -528,6 +528,19 @@
     },
     "symfony/uid": {
         "version": "v6.0.2"
+    },
+    "symfony/validator": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "3eb8df139ec05414489d55b97603c5f6ca0c44cb"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v6.0.0"

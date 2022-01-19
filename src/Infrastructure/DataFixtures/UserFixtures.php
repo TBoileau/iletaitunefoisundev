@@ -1,16 +1,21 @@
 <?php
 
-namespace App\DataFixtures;
+declare(strict_types=1);
 
-use App\Entity\User;
+namespace App\Infrastructure\DataFixtures;
+
+use App\Domain\Security\Entity\User;
+use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
-    {
+    public function __construct(
+        private UuidGeneratorInterface $uuidGenerator,
+        private UserPasswordHasherInterface $userPasswordHasher
+    ) {
     }
 
     public function load(ObjectManager $manager): void
@@ -24,6 +29,7 @@ final class UserFixtures extends Fixture
     private function createUser(int $index): User
     {
         $user = new User();
+        $user->setId($this->uuidGenerator->generate());
         $user->setEmail(sprintf('user+%d@email.com', $index));
         $user->setPassword($this->userPasswordHasher->hashPassword($user, 'password'));
         $this->setReference(sprintf('user+%d', $index), $user);

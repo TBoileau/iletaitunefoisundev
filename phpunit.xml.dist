@@ -10,8 +10,8 @@
         </include>
         <exclude>
             <file>src/Kernel.php</file>
-            <file>src/Command/InstallCommand.php</file>
-            <directory>src/DataFixtures</directory>
+            <file>src/UserInterface/Command/InstallCommand.php</file>
+            <directory>src/Infrastructure/DataFixtures</directory>
         </exclude>
         <report>
             <clover outputFile="var/coverage/clover.xml"/>

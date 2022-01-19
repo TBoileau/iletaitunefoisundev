@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Domain\Security\Entity;
 
-use App\Repository\UserRepository;
+use App\Infrastructure\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -26,14 +26,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: Types::STRING, nullable: true)]
     private ?string $password;
 
-    public function __construct()
-    {
-        $this->id = Uuid::v4();
-    }
-
     public function getId(): Uuid
     {
         return $this->id;
+    }
+
+    public function setId(Uuid $id): void
+    {
+        $this->id = $id;
     }
 
     public function getEmail(): string

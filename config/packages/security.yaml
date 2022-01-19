@@ -1,12 +1,12 @@
 security:
     enable_authenticator_manager: true
     password_hashers:
-        App\Entity\User:
+        App\Domain\Security\Entity\User:
             algorithm: auto
     providers:
         users_doctrine:
             entity:
-                class: App\Entity\User
+                class: App\Domain\Security\Entity\User
                 property: email
     firewalls:
         dev:
@@ -15,7 +15,7 @@ security:
         main:
             lazy: true
             provider: users_doctrine
-            custom_authenticator: App\Security\Guard\WebAuthenticator
+            custom_authenticator: App\Infrastructure\Security\Guard\WebAuthenticator
             logout:
                 path: security_logout
 
