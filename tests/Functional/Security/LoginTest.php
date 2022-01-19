@@ -32,7 +32,7 @@ final class LoginTest extends WebTestCase
     }
 
     /**
-     * @param array{_username: string, _password: string} $formData
+     * @param array<string, string> $formData
      *
      * @test
      *

@@ -7,6 +7,7 @@ namespace App\Tests\Integration\Doctrine\Repository;
 use App\Domain\Security\Entity\User;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use App\Infrastructure\Repository\UserRepository;
+use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -55,5 +56,29 @@ final class UserRepositoryTest extends KernelTestCase
         self::assertTrue(Uuid::isValid((string) $user->getId()));
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertSame('password', $user->getPassword());
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider provideEmailAndUniqueState
+     */
+    public function isUniqueEmailShouldReturn(string $email, bool $unique): void
+    {
+        self::bootKernel();
+
+        /** @var UserRepository<User> $userRepository */
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        self::assertSame($unique, $userRepository->isUniqueEmail($email));
+    }
+
+    /**
+     * @return Generator<string, array{email: string, unique: bool}>
+     */
+    public function provideEmailAndUniqueState(): Generator
+    {
+        yield 'unique' => ['email' => 'user+6@email.com', 'unique' => true];
+        yield 'non unique' => ['email' => 'user+1@email.com', 'unique' => false];
     }
 }

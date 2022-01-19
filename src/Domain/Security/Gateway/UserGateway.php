@@ -12,4 +12,6 @@ use App\Domain\Security\Entity\User;
 interface UserGateway
 {
     public function register(User $user): void;
+
+    public function isUniqueEmail(string $email): bool;
 }

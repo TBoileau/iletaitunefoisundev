@@ -34,4 +34,9 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+    public function isUniqueEmail(string $email): bool
+    {
+        return 0 === $this->count(['email' => $email]);
+    }
 }
