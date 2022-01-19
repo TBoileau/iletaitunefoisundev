@@ -8,6 +8,11 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @template T
+ *
+ * @template-extends ServiceEntityRepository<User>
+ */
 final class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
