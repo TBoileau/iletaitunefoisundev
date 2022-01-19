@@ -10,6 +10,6 @@ final class SecurityTest extends SmokeTestCase
 {
     public function provideRoutes(): Generator
     {
-        yield 'login' => ['path' => '/login'];
+        yield 'login' => ['path' => '/login', 'email' => null];
     }
 }

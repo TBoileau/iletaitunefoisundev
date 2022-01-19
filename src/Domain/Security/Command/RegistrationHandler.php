@@ -12,6 +12,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class RegistrationHandler implements RegistrationHandlerInterface
 {
+    /**
+     * @param UserGateway<User> $userGateway
+     */
     public function __construct(
         private UuidGeneratorInterface $uuidGenerator,
         private UserGateway $userGateway,

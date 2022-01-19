@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
+use App\Domain\Security\Entity\User;
+use App\Infrastructure\Repository\UserRepository;
 use Generator;
 use RuntimeException;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -28,8 +29,8 @@ abstract class SmokeTestCase extends WebTestCase
         $client = self::createClient();
 
         if (null !== $email) {
-            /** @var UserLoaderInterface $userRepository */
-            $userRepository = $client->getContainer()->get(UserLoaderInterface::class);
+            /** @var UserRepository<User> $userRepository */
+            $userRepository = $client->getContainer()->get(UserRepository::class);
 
             /** @var UserInterface|null $user */
             $user = $userRepository->loadUserByIdentifier($email);

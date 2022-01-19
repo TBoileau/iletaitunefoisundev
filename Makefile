@@ -21,7 +21,7 @@ analyse: composer-valid container-linter mapping-valid phpcpd churn-php phpstan
 
 phpstan:
 	@echo "\nRunning phpstan...\e[0m"
-	$(PHP) vendor/bin/phpstan analyse src/ --configuration=phpstan.neon
+	$(PHP) vendor/bin/phpstan analyse --configuration=phpstan.neon
 
 php-cs-fixer:
 	@echo "\nRunning phpinsights...\e[0m"

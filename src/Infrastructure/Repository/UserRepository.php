@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @template T
  *
  * @template-extends ServiceEntityRepository<User>
+ * @template-implements UserGateway<User>
  */
 final class UserRepository extends ServiceEntityRepository implements UserLoaderInterface, UserGateway
 {

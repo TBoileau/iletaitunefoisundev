@@ -19,7 +19,7 @@ final class UserRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
 
-        /** @var UserRepository $userRepository */
+        /** @var UserRepository<User> $userRepository */
         $userRepository = self::getContainer()->get(UserRepository::class);
 
         $user = $userRepository->loadUserByIdentifier('user+1@email.com');
@@ -35,7 +35,7 @@ final class UserRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
 
-        /** @var UserRepository $userRepository */
+        /** @var UserRepository<User> $userRepository */
         $userRepository = self::getContainer()->get(UserRepository::class);
 
         /** @var UuidGeneratorInterface $uuidGenerator */
@@ -52,7 +52,7 @@ final class UserRepositoryTest extends KernelTestCase
 
         self::assertNotNull($user);
         self::assertInstanceOf(User::class, $user);
-        self::assertInstanceOf(Uuid::class, $user->getId());
+        self::assertTrue(Uuid::isValid((string) $user->getId()));
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertSame('password', $user->getPassword());
     }
