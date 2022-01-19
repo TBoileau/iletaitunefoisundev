@@ -11,6 +11,7 @@
         <exclude>
             <file>src/Kernel.php</file>
             <file>src/Command/InstallCommand.php</file>
+            <directory>src/DataFixtures</directory>
         </exclude>
         <report>
             <clover outputFile="var/coverage/clover.xml"/>
