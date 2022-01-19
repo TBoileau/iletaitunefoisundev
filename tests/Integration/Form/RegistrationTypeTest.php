@@ -21,11 +21,16 @@ final class RegistrationTypeTest extends KernelTestCase
     {
         self::bootKernel();
 
-        $formFactory = Forms::createFormFactoryBuilder()->getFormFactory();
+        /** @var ValidatorInterface $validator */
+        $validator = self::getContainer()->get(ValidatorInterface::class);
+
+        $formFactory = Forms::createFormFactoryBuilder()
+            ->addExtension(new ValidatorExtension($validator))
+            ->getFormFactory();
 
         $formData = [
             'email' => 'user+6@email.com',
-            'plainPassword' => 'password',
+            'plainPassword' => 'Password123!',
         ];
 
         $registration = new Registration();
@@ -34,7 +39,7 @@ final class RegistrationTypeTest extends KernelTestCase
 
         $expectedRegistration = new Registration();
         $expectedRegistration->setEmail('user+6@email.com');
-        $expectedRegistration->setPlainPassword('password');
+        $expectedRegistration->setPlainPassword('Password123!');
 
         $formView = $form->createView();
         self::assertArrayHasKey('email', $formView->children);
@@ -82,7 +87,7 @@ final class RegistrationTypeTest extends KernelTestCase
      */
     public function provideInvalidData(): Generator
     {
-        yield 'wrong email' => [self::createData(['email' => 'fail'])];
+        yield 'invalid email' => [self::createData(['email' => 'fail'])];
         yield 'empty email' => [self::createData(['email' => ''])];
         yield 'non unique email' => [self::createData(['email' => 'user+1@email.com'])];
         yield 'wrong password' => [self::createData(['plainPassword' => 'fail'])];

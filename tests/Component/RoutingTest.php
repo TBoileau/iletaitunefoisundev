@@ -69,5 +69,14 @@ final class RoutingTest extends KernelTestCase
                 '_controller' => sprintf('%s::%s', SecurityController::class, 'logout'),
             ],
         ];
+        yield 'security register' => [
+            'route' => 'security_register',
+            'path' => '/register',
+            'methods' => [Request::METHOD_GET, Request::METHOD_POST],
+            'requirements' => [],
+            'defaults' => [
+                '_controller' => sprintf('%s::%s', SecurityController::class, 'register'),
+            ],
+        ];
     }
 }

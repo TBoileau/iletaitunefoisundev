@@ -8,6 +8,11 @@ services:
             string $projectDir: '%kernel.project_dir%'
             string $environment: '%kernel.environment%'
 
+    _instanceof:
+        App\Domain\Shared\Command\HandlerInterface:
+            tags:
+                - messenger.message_handler
+
     App\:
         resource: '../src/'
         exclude:
