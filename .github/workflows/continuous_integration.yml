@@ -66,7 +66,7 @@ jobs:
       - name: Install dependencies
         run: make composer-install
       - name: Install application
-        run: php bin/console app:install --environment=test --db-driver=mysql --db-name=iletaitunefoisundev --db-user=root --db-password=Password123!
+        run: php bin/console app:install --env=test --db-driver=mysql --db-name=iletaitunefoisundev --db-user=root --db-password=Password123!
       - name: Run unit tests
         run: make unit-tests
       - name: Run component tests
@@ -77,5 +77,3 @@ jobs:
         run: make smoke-tests
       - name: Run functional tests
         run: make functional-tests
-      - name: Run end to end tests
-        run: make end-to-end-tests

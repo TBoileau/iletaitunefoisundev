@@ -17,7 +17,7 @@ install-app:
 	@echo "\Install application...\e[0m"
 	$(PHP) bin/console app:install
 
-analyse: composer-valid container-linter phpcpd churn-php phpstan
+analyse: composer-valid container-linter mapping-valid phpcpd churn-php phpstan
 
 phpstan:
 	@echo "\nRunning phpstan...\e[0m"
@@ -42,6 +42,10 @@ container-linter:
 composer-valid:
 	@echo "\nRunning container valid...\e[0m"
 	composer valid
+
+mapping-valid:
+	@echo "\nRunning container valid...\e[0m"
+	@$(PHP) bin/console doctrine:schema:valid --skip-sync
 
 tests:
 	@echo "\nRunning tests...\e[0m"
@@ -76,11 +80,11 @@ end-to-end-tests:
 	@$(PHP) bin/phpunit --testsuite=end-to-end
 
 database:
-	@echo "\nSetup database...\e[0m"
-	@$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
-	@$(PHP) bin/console doctrine:database:create --env=$(env)
-	@$(PHP) bin/console doctrine:schema:update --force --env=$(env)
+	echo "\nSetup database...\e[0m"
+	$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
+	$(PHP) bin/console doctrine:database:create --env=$(env)
+	$(PHP) bin/console doctrine:schema:update --force --env=$(env)
 
 fixtures:
 	@echo "\nLoad fixtures...\e[0m"
-	@$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
+	$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)

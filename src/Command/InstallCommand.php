@@ -18,7 +18,7 @@ final class InstallCommand extends Command
 {
     protected static $defaultName = 'app:install';
 
-    public function __construct(private string $projectDir)
+    public function __construct(private string $projectDir, private string $environment)
     {
         parent::__construct();
     }
@@ -28,11 +28,6 @@ final class InstallCommand extends Command
         $this
             ->setDescription('Configure your environment.')
             ->setHelp('This command allows you to configure your environment.')
-            ->addOption(
-                name: 'environment',
-                mode: InputOption::VALUE_OPTIONAL,
-                description: 'Environment\'s name to configure'
-            )
             ->addOption(
                 name: 'db-driver',
                 mode: InputOption::VALUE_OPTIONAL,
@@ -64,7 +59,6 @@ final class InstallCommand extends Command
     {
         $helper = $this->getHelper('question');
 
-        $this->askEnvironment($helper, $input, $output);
         $this->askDatabaseDriver($helper, $input, $output);
         $this->askDatabaseUrl($helper, $input, $output);
     }
@@ -75,25 +69,6 @@ final class InstallCommand extends Command
         $this->setupDatabase($input, $output);
 
         return self::SUCCESS;
-    }
-
-    private function askEnvironment(QuestionHelper $helper, InputInterface $input, OutputInterface $output): void
-    {
-        if (null !== $input->getOption('environment')) {
-            return;
-        }
-
-        $question = new ChoiceQuestion(
-            'Please select your environment (defaults to dev)',
-            ['dev' => 'dev', 'test' => 'test', 'prod' => 'prod'],
-            'dev'
-        );
-
-        $question->setErrorMessage('Environment %s is invalid.');
-
-        $environment = $helper->ask($input, $output, $question);
-
-        $input->setOption('environment', $environment);
     }
 
     private function askDatabaseDriver(
@@ -193,12 +168,9 @@ final class InstallCommand extends Command
 
     private function configureEnvironment(InputInterface $input, OutputInterface $output): void
     {
-        /** @var string $environment */
-        $environment = $input->getOption('environment');
-
         $filesystem = new Filesystem();
 
-        $envFilename = sprintf('.env.%s.local', $environment);
+        $envFilename = sprintf('.env.%s.local', $this->environment);
 
         $envAbsolutePath = sprintf('%s/%s', $this->projectDir, $envFilename);
 
@@ -242,13 +214,10 @@ final class InstallCommand extends Command
 
     private function setupDatabase(InputInterface $input, OutputInterface $output): void
     {
-        /** @var string $environment */
-        $environment = $input->getOption('environment');
-
         $process = new Process([
             'make',
             'database',
-            sprintf('env=%s', $environment),
+            sprintf('env=%s', $this->environment),
         ]);
 
         $process->run();
@@ -261,7 +230,7 @@ final class InstallCommand extends Command
 
         $output->writeln('<info>Database created</info>');
 
-        if ('prod' === $environment) {
+        if ('prod' === $this->environment) {
             $output->writeln('<comment>No fixture can be load in prod environment</comment>');
 
             return;
@@ -270,7 +239,7 @@ final class InstallCommand extends Command
         $process = new Process([
             'make',
             'fixtures',
-            sprintf('env=%s', $environment),
+            sprintf('env=%s', $this->environment),
         ]);
 
         $process->run();
