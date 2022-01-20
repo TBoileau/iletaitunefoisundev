@@ -24,7 +24,7 @@ phpstan:
 	$(PHP) vendor/bin/phpstan analyse --configuration=phpstan.neon
 
 php-cs-fixer:
-	@echo "\nRunning phpinsights...\e[0m"
+	@echo "\nRunning php-cs-fixer...\e[0m"
 	@$(PHP) vendor/bin/php-cs-fixer fix
 
 phpcpd:
@@ -44,7 +44,7 @@ composer-valid:
 	composer valid
 
 mapping-valid:
-	@echo "\nRunning container valid...\e[0m"
+	@echo "\nRunning mapping valid...\e[0m"
 	@$(PHP) bin/console doctrine:schema:valid --skip-sync
 
 tests:
@@ -88,3 +88,5 @@ database:
 fixtures:
 	@echo "\nLoad fixtures...\e[0m"
 	$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
+
+fix: php-cs-fixer

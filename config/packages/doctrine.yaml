@@ -20,3 +20,8 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Shared/Entity'
                 prefix: 'App\Domain\Shared\Entity'
                 alias: Shared
+            Course:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Course/Entity'
+                prefix: 'App\Domain\Course\Entity'
+                alias: Course

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Domain\Course\Entity\Course;
 use App\Domain\Security\Entity\User;
 use App\Domain\Shared\Entity\Node;
+use App\Infrastructure\Repository\CourseRepository;
 use App\Infrastructure\Repository\NodeRepository;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,5 +43,6 @@ final class RepositoryTest extends KernelTestCase
     {
         yield 'user entity' => [User::class, UserRepository::class]; /* @phpstan-ignore-line */
         yield 'node entity' => [Node::class, NodeRepository::class]; /* @phpstan-ignore-line */
+        yield 'course entity' => [Course::class, CourseRepository::class]; /* @phpstan-ignore-line */
     }
 }
