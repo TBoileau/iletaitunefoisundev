@@ -39,7 +39,7 @@ final class RepositoryTest extends KernelTestCase
      */
     public function provideEntities(): Generator
     {
-        yield 'user entity' => [User::class, UserRepository::class];
-        yield 'node entity' => [Node::class, NodeRepository::class];
+        yield 'user entity' => [User::class, UserRepository::class]; /* @phpstan-ignore-line */
+        yield 'node entity' => [Node::class, NodeRepository::class]; /* @phpstan-ignore-line */
     }
 }

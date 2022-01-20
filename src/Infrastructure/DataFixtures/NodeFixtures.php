@@ -15,7 +15,7 @@ final class NodeFixtures extends Fixture
     {
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var array<array-key, Node> $nodes */
         $nodes = [];
