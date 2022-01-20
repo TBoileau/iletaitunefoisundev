@@ -37,7 +37,6 @@ final class NodeFixtures extends Fixture
 
     private function createNode(int $index): Node
     {
-
         $node = new Node();
         $node->setId($this->uuidGenerator->generate());
         $node->setTitle(sprintf('Node %d', $index));

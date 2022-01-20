@@ -4,15 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Security\Entity\User;
 use App\Domain\Shared\Entity\Node;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use App\Infrastructure\Repository\NodeRepository;
-use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Uid\Uuid;
 
 final class NodeRepositoryTest extends KernelTestCase
 {
@@ -25,7 +21,6 @@ final class NodeRepositoryTest extends KernelTestCase
 
         /** @var EntityManagerInterface $entityManager */
         $entityManager = self::getContainer()->get(EntityManagerInterface::class);
-
 
         /** @var NodeRepository<Node> $nodeRepository */
         $nodeRepository = self::getContainer()->get(NodeRepository::class);
