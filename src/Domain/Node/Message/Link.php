@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Message;
+namespace App\Domain\Node\Message;
 
-use App\Domain\Shared\Entity\Node;
+use App\Domain\Node\Entity\Node;
 use Symfony\Component\Validator\Constraints\NotIdenticalTo;
 use Symfony\Component\Validator\Constraints\NotNull;
 

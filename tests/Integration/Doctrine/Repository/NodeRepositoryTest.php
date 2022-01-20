@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Shared\Entity\Node;
+use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Node;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use App\Infrastructure\Repository\NodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,13 +29,13 @@ final class NodeRepositoryTest extends KernelTestCase
         /** @var UuidGeneratorInterface $uuidGenerator */
         $uuidGenerator = self::getContainer()->get(UuidGeneratorInterface::class);
 
-        $from = new Node();
+        $from = new Course();
         $from->setId($uuidGenerator->generate());
         $from->setTitle('Title 51');
         $from->setSlug('title-51');
         $entityManager->persist($from);
 
-        $to = new Node();
+        $to = new Course();
         $to->setId($uuidGenerator->generate());
         $to->setTitle('Title 52');
         $to->setSlug('title-52');

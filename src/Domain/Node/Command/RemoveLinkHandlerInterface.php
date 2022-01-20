@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Command;
+namespace App\Domain\Node\Command;
 
-use App\Domain\Shared\Message\Link;
+use App\Domain\Node\Message\Link;
+use App\Domain\Shared\Command\HandlerInterface;
 
 interface RemoveLinkHandlerInterface extends HandlerInterface
 {

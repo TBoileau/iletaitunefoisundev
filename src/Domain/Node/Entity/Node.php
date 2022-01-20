@@ -2,31 +2,40 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Entity;
+namespace App\Domain\Node\Entity;
 
+use App\Domain\Course\Entity\Course;
 use App\Infrastructure\Repository\NodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\DiscriminatorColumn;
+use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: NodeRepository::class)]
-class Node
+#[InheritanceType('SINGLE_TABLE')]
+#[DiscriminatorColumn(name: 'discr', type: Types::STRING)]
+#[DiscriminatorMap([
+    'course' => Course::class,
+])]
+abstract class Node
 {
     #[Id]
     #[Column(type: 'uuid', unique: true)]
-    private Uuid $id;
+    protected Uuid $id;
 
     #[Column(type: Types::STRING)]
-    private string $title;
+    protected string $title;
 
     #[Column(type: Types::STRING, unique: true)]
-    private string $slug;
+    protected string $slug;
 
     /**
      * @var Collection<int, Node>

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Shared\Entity\Node;
-use App\Domain\Shared\Gateway\NodeGateway;
+use App\Domain\Node\Entity\Node;
+use App\Domain\Node\Gateway\NodeGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
