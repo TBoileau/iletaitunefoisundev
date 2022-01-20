@@ -14,4 +14,9 @@ doctrine:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Domain/Security/Entity'
                 prefix: 'App\Domain\Security\Entity'
-                alias: App
+                alias: Security
+            Shared:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Domain/Shared/Entity'
+                prefix: 'App\Domain\Shared\Entity'
+                alias: Shared
