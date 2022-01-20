@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Component;
 
 use App\Domain\Security\Entity\User;
+use App\Domain\Shared\Entity\Node;
+use App\Infrastructure\Repository\NodeRepository;
 use App\Infrastructure\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
@@ -41,5 +43,6 @@ final class RepositoryTest extends KernelTestCase
          * @phpstan-ignore-next-line
          */
         yield 'user entity' => [User::class, UserRepository::class];
+        yield 'node entity' => [Node::class, NodeRepository::class];
     }
 }
