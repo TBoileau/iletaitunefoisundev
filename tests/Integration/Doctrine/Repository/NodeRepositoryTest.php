@@ -51,7 +51,6 @@ final class NodeRepositoryTest extends KernelTestCase
 
         $nodeRepository->update();
 
-
         /** @var Node $from */
         $from = $nodeRepository->findOneBy(['slug' => 'title-51']);
 

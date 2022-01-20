@@ -6,7 +6,7 @@ namespace App\Domain\Shared\Command;
 
 use App\Domain\Shared\Message\Link;
 
-interface LinkHandlerInterface extends HandlerInterface
+interface CreateLinkHandlerInterface extends HandlerInterface
 {
     public function __invoke(Link $link): void;
 }

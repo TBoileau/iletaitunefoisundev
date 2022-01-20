@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared;
 
-use App\Domain\Security\Command\RegistrationHandler;
-use App\Domain\Security\Entity\User;
-use App\Domain\Security\Gateway\UserGateway;
-use App\Domain\Security\Message\Registration;
-use App\Domain\Shared\Command\LinkHandler;
+use App\Domain\Shared\Command\CreateLinkHandler;
 use App\Domain\Shared\Entity\Node;
 use App\Domain\Shared\Gateway\NodeGateway;
 use App\Domain\Shared\Message\Link;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
-final class LinkTest extends TestCase
+final class CreateLinkTest extends TestCase
 {
     /**
      * @test
      */
-    public function shouldLinkNodes(): void
+    public function shouldCreateLinkBetweenTwoNodes(): void
     {
-
         $from = new Node();
         $from->setId(Uuid::v4());
         $from->setTitle('Title 51');
@@ -44,7 +37,7 @@ final class LinkTest extends TestCase
             ->expects(self::once())
             ->method('update');
 
-        $command = new LinkHandler($nodeGateway);
+        $command = new CreateLinkHandler($nodeGateway);
 
         $command($link);
 
