@@ -9,7 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Uuid;
 
@@ -21,13 +20,12 @@ class Map
     private Uuid $id;
 
     #[OneToOne(targetEntity: Level::class)]
-    #[JoinColumn(nullable: false)]
-    private Level $start;
+    private ?Level $start = null;
 
-    #[OneToOne(mappedBy: 'next', targetEntity: Map::class)]
+    #[OneToOne(inversedBy: 'next', targetEntity: Map::class)]
     private ?Map $previous = null;
 
-    #[OneToOne(inversedBy: 'previous', targetEntity: Map::class)]
+    #[OneToOne(mappedBy: 'previous', targetEntity: Map::class)]
     private ?Map $next = null;
 
     #[Column(type: Types::STRING)]
@@ -43,7 +41,7 @@ class Map
         $this->id = $id;
     }
 
-    public function getStart(): Level
+    public function getStart(): ?Level
     {
         return $this->start;
     }

@@ -6,7 +6,6 @@ namespace App\Domain\Adventure\Entity;
 
 use App\Domain\Course\Entity\Course;
 use App\Infrastructure\Repository\LevelRepository;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -32,21 +31,15 @@ class Level
     #[JoinColumn(nullable: false)]
     private Map $map;
 
-    #[OneToOne(mappedBy: 'next', targetEntity: Level::class)]
+    #[OneToOne(inversedBy: 'next', targetEntity: Level::class)]
     private ?Level $previous = null;
 
-    #[OneToOne(inversedBy: 'previous', targetEntity: Level::class)]
+    #[OneToOne(mappedBy: 'previous', targetEntity: Level::class)]
     private ?Level $next = null;
 
     #[OneToOne(targetEntity: Course::class)]
     #[JoinColumn(nullable: false)]
     private Course $course;
-
-    #[Column(type: Types::DATETIME_IMMUTABLE)]
-    private DateTimeImmutable $startedAt;
-
-    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $finishedAt = null;
 
     public function getId(): Uuid
     {
@@ -106,25 +99,5 @@ class Level
     public function setCourse(Course $course): void
     {
         $this->course = $course;
-    }
-
-    public function getStartedAt(): DateTimeImmutable
-    {
-        return $this->startedAt;
-    }
-
-    public function setStartedAt(DateTimeImmutable $startedAt): void
-    {
-        $this->startedAt = $startedAt;
-    }
-
-    public function getFinishedAt(): ?DateTimeImmutable
-    {
-        return $this->finishedAt;
-    }
-
-    public function setFinishedAt(?DateTimeImmutable $finishedAt): void
-    {
-        $this->finishedAt = $finishedAt;
     }
 }
