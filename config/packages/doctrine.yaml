@@ -15,11 +15,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Security/Entity'
                 prefix: 'App\Domain\Security\Entity'
                 alias: Security
-            Shared:
+            Node:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Shared/Entity'
-                prefix: 'App\Domain\Shared\Entity'
-                alias: Shared
+                dir: '%kernel.project_dir%/src/Domain/Node/Entity'
+                prefix: 'App\Domain\Node\Entity'
+                alias: Node
             Course:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Domain/Course/Entity'

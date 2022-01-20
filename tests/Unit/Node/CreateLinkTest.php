@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared;
+namespace App\Tests\Unit\Node;
 
 use App\Domain\Course\Entity\Course;
-use App\Domain\Shared\Command\CreateLinkHandler;
-use App\Domain\Shared\Gateway\NodeGateway;
-use App\Domain\Shared\Message\Link;
+use App\Domain\Node\Command\CreateLinkHandler;
+use App\Domain\Node\Gateway\NodeGateway;
+use App\Domain\Node\Message\Link;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 

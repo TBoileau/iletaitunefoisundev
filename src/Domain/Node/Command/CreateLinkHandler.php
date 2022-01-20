@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Command;
+namespace App\Domain\Node\Command;
 
-use App\Domain\Shared\Entity\Node;
-use App\Domain\Shared\Gateway\NodeGateway;
-use App\Domain\Shared\Message\Link;
+use App\Domain\Node\Entity\Node;
+use App\Domain\Node\Gateway\NodeGateway;
+use App\Domain\Node\Message\Link;
 
-final class RemoveLinkHandler implements RemoveLinkHandlerInterface
+final class CreateLinkHandler implements CreateLinkHandlerInterface
 {
     /**
      * @param NodeGateway<Node> $nodeGateway
@@ -19,7 +19,7 @@ final class RemoveLinkHandler implements RemoveLinkHandlerInterface
 
     public function __invoke(Link $link): void
     {
-        $link->getFrom()->removeSibling($link->getTo());
+        $link->getFrom()->addSibling($link->getTo());
         $this->nodeGateway->update();
     }
 }

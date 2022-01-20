@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Component;
 
 use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Node;
 use App\Domain\Security\Entity\User;
-use App\Domain\Shared\Entity\Node;
 use App\Infrastructure\Repository\CourseRepository;
 use App\Infrastructure\Repository\NodeRepository;
 use App\Infrastructure\Repository\UserRepository;

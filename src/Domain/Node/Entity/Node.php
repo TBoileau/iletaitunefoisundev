@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Shared\Entity;
+namespace App\Domain\Node\Entity;
 
 use App\Domain\Course\Entity\Course;
 use App\Infrastructure\Repository\NodeRepository;

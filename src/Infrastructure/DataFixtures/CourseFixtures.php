@@ -41,6 +41,8 @@ final class CourseFixtures extends Fixture
         $course->setId($this->uuidGenerator->generate());
         $course->setTitle(sprintf('Course %d', $index));
         $course->setSlug(sprintf('course-%d', $index));
+        $course->setYoutubeId(sprintf('youtube-%d', $index));
+        $course->setDescription(sprintf('Description %s', $index));
 
         return $course;
     }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Domain\Node\Message\Link;
 use App\Domain\Security\Message\Registration;
 use App\Domain\Security\Validator\UniqueEmail;
-use App\Domain\Shared\Message\Link;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Constraints\Email;
