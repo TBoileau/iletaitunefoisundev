@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DataFixtures;
 
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Entity\Node;
 use App\Domain\Node\Entity\Step;
 use App\Domain\Security\Entity\User;

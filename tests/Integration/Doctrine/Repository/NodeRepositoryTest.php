@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Entity\Node;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use App\Infrastructure\Repository\NodeRepository;

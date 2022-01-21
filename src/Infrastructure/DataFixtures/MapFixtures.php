@@ -6,7 +6,7 @@ namespace App\Infrastructure\DataFixtures;
 
 use App\Domain\Adventure\Entity\Level;
 use App\Domain\Adventure\Entity\Map;
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

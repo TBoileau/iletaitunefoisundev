@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Repository;
 
-use App\Domain\Course\Entity\Course;
-use App\Domain\Course\Gateway\CourseGateway;
+use App\Domain\Node\Entity\Course;
+use App\Domain\Node\Gateway\CourseGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

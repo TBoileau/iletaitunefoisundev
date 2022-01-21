@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Node\Entity;
 
-use App\Domain\Course\Entity\Course;
 use App\Infrastructure\Repository\NodeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

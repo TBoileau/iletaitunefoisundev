@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Adventure\Entity;
 
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Infrastructure\Repository\LevelRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;

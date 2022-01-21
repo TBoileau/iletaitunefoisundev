@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Node;
 
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Command\RemoveLinkHandler;
 use App\Domain\Node\Gateway\NodeGateway;
 use App\Domain\Node\Message\Link;
