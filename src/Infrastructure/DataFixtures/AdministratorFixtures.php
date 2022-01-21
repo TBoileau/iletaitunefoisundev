@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DataFixtures;
 
-use App\Domain\Security\Entity\User;
+use App\Domain\Security\Entity\Administrator;
 use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class UserFixtures extends Fixture
+final class AdministratorFixtures extends Fixture
 {
     public function __construct(
         private UlidGeneratorInterface $ulidGenerator,
@@ -21,16 +21,16 @@ final class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         for ($i = 1; $i <= 5; ++$i) {
-            $manager->persist($this->createUser($i));
+            $manager->persist($this->createAdministrator($i));
         }
         $manager->flush();
     }
 
-    private function createUser(int $index): User
+    private function createAdministrator(int $index): Administrator
     {
-        $user = new User();
+        $user = new Administrator();
         $user->setId($this->ulidGenerator->generate());
-        $user->setEmail(sprintf('user+%d@email.com', $index));
+        $user->setEmail(sprintf('admin+%d@email.com', $index));
         $user->setPassword($this->userPasswordHasher->hashPassword($user, 'password'));
 
         return $user;

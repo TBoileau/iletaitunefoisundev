@@ -121,6 +121,15 @@
     "doctrine/sql-formatter": {
         "version": "1.1.2"
     },
+    "easycorp/easyadmin-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "b131e6cbfe1b898a508987851963fff485986285"
+        }
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "3.4",
         "recipe": {
@@ -288,6 +297,9 @@
             "public/.htaccess"
         ]
     },
+    "symfony/asset": {
+        "version": "v6.0.1"
+    },
     "symfony/browser-kit": {
         "version": "v6.0.1"
     },
@@ -384,6 +396,9 @@
     },
     "symfony/http-kernel": {
         "version": "v6.0.0"
+    },
+    "symfony/intl": {
+        "version": "v6.0.1"
     },
     "symfony/messenger": {
         "version": "6.0",
