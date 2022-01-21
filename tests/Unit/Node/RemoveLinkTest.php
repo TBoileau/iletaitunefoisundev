@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Node;
 
-use App\Domain\Node\Command\RemoveLinkHandler;
-use App\Domain\Node\Entity\Course;
-use App\Domain\Node\Gateway\NodeGateway;
-use App\Domain\Node\Message\Link;
+use App\Node\Command\RemoveLinkHandler;
+use App\Node\Entity\Course;
+use App\Node\Gateway\NodeGateway;
+use App\Node\Message\Link;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Ulid;
 

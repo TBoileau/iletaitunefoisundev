@@ -1,5 +1,9 @@
-controllers:
-  resource: ../src/UserInterface/Controller/
+security_controllers:
+  resource: ../src/Security/Controller/
+  type: annotation
+
+admin_controllers:
+  resource: ../src/Admin/Controller/
   type: annotation
 
 kernel:

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
-use App\Domain\Security\Entity\User;
-use App\Infrastructure\Repository\UserRepository;
+use App\Security\Entity\User;
+use App\Security\Repository\UserRepository;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;

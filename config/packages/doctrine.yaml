@@ -12,16 +12,16 @@ doctrine:
         mappings:
             Security:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Security/Entity'
-                prefix: 'App\Domain\Security\Entity'
+                dir: '%kernel.project_dir%/src/Security/Entity'
+                prefix: 'App\Security\Entity'
                 alias: Security
             Node:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Node/Entity'
-                prefix: 'App\Domain\Node\Entity'
+                dir: '%kernel.project_dir%/src/Node/Entity'
+                prefix: 'App\Node\Entity'
                 alias: Node
             Adventure:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Adventure/Entity'
-                prefix: 'App\Domain\Adventure\Entity'
+                dir: '%kernel.project_dir%/src/Adventure/Entity'
+                prefix: 'App\Adventure\Entity'
                 alias: Adventure

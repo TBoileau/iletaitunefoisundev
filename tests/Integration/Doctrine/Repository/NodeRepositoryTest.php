@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Node\Entity\Course;
-use App\Domain\Node\Entity\Node;
-use App\Domain\Shared\Uuid\UlidGeneratorInterface;
-use App\Infrastructure\Repository\NodeRepository;
+use App\Core\Uid\UlidGeneratorInterface;
+use App\Node\Entity\Course;
+use App\Node\Entity\Node;
+use App\Node\Repository\NodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 

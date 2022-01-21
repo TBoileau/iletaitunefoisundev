@@ -1,18 +1,18 @@
 security:
     enable_authenticator_manager: true
     password_hashers:
-        App\Domain\Security\Entity\User:
+        App\Security\Entity\User:
             algorithm: auto
-        App\Domain\Security\Entity\Administrator:
+        App\Security\Entity\Administrator:
             algorithm: auto
     providers:
         users_doctrine:
             entity:
-                class: App\Domain\Security\Entity\User
+                class: App\Security\Entity\User
                 property: email
         administrators_doctrine:
             entity:
-                class: App\Domain\Security\Entity\Administrator
+                class: App\Security\Entity\Administrator
                 property: email
     firewalls:
         dev:
@@ -30,7 +30,7 @@ security:
             pattern: ^/
             lazy: true
             provider: users_doctrine
-            custom_authenticator: App\Infrastructure\Security\Guard\WebAuthenticator
+            custom_authenticator: App\Security\Guard\WebAuthenticator
             logout:
                 path: security_logout
     access_control:

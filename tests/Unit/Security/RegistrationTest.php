@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Security;
 
-use App\Domain\Security\Command\RegistrationHandler;
-use App\Domain\Security\Entity\User;
-use App\Domain\Security\Gateway\UserGateway;
-use App\Domain\Security\Message\Registration;
-use App\Domain\Shared\Uuid\UlidGeneratorInterface;
+use App\Core\Uid\UlidGeneratorInterface;
+use App\Security\Command\RegistrationHandler;
+use App\Security\Entity\User;
+use App\Security\Gateway\UserGateway;
+use App\Security\Message\Registration;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Ulid;

@@ -9,7 +9,7 @@ services:
             string $environment: '%kernel.environment%'
 
     _instanceof:
-        App\Domain\Shared\Command\HandlerInterface:
+        App\Core\CQRS\HandlerInterface:
             tags:
                 - messenger.message_handler
 
