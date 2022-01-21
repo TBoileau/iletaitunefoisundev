@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: NodeRepository::class)]
 #[InheritanceType('SINGLE_TABLE')]
@@ -27,8 +27,8 @@ use Symfony\Component\Uid\Uuid;
 abstract class Node
 {
     #[Id]
-    #[Column(type: 'uuid', unique: true)]
-    protected Uuid $id;
+    #[Column(type: 'ulid', unique: true)]
+    protected Ulid $id;
 
     #[Column(type: Types::STRING)]
     protected string $title;
@@ -48,12 +48,12 @@ abstract class Node
         $this->siblings = new ArrayCollection();
     }
 
-    public function getId(): Uuid
+    public function getId(): Ulid
     {
         return $this->id;
     }
 
-    public function setId(Uuid $id): void
+    public function setId(Ulid $id): void
     {
         $this->id = $id;
     }

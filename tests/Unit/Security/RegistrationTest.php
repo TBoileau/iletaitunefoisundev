@@ -8,10 +8,10 @@ use App\Domain\Security\Command\RegistrationHandler;
 use App\Domain\Security\Entity\User;
 use App\Domain\Security\Gateway\UserGateway;
 use App\Domain\Security\Message\Registration;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
+use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 final class RegistrationTest extends TestCase
 {
@@ -24,16 +24,16 @@ final class RegistrationTest extends TestCase
         $registration->setEmail('user+6@email.com');
         $registration->setPlainPassword('Password123!');
 
-        $uuid = Uuid::fromString('a8cf3ac5-4370-4981-bada-b57eec49ebbb');
+        $ulid = Ulid::fromString('01FSY13PXFRJSR7FPBHZ5B2FNT');
 
-        $uuidGenerator = self::createMock(UuidGeneratorInterface::class);
+        $uuidGenerator = self::createMock(UlidGeneratorInterface::class);
         $uuidGenerator
             ->expects(self::once())
             ->method('generate')
-            ->willReturn($uuid);
+            ->willReturn($ulid);
 
         $user = new User();
-        $user->setId($uuid);
+        $user->setId($ulid);
         $user->setEmail('user+6@email.com');
         $user->setPassword('hashed_password');
 

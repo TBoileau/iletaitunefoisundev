@@ -14,15 +14,15 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: LevelRepository::class)]
 #[UniqueConstraint(columns: ['odr', 'map_id'])]
 class Level
 {
     #[Id]
-    #[Column(type: 'uuid', unique: true)]
-    private Uuid $id;
+    #[Column(type: 'ulid', unique: true)]
+    private Ulid $id;
 
     #[Column(name: 'odr', type: Types::INTEGER)]
     private int $order;
@@ -41,12 +41,12 @@ class Level
     #[JoinColumn(nullable: false)]
     private Course $course;
 
-    public function getId(): Uuid
+    public function getId(): Ulid
     {
         return $this->id;
     }
 
-    public function setId(Uuid $id): void
+    public function setId(Ulid $id): void
     {
         $this->id = $id;
     }
