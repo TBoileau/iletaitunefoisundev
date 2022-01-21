@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Node;
 
-use App\Domain\Course\Entity\Course;
 use App\Domain\Node\Command\CreateLinkHandler;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Gateway\NodeGateway;
 use App\Domain\Node\Message\Link;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 final class CreateLinkTest extends TestCase
 {
@@ -19,12 +19,12 @@ final class CreateLinkTest extends TestCase
     public function shouldCreateLinkBetweenTwoNodes(): void
     {
         $from = new Course();
-        $from->setId(Uuid::v4());
+        $from->setId(new Ulid());
         $from->setTitle('Title 51');
         $from->setSlug('title-51');
 
         $to = new Course();
-        $to->setId(Uuid::v4());
+        $to->setId(new Ulid());
         $to->setTitle('Title 52');
         $to->setSlug('title-52');
 

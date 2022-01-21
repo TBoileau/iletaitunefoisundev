@@ -6,15 +6,15 @@ namespace App\Infrastructure\DataFixtures;
 
 use App\Domain\Adventure\Entity\Level;
 use App\Domain\Adventure\Entity\Map;
-use App\Domain\Course\Entity\Course;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
+use App\Domain\Node\Entity\Course;
+use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 final class MapFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private UuidGeneratorInterface $uuidGenerator)
+    public function __construct(private UlidGeneratorInterface $ulidGenerator)
     {
     }
 
@@ -63,7 +63,7 @@ final class MapFixtures extends Fixture implements DependentFixtureInterface
     private function createMap(int $index, ?Map $previous): Map
     {
         $map = new Map();
-        $map->setId($this->uuidGenerator->generate());
+        $map->setId($this->ulidGenerator->generate());
         $map->setPrevious($previous);
         $map->setName(sprintf('Map %d', $index));
 
@@ -73,7 +73,7 @@ final class MapFixtures extends Fixture implements DependentFixtureInterface
     private function createLevel(int $order, Course $course, Map $map, ?Level $previous): Level
     {
         $level = new Level();
-        $level->setId($this->uuidGenerator->generate());
+        $level->setId($this->ulidGenerator->generate());
         $level->setPrevious($previous);
         $level->setMap($map);
         $level->setCourse($course);

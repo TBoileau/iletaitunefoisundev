@@ -20,11 +20,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Node/Entity'
                 prefix: 'App\Domain\Node\Entity'
                 alias: Node
-            Course:
-                is_bundle: false
-                dir: '%kernel.project_dir%/src/Domain/Course/Entity'
-                prefix: 'App\Domain\Course\Entity'
-                alias: Course
             Adventure:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Domain/Adventure/Entity'

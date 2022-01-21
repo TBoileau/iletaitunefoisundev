@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\DataFixtures;
 
-use App\Domain\Course\Entity\Course;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
+use App\Domain\Node\Entity\Course;
+use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 final class CourseFixtures extends Fixture
 {
-    public function __construct(private UuidGeneratorInterface $uuidGenerator)
+    public function __construct(private UlidGeneratorInterface $ulidGenerator)
     {
     }
 
@@ -38,7 +38,7 @@ final class CourseFixtures extends Fixture
     private function createCourse(int $index): Course
     {
         $course = new Course();
-        $course->setId($this->uuidGenerator->generate());
+        $course->setId($this->ulidGenerator->generate());
         $course->setTitle(sprintf('Course %d', $index));
         $course->setSlug(sprintf('course-%d', $index));
         $course->setYoutubeId(sprintf('youtube-%d', $index));

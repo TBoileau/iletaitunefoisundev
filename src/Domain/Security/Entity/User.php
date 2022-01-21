@@ -11,14 +11,14 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[Id]
-    #[Column(type: 'uuid', unique: true)]
-    private Uuid $id;
+    #[Column(type: 'ulid', unique: true)]
+    private Ulid $id;
 
     #[Column(type: Types::STRING, unique: true)]
     private string $email;
@@ -26,12 +26,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: Types::STRING, nullable: true)]
     private ?string $password;
 
-    public function getId(): Uuid
+    public function getId(): Ulid
     {
         return $this->id;
     }
 
-    public function setId(Uuid $id): void
+    public function setId(Ulid $id): void
     {
         $this->id = $id;
     }

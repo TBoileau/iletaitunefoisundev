@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Integration\Doctrine\Repository;
 
 use App\Domain\Security\Entity\User;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
+use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use App\Infrastructure\Repository\UserRepository;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 final class UserRepositoryTest extends KernelTestCase
 {
@@ -39,8 +39,8 @@ final class UserRepositoryTest extends KernelTestCase
         /** @var UserRepository<User> $userRepository */
         $userRepository = self::getContainer()->get(UserRepository::class);
 
-        /** @var UuidGeneratorInterface $uuidGenerator */
-        $uuidGenerator = self::getContainer()->get(UuidGeneratorInterface::class);
+        /** @var UlidGeneratorInterface $uuidGenerator */
+        $uuidGenerator = self::getContainer()->get(UlidGeneratorInterface::class);
 
         $user = new User();
         $user->setId($uuidGenerator->generate());
@@ -53,7 +53,7 @@ final class UserRepositoryTest extends KernelTestCase
 
         self::assertNotNull($user);
         self::assertInstanceOf(User::class, $user);
-        self::assertTrue(Uuid::isValid((string) $user->getId()));
+        self::assertTrue(Ulid::isValid((string) $user->getId()));
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertSame('password', $user->getPassword());
     }

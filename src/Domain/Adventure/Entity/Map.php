@@ -10,14 +10,14 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: MapRepository::class)]
 class Map
 {
     #[Id]
-    #[Column(type: 'uuid', unique: true)]
-    private Uuid $id;
+    #[Column(type: 'ulid', unique: true)]
+    private Ulid $id;
 
     #[OneToOne(targetEntity: Level::class)]
     private ?Level $start = null;
@@ -31,12 +31,12 @@ class Map
     #[Column(type: Types::STRING)]
     private string $name;
 
-    public function getId(): Uuid
+    public function getId(): Ulid
     {
         return $this->id;
     }
 
-    public function setId(Uuid $id): void
+    public function setId(Ulid $id): void
     {
         $this->id = $id;
     }

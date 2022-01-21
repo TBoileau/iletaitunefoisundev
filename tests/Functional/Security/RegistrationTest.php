@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 final class RegistrationTest extends WebTestCase
 {
@@ -44,7 +44,7 @@ final class RegistrationTest extends WebTestCase
         self::assertInstanceOf(User::class, $user);
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
-        self::assertTrue(Uuid::isValid((string) $user->getId()));
+        self::assertTrue(Ulid::isValid((string) $user->getId()));
 
         $client->followRedirect();
 

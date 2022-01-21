@@ -7,8 +7,9 @@ namespace App\Domain\Node\Command;
 use App\Domain\Node\Entity\Node;
 use App\Domain\Node\Gateway\NodeGateway;
 use App\Domain\Node\Message\Link;
+use App\Domain\Shared\Command\HandlerInterface;
 
-final class RemoveLinkHandler implements RemoveLinkHandlerInterface
+final class RemoveLinkHandler implements HandlerInterface
 {
     /**
      * @param NodeGateway<Node> $nodeGateway

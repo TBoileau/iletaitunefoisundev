@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Entity\Node;
-use App\Domain\Shared\Uuid\UuidGeneratorInterface;
+use App\Domain\Shared\Uuid\UlidGeneratorInterface;
 use App\Infrastructure\Repository\NodeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -26,17 +26,17 @@ final class NodeRepositoryTest extends KernelTestCase
         /** @var NodeRepository<Node> $nodeRepository */
         $nodeRepository = self::getContainer()->get(NodeRepository::class);
 
-        /** @var UuidGeneratorInterface $uuidGenerator */
-        $uuidGenerator = self::getContainer()->get(UuidGeneratorInterface::class);
+        /** @var UlidGeneratorInterface $ulidGenerator */
+        $ulidGenerator = self::getContainer()->get(UlidGeneratorInterface::class);
 
         $from = new Course();
-        $from->setId($uuidGenerator->generate());
+        $from->setId($ulidGenerator->generate());
         $from->setTitle('Title 51');
         $from->setSlug('title-51');
         $entityManager->persist($from);
 
         $to = new Course();
-        $to->setId($uuidGenerator->generate());
+        $to->setId($ulidGenerator->generate());
         $to->setTitle('Title 52');
         $to->setSlug('title-52');
         $entityManager->persist($to);

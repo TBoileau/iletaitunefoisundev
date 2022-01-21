@@ -6,7 +6,7 @@ namespace App\Tests\Component;
 
 use App\Domain\Adventure\Entity\Level;
 use App\Domain\Adventure\Entity\Map;
-use App\Domain\Course\Entity\Course;
+use App\Domain\Node\Entity\Course;
 use App\Domain\Node\Entity\Node;
 use App\Domain\Security\Entity\User;
 use App\Infrastructure\Repository\CourseRepository;
