@@ -7,10 +7,11 @@ namespace App\Domain\Security\Command;
 use App\Domain\Security\Entity\User;
 use App\Domain\Security\Gateway\UserGateway;
 use App\Domain\Security\Message\Registration;
+use App\Domain\Shared\Command\HandlerInterface;
 use App\Domain\Shared\Uuid\UuidGeneratorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class RegistrationHandler implements RegistrationHandlerInterface
+final class RegistrationHandler implements HandlerInterface
 {
     /**
      * @param UserGateway<User> $userGateway
