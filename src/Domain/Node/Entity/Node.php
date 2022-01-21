@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: NodeRepository::class)]
@@ -24,7 +25,7 @@ use Symfony\Component\Uid\Ulid;
 #[DiscriminatorMap([
     'course' => Course::class,
 ])]
-abstract class Node
+abstract class Node implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -100,5 +101,10 @@ abstract class Node
             $this->siblings->removeElement($sibling);
             $sibling->removeSibling($this);
         }
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
     }
 }

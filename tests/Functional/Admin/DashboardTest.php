@@ -38,6 +38,7 @@ final class DashboardTest extends WebTestCase
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $client->getContainer()->get(EntityManagerInterface::class);
 
+        /** @var Administrator $admin */
         $admin = $entityManager->getRepository(Administrator::class)->findOneBy(['email' => 'admin+1@email.com']);
 
         $client->loginUser($admin, 'admin');

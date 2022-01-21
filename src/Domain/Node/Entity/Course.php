@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\Entity;
 #[Entity(repositoryClass: CourseRepository::class)]
 class Course extends Node
 {
-    #[Column(type: Types::STRING, unique: true)]
+    #[Column(type: Types::STRING)]
     private string $youtubeId;
 
     #[Column(type: Types::TEXT)]

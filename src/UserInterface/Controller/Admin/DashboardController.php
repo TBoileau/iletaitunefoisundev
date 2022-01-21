@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\UserInterface\Controller\Admin;
 
+use App\Domain\Node\Entity\Course;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Menu\MenuItemInterface;
@@ -16,7 +17,7 @@ final class DashboardController extends AbstractDashboardController
     #[Route(path: '/admin', name: 'admin_dashboard')]
     public function index(): Response
     {
-        return parent::index();
+        return $this->render('admin/dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -29,7 +30,8 @@ final class DashboardController extends AbstractDashboardController
      */
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToRoute('Retour sur le site', 'fa fa-sitemap', 'security_login');
+        yield MenuItem::linkToRoute('Retour sur le site', 'fa fa-arrow-left', 'security_login');
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Course::class);
     }
 }
