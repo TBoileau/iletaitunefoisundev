@@ -21,7 +21,10 @@ final class YoutubeType extends TextType implements DataTransformerInterface
         $builder->addModelTransformer($this);
     }
 
-    public function transform(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function transform(mixed $value): string /* @phpstan-ignore-line */
     {
         if (!is_string($value)) {
             return '';
@@ -30,7 +33,10 @@ final class YoutubeType extends TextType implements DataTransformerInterface
         return sprintf('https://www.youtube.com/watch?v=%s', $value);
     }
 
-    public function reverseTransform(mixed $value): string
+    /**
+     * {@inheritdoc}
+     */
+    public function reverseTransform(mixed $value): string /* @phpstan-ignore-line */
     {
         if (!is_string($value)) {
             throw new RuntimeException('The value is not a string.');
