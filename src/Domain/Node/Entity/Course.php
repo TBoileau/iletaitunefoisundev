@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Node\Entity;
 
-use App\Domain\Node\Entity\Node;
 use App\Infrastructure\Repository\CourseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
