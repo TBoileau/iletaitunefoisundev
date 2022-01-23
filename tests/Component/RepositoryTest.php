@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Domain\Adventure\Entity\Level;
-use App\Domain\Adventure\Entity\Map;
-use App\Domain\Node\Entity\Course;
-use App\Domain\Node\Entity\Node;
-use App\Domain\Security\Entity\User;
-use App\Infrastructure\Repository\CourseRepository;
-use App\Infrastructure\Repository\LevelRepository;
-use App\Infrastructure\Repository\MapRepository;
-use App\Infrastructure\Repository\NodeRepository;
-use App\Infrastructure\Repository\UserRepository;
+use App\Adventure\Entity\Level;
+use App\Adventure\Entity\Map;
+use App\Adventure\Repository\LevelRepository;
+use App\Adventure\Repository\MapRepository;
+use App\Node\Entity\Course;
+use App\Node\Entity\Node;
+use App\Node\Repository\CourseRepository;
+use App\Node\Repository\NodeRepository;
+use App\Security\Entity\User;
+use App\Security\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

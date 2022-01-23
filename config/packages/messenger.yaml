@@ -10,4 +10,4 @@ framework:
             sync: 'sync://'
 
         routing:
-            App\Domain\Security\Message\Registration: sync
+            App\Security\Message\Registration: sync

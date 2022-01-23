@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Form;
 
-use App\Domain\Security\Message\Registration;
-use App\UserInterface\Form\RegistrationType;
+use App\Security\Form\RegistrationType;
+use App\Security\Message\Registration;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;

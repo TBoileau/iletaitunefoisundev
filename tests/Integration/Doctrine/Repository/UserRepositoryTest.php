@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Domain\Security\Entity\User;
-use App\Domain\Shared\Uuid\UlidGeneratorInterface;
-use App\Infrastructure\Repository\UserRepository;
+use App\Core\Uid\UlidGeneratorInterface;
+use App\Security\Entity\User;
+use App\Security\Repository\UserRepository;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Ulid;
