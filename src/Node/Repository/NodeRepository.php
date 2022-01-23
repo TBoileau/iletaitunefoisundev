@@ -21,9 +21,4 @@ final class NodeRepository extends ServiceEntityRepository implements NodeGatewa
     {
         parent::__construct($registry, Node::class);
     }
-
-    public function update(): void
-    {
-        $this->_em->flush();
-    }
 }

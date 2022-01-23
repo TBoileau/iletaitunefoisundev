@@ -6,6 +6,7 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\CourseCrudController;
 use App\Node\Entity\Course;
+use App\Node\Entity\Node;
 use App\Node\Repository\CourseRepository;
 use App\Security\Entity\Administrator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -99,6 +100,13 @@ final class CourseTest extends WebTestCase
         self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
         self::assertCount(1, $course->getSiblings());
+
+        /** @var Node $sibling */
+        $sibling = $course->getSiblings()->first();
+
+        self::assertCount(1, $sibling->getRelatives());
+
+        self::assertTrue($sibling->getRelatives()->contains($course));
     }
 
     /**
@@ -118,7 +126,7 @@ final class CourseTest extends WebTestCase
         $course = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-1']);
 
         /** @var Course $sibling */
-        $sibling = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-3']);
+        $sibling = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-4']);
 
         $client->loginUser($admin, 'admin');
 
@@ -158,5 +166,12 @@ final class CourseTest extends WebTestCase
         self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
         self::assertCount(1, $course->getSiblings());
+
+        /** @var Node $sibling */
+        $sibling = $course->getSiblings()->first();
+
+        self::assertCount(2, $sibling->getRelatives());
+
+        self::assertTrue($sibling->getRelatives()->contains($course));
     }
 }

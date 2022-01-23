@@ -9,5 +9,4 @@ namespace App\Node\Gateway;
  */
 interface NodeGateway
 {
-    public function update(): void;
 }

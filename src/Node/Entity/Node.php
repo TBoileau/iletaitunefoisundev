@@ -40,13 +40,20 @@ abstract class Node implements Stringable
     /**
      * @var Collection<int, Node>
      */
-    #[ManyToMany(targetEntity: Node::class)]
+    #[ManyToMany(targetEntity: Node::class, inversedBy: 'relatives')]
     #[JoinTable(name: 'node_siblings')]
     private Collection $siblings;
+
+    /**
+     * @var Collection<int, Node>
+     */
+    #[ManyToMany(targetEntity: Node::class, mappedBy: 'siblings')]
+    private Collection $relatives;
 
     public function __construct()
     {
         $this->siblings = new ArrayCollection();
+        $this->relatives = new ArrayCollection();
     }
 
     public function getId(): Ulid
@@ -87,20 +94,12 @@ abstract class Node implements Stringable
         return $this->siblings;
     }
 
-    public function addSibling(Node $sibling): void
+    /**
+     * @return Collection<int, Node>
+     */
+    public function getRelatives(): Collection
     {
-        if (!$this->siblings->contains($sibling)) {
-            $this->siblings->add($sibling);
-            $sibling->addSibling($this);
-        }
-    }
-
-    public function removeSibling(Node $sibling): void
-    {
-        if ($this->siblings->contains($sibling)) {
-            $this->siblings->removeElement($sibling);
-            $sibling->removeSibling($this);
-        }
+        return $this->relatives;
     }
 
     public function __toString(): string

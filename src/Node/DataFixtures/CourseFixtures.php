@@ -28,7 +28,7 @@ final class CourseFixtures extends Fixture
 
         foreach ($courses as $i => $course) {
             if ($i < count($courses) - 1) {
-                $course->addSibling($courses[$i + 1]);
+                $course->getSiblings()->add($courses[$i + 1]);
             }
         }
 

@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 #[Entity]
-class Step
+class History
 {
     #[Id]
     #[GeneratedValue]

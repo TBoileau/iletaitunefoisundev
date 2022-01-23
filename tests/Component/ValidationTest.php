@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Node\Message\Link;
 use App\Security\Message\Registration;
 use App\Security\Validator\UniqueEmail;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotIdenticalTo;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -68,19 +65,6 @@ final class ValidationTest extends KernelTestCase
                 'plainPassword' => [
                     NotBlank::class,
                     Regex::class,
-                ],
-            ],
-        ];
-
-        yield 'link' => [
-            'class' => Link::class,
-            'constraints' => [
-                'from' => [
-                    NotIdenticalTo::class,
-                    NotNull::class,
-                ],
-                'to' => [
-                    NotNull::class,
                 ],
             ],
         ];
