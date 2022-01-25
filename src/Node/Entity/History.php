@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Stringable;
 
 #[Entity]
-class History
+class History implements Stringable
 {
     #[Id]
     #[GeneratedValue]
@@ -110,5 +111,10 @@ class History
     public function isFinished(): bool
     {
         return null !== $this->finishedAt;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s - %s', $this->node, $this->user);
     }
 }
