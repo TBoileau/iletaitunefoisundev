@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use App\Adventure\Entity\Journey;
+use App\Adventure\Entity\Checkpoint;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -15,11 +15,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
-final class JourneyCrudController extends AbstractCrudController
+final class CheckpointCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Journey::class;
+        return Checkpoint::class;
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -30,9 +30,9 @@ final class JourneyCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Journal de bord')
-            ->setEntityLabelInPlural('Journaux de bord')
-            ->setDefaultSort(['updatedAt' => 'DESC']);
+            ->setEntityLabelInSingular('Checkpoint')
+            ->setEntityLabelInPlural('Checkpoints')
+            ->setDefaultSort(['passedAt' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions
@@ -51,13 +51,10 @@ final class JourneyCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield AssociationField::new('user', 'Utilisateur')
-            ->setCrudController(UserCrudController::class);
-        yield AssociationField::new('currentLevel', 'Niveau actuel')
+        yield AssociationField::new('journey', 'Journal de bord')
+            ->setCrudController(JourneyCrudController::class);
+        yield AssociationField::new('level', 'Niveau')
             ->setCrudController(LevelCrudController::class);
-        yield AssociationField::new('checkpoints', 'Checkpoints')
-            ->setCrudController(CheckpointCrudController::class)
-            ->setTemplatePath('admin/field/checkpoints.html.twig');
-        yield DateTimeField::new('updatedAt', 'Dernière mise à jour');
+        yield DateTimeField::new('passedAt', 'Date de passage');
     }
 }

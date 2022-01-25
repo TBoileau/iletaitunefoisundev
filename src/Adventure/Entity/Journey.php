@@ -18,10 +18,11 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: JourneyRepository::class)]
-class Journey
+class Journey implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -95,5 +96,10 @@ class Journey
     public function setUpdatedAt(DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function __toString(): string
+    {
+        return $this->user->__toString();
     }
 }
