@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Level;
 use App\Adventure\Entity\Map;
+use App\Adventure\Repository\CheckpointRepository;
 use App\Adventure\Repository\JourneyRepository;
 use App\Adventure\Repository\LevelRepository;
 use App\Adventure\Repository\MapRepository;
@@ -53,5 +55,6 @@ final class RepositoryTest extends KernelTestCase
         yield 'map entity' => [Map::class, MapRepository::class]; /* @phpstan-ignore-line */
         yield 'level entity' => [Level::class, LevelRepository::class]; /* @phpstan-ignore-line */
         yield 'journey entity' => [Journey::class, JourneyRepository::class]; /* @phpstan-ignore-line */
+        yield 'checkpoint entity' => [Checkpoint::class, CheckpointRepository::class]; /* @phpstan-ignore-line */
     }
 }
