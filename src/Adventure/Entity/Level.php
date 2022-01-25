@@ -84,7 +84,15 @@ class Level implements Stringable
 
     public function getNext(): ?Level
     {
-        return $this->next;
+        if (null !== $this->next) {
+            return $this->next;
+        }
+
+        if (null === $this->map->getNext()) {
+            return null;
+        }
+
+        return $this->map->getNext()->getStart();
     }
 
     public function getCourse(): Course

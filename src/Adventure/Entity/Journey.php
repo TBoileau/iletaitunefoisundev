@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: JourneyRepository::class)]
@@ -29,13 +30,13 @@ class Journey
     private User $user;
 
     #[ManyToOne(targetEntity: Level::class)]
-    #[JoinColumn(nullable: false)]
-    private Level $currentLevel;
+    private ?Level $currentLevel;
 
     /**
      * @var Collection<int, Checkpoint>
      */
     #[OneToMany(mappedBy: 'journey', targetEntity: Checkpoint::class)]
+    #[OrderBy(['passedAt' => 'DESC'])]
     private Collection $checkpoints;
 
     public function __construct()
@@ -63,12 +64,12 @@ class Journey
         $this->user = $user;
     }
 
-    public function getCurrentLevel(): Level
+    public function getCurrentLevel(): ?Level
     {
         return $this->currentLevel;
     }
 
-    public function setCurrentLevel(Level $currentLevel): void
+    public function setCurrentLevel(?Level $currentLevel): void
     {
         $this->currentLevel = $currentLevel;
     }
