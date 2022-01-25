@@ -5,25 +5,25 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Security\Entity\AbstractUser;
-use App\Security\Entity\User;
+use App\Security\Entity\Administrator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
-final class UserCrudController extends AbstractUserCrudController
+final class AdministratorCrudController extends AbstractUserCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return User::class;
+        return Administrator::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-            ->setEntityLabelInSingular('Utilisateur')
-            ->setEntityLabelInPlural('Utilisateurs');
+            ->setEntityLabelInSingular('Administrateur')
+            ->setEntityLabelInPlural('Administrateurs');
     }
 
     public function createUser(): AbstractUser
     {
-        return new User();
+        return new Administrator();
     }
 }
