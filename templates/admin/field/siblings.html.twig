@@ -4,7 +4,7 @@
 {% if ea.crud.currentAction == 'detail' %}
     <ul class="list-group">
         {% for sibling in field.value %}
-            {% set url = ea_url().setDashboard('App\\UserInterface\\Controller\\Admin\\DashboardController').setController('App\\UserInterface\\Controller\\Admin\\CourseCrudController').setAction('detail').setEntityId(sibling.id) %}
+            {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\CourseCrudController').setAction('detail').setEntityId(sibling.id) %}
             <li class="list-group-item">
                 <a href="{{ url }}">{{ sibling.title }}</a>
             </li>

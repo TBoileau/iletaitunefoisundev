@@ -108,6 +108,39 @@ final class CourseTest extends WebTestCase
 
         self::assertTrue($sibling->getRelatives()->contains($course));
     }
+    
+    /**
+     * @test
+     */
+    public function shouldShowDetailOfCourse(): void
+    {
+        $client = self::createClient();
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get(EntityManagerInterface::class);
+
+        /** @var Administrator $admin */
+        $admin = $entityManager->getRepository(Administrator::class)->findOneBy(['email' => 'admin+1@email.com']);
+
+        $client->loginUser($admin, 'admin');
+
+        /** @var AdminUrlGenerator $adminUrlGenerator */
+        $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
+
+        /** @var Course $course */
+        $course = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-1']);
+
+        $client->request(
+            'GET',
+            $adminUrlGenerator
+                ->setController(CourseCrudController::class)
+                ->setAction(Action::DETAIL)
+                ->setEntityId($course->getId())
+                ->generateUrl()
+        );
+
+        self::assertResponseIsSuccessful();
+    }
 
     /**
      * @test

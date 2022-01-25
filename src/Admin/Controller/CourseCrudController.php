@@ -57,9 +57,9 @@ final class CourseCrudController extends AbstractCrudController
         yield SlugField::new('slug', 'Slug')->setTargetFieldName('title');
         yield TextEditorField::new('description', 'Description');
         yield YoutubeField::new('youtubeId', 'Vidéo Youtube');
-        yield AssociationField::new('siblings', 'Relations')
+        yield AssociationField::new('siblings', 'Relations directes')
             ->setTemplatePath('admin/field/siblings.html.twig');
-        yield AssociationField::new('relatives', 'Relations')
+        yield AssociationField::new('relatives', 'Relations indirectes')
             ->setTemplatePath('admin/field/siblings.html.twig');
     }
 
