@@ -7,11 +7,12 @@ namespace App\Security\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Id;
+use Stringable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Ulid;
 
-abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserInterface
+abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -58,6 +59,11 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
     }
 
     public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function __toString(): string
     {
         return $this->email;
     }

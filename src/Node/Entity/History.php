@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Stringable;
 
 #[Entity]
-class History
+class History implements Stringable
 {
     #[Id]
     #[GeneratedValue]
@@ -26,7 +27,7 @@ class History
     #[JoinColumn(nullable: false)]
     private Node $node;
 
-    #[ManyToOne(targetEntity: User::class)]
+    #[ManyToOne(targetEntity: User::class, inversedBy: 'history')]
     #[JoinColumn(nullable: false)]
     private User $user;
 
@@ -105,5 +106,15 @@ class History
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    public function isFinished(): bool
+    {
+        return null !== $this->finishedAt;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s - %s', $this->node, $this->user);
     }
 }

@@ -50,6 +50,8 @@ abstract class Node implements Stringable
     #[ManyToMany(targetEntity: Node::class, mappedBy: 'siblings')]
     private Collection $relatives;
 
+    abstract public function getType(): string;
+
     public function __construct()
     {
         $this->siblings = new ArrayCollection();
