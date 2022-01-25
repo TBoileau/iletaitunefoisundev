@@ -58,6 +58,9 @@ final class MapCrudController extends AbstractCrudController
         yield AssociationField::new('start', 'Premier niveau')
             ->setCrudController(LevelCrudController::class)
             ->hideWhenCreating();
+        yield AssociationField::new('levels', 'Niveaux')
+            ->setCrudController(LevelCrudController::class)
+            ->setTemplatePath('admin/field/levels.html.twig');
         yield AssociationField::new('previous', 'Carte précédente')
             ->setCrudController(MapCrudController::class);
         yield AssociationField::new('next', 'Carte suivante')

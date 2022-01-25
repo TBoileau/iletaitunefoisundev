@@ -112,7 +112,7 @@ final class LevelTest extends WebTestCase
 
         self::assertNotNull($level);
         self::assertTrue(Ulid::isValid((string) $level->getId()));
-        self::assertNull($level->getNext());
+        self::assertNotNull($level->getNext());
         self::assertNotNull($level->getPrevious());
         self::assertEquals($previous->getId(), $level->getPrevious()->getId());
     }
@@ -210,7 +210,7 @@ final class LevelTest extends WebTestCase
 
         self::assertNotNull($level);
         self::assertTrue(Ulid::isValid((string) $level->getId()));
-        self::assertNull($level->getNext());
+        self::assertNotNull($level->getNext());
         self::assertNotNull($level->getPrevious());
     }
 }

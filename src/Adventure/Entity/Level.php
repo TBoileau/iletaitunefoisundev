@@ -28,7 +28,7 @@ class Level implements Stringable
     #[Column(name: 'odr', type: Types::INTEGER)]
     private int $order;
 
-    #[ManyToOne(targetEntity: Map::class)]
+    #[ManyToOne(targetEntity: Map::class, inversedBy: 'levels')]
     #[JoinColumn(nullable: false)]
     private Map $map;
 
@@ -84,7 +84,15 @@ class Level implements Stringable
 
     public function getNext(): ?Level
     {
-        return $this->next;
+        if (null !== $this->next) {
+            return $this->next;
+        }
+
+        if (null === $this->map->getNext()) {
+            return null;
+        }
+
+        return $this->map->getNext()->getStart();
     }
 
     public function getCourse(): Course
@@ -99,6 +107,6 @@ class Level implements Stringable
 
     public function __toString(): string
     {
-        return sprintf('%s - Niveau %d', $this->map, $this->order);
+        return sprintf('Niveau %d', $this->order);
     }
 }

@@ -1,0 +1,35 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% if ea.crud.currentAction == 'detail' %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Niveau</th>
+                <th>Carte</th>
+                <th>Date de passage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for checkpoint in field.value %}
+                <tr>
+                    <td>
+                        {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\LevelCrudController').setAction('detail').setEntityId(checkpoint.level.id) %}
+                        <a href="{{ url }}">{{ checkpoint.level }}</a>
+                    </td>
+                    <td>
+                        {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\MapCrudController').setAction('detail').setEntityId(checkpoint.level.map.id) %}
+                        <a href="{{ url }}">{{ checkpoint.level.map }}</a>
+                    </td>
+                    <td>{{ checkpoint.passedAt|date('d/m/Y H:i') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="text-center" colspan="3">Aucun résultat</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <span class="badge badge-secondary">{{ field.formattedValue }}</span>
+{% endif %}
