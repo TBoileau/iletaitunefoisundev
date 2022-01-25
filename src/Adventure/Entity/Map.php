@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Adventure\Entity;
 
 use App\Adventure\Repository\MapRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\OrderBy;
 use Stringable;
 use Symfony\Component\Uid\Ulid;
 
@@ -31,6 +35,18 @@ class Map implements Stringable
 
     #[Column(type: Types::STRING)]
     private string $name;
+
+    /**
+     * @var Collection<int, Level>
+     */
+    #[OneToMany(mappedBy: 'map', targetEntity: Level::class)]
+    #[OrderBy(['order' => 'ASC'])]
+    private Collection $levels;
+
+    public function __construct()
+    {
+        $this->levels = new ArrayCollection();
+    }
 
     public function getId(): Ulid
     {
@@ -80,5 +96,13 @@ class Map implements Stringable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection<int, Level>
+     */
+    public function getLevels(): Collection
+    {
+        return $this->levels;
     }
 }

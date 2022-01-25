@@ -28,7 +28,7 @@ class Level implements Stringable
     #[Column(name: 'odr', type: Types::INTEGER)]
     private int $order;
 
-    #[ManyToOne(targetEntity: Map::class)]
+    #[ManyToOne(targetEntity: Map::class, inversedBy: 'levels')]
     #[JoinColumn(nullable: false)]
     private Map $map;
 
