@@ -82,6 +82,7 @@ final class JourneyFixtures extends Fixture implements DependentFixtureInterface
         /** @var Level $nextLevel */
         $nextLevel = $level->getNext();
         $journey->setCurrentLevel($nextLevel);
+        $journey->setUpdatedAt($passedAt);
 
         return $checkpoint;
     }

@@ -107,6 +107,6 @@ class Level implements Stringable
 
     public function __toString(): string
     {
-        return sprintf('%s - Niveau %d', $this->map, $this->order);
+        return sprintf('Niveau %d', $this->order);
     }
 }

@@ -6,8 +6,10 @@ namespace App\Adventure\Entity;
 
 use App\Adventure\Repository\JourneyRepository;
 use App\Security\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
@@ -38,6 +40,9 @@ class Journey
     #[OneToMany(mappedBy: 'journey', targetEntity: Checkpoint::class)]
     #[OrderBy(['passedAt' => 'DESC'])]
     private Collection $checkpoints;
+
+    #[Column(type: Types::DATETIME_IMMUTABLE)]
+    private DateTimeImmutable $updatedAt;
 
     public function __construct()
     {
@@ -80,5 +85,15 @@ class Journey
     public function getCheckpoints(): Collection
     {
         return $this->checkpoints;
+    }
+
+    public function getUpdatedAt(): DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
