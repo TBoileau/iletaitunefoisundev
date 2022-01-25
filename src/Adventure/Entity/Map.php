@@ -10,10 +10,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToOne;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: MapRepository::class)]
-class Map
+class Map implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -66,11 +67,6 @@ class Map
         return $this->next;
     }
 
-    public function setNext(?Map $next): void
-    {
-        $this->next = $next;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -79,5 +75,10 @@ class Map
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
