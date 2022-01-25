@@ -14,11 +14,12 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: LevelRepository::class)]
 #[UniqueConstraint(columns: ['odr', 'map_id'])]
-class Level
+class Level implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -37,8 +38,8 @@ class Level
     #[OneToOne(mappedBy: 'previous', targetEntity: Level::class)]
     private ?Level $next = null;
 
-    #[OneToOne(targetEntity: Course::class)]
-    #[JoinColumn(nullable: false)]
+    #[ManyToOne(targetEntity: Course::class)]
+    #[JoinColumn(unique: false, nullable: false)]
     private Course $course;
 
     public function getId(): Ulid
@@ -86,11 +87,6 @@ class Level
         return $this->next;
     }
 
-    public function setNext(?Level $next): void
-    {
-        $this->next = $next;
-    }
-
     public function getCourse(): Course
     {
         return $this->course;
@@ -99,5 +95,10 @@ class Level
     public function setCourse(Course $course): void
     {
         $this->course = $course;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s - Niveau %d', $this->map, $this->order);
     }
 }
