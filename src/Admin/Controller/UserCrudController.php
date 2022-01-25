@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use App\Admin\EasyAdmin\Field\YoutubeField;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Node\Entity\Course;
 use App\Security\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -15,13 +13,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Ulid;
 
 final class UserCrudController extends AbstractCrudController
 {
@@ -67,6 +61,7 @@ final class UserCrudController extends AbstractCrudController
     {
         $user = new User();
         $user->setId($this->ulidGenerator->generate());
+
         return $user;
     }
 

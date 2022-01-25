@@ -108,7 +108,7 @@ final class CourseTest extends WebTestCase
 
         self::assertTrue($sibling->getRelatives()->contains($course));
     }
-    
+
     /**
      * @test
      */
