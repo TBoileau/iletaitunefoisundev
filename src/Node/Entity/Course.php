@@ -18,6 +18,11 @@ class Course extends Node
     #[Column(type: Types::TEXT)]
     private string $description;
 
+    public function getType(): string
+    {
+        return 'Cours';
+    }
+
     public function getYoutubeId(): string
     {
         return $this->youtubeId;

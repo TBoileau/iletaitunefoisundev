@@ -26,7 +26,7 @@ class History
     #[JoinColumn(nullable: false)]
     private Node $node;
 
-    #[ManyToOne(targetEntity: User::class)]
+    #[ManyToOne(targetEntity: User::class, inversedBy: 'history')]
     #[JoinColumn(nullable: false)]
     private User $user;
 
@@ -105,5 +105,10 @@ class History
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
+    }
+
+    public function isFinished(): bool
+    {
+        return null !== $this->finishedAt;
     }
 }
