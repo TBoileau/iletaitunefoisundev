@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\DataFixtures;
 
+use App\Adventure\Entity\Difficulty;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
 use App\Core\Uid\UlidGeneratorInterface;
@@ -28,6 +29,11 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 $quest->setId($this->ulidGenerator->generate());
                 $quest->setName(sprintf('Quest %d', $i));
                 $quest->setRegion($region);
+                $quest->setDifficulty(match ($i) {
+                    1, 2 => Difficulty::Easy,
+                    3, 4 => Difficulty::Normal,
+                    default => Difficulty::Hard,
+                });
                 $manager->persist($quest);
             }
         }
