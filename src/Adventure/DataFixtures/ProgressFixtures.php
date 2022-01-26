@@ -38,9 +38,9 @@ final class ProgressFixtures extends Fixture implements DependentFixtureInterfac
             $passedAt = new DateTimeImmutable('2022-01-01 00:00:00');
 
             /** @var Region $region */
-            foreach ($continent->getRegions()->slice(0, $index) as $region) {
+            foreach ($continent->getRegions()->slice(0, $index + 1) as $region) {
                 /** @var Quest $quest */
-                foreach ($region->getQuests()->slice(0, $index) as $quest) {
+                foreach ($region->getQuests()->slice(0, $index + 1) as $quest) {
                     $checkpoint = new Checkpoint();
                     $checkpoint->setId($this->ulidGenerator->generate());
                     $checkpoint->setJourney($player->getJourney());

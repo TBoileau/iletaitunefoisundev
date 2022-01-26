@@ -32,6 +32,9 @@ class Journey
     #[OrderBy(['passedAt' => 'DESC'])]
     private Collection $checkpoints;
 
+    #[OneToOne(targetEntity: Save::class, cascade: ['persist'])]
+    private ?Save $save = null;
+
     public function __construct()
     {
         $this->checkpoints = new ArrayCollection();
@@ -58,5 +61,15 @@ class Journey
     public function getCheckpoints(): Collection
     {
         return $this->checkpoints;
+    }
+
+    public function getSave(): ?Save
+    {
+        return $this->save;
+    }
+
+    public function setSave(?Save $save): void
+    {
+        $this->save = $save;
     }
 }
