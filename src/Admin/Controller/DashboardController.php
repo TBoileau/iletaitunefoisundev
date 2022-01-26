@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use App\Adventure\Entity\Checkpoint;
-use App\Adventure\Entity\Journey;
-use App\Adventure\Entity\Level;
-use App\Adventure\Entity\Map;
 use App\Node\Entity\Course;
 use App\Node\Entity\History;
 use App\Security\Entity\Administrator;
@@ -43,9 +39,5 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('Administrateurs', 'fa fa-user-shield', Administrator::class);
         yield MenuItem::linkToCrud('Historique', 'fa fa-history', History::class);
-        yield MenuItem::linkToCrud('Cartes', 'fa fa-map-marked-alt', Map::class);
-        yield MenuItem::linkToCrud('Niveaux', 'fa fa-map-pin', Level::class);
-        yield MenuItem::linkToCrud('Journaux de bord', 'fa fa-book-open', Journey::class);
-        yield MenuItem::linkToCrud('Checkpoints', 'fa fa-flag-checkered', Checkpoint::class);
     }
 }

@@ -7,6 +7,6 @@ namespace App\Adventure\Gateway;
 /**
  * @template T
  */
-interface LevelGateway
+interface WorldGateway
 {
 }
