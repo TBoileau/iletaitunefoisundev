@@ -90,3 +90,5 @@ fixtures:
 	$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
 
 fix: php-cs-fixer
+
+prepare: database fixtures
