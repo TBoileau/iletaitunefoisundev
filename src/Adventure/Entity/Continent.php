@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\Repository\WorldRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Adventure\Repository\ContinentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Uid\Ulid;
 
-#[Entity(repositoryClass: WorldRepository::class)]
-class World
+#[Entity(repositoryClass: ContinentRepository::class)]
+class Continent
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -24,16 +23,9 @@ class World
     #[Column(type: Types::STRING)]
     private string $name;
 
-    /**
-     * @var Collection<int, Continent>
-     */
-    #[OneToMany(mappedBy: 'world', targetEntity: Continent::class)]
-    private Collection $continents;
-
-    public function __construct()
-    {
-        $this->continents = new ArrayCollection();
-    }
+    #[ManyToOne(targetEntity: World::class, inversedBy: 'continents')]
+    #[JoinColumn(nullable: false)]
+    private World $world;
 
     public function getId(): Ulid
     {
@@ -55,11 +47,13 @@ class World
         $this->name = $name;
     }
 
-    /**
-     * @return Collection<int, Continent>
-     */
-    public function getContinents(): Collection
+    public function getWorld(): World
     {
-        return $this->continents;
+        return $this->world;
+    }
+
+    public function setWorld(World $world): void
+    {
+        $this->world = $world;
     }
 }

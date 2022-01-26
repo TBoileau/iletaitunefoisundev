@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\World;
+use App\Adventure\Repository\ContinentRepository;
 use App\Adventure\Repository\WorldRepository;
 use App\Node\Entity\Course;
 use App\Node\Entity\Node;
@@ -47,5 +49,6 @@ final class RepositoryTest extends KernelTestCase
         yield 'node entity' => [Node::class, NodeRepository::class]; /* @phpstan-ignore-line */
         yield 'course entity' => [Course::class, CourseRepository::class]; /* @phpstan-ignore-line */
         yield 'world entity' => [World::class, WorldRepository::class]; /* @phpstan-ignore-line */
+        yield 'continent entity' => [Continent::class, ContinentRepository::class]; /* @phpstan-ignore-line */
     }
 }
