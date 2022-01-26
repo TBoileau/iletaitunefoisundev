@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use App\Adventure\Doctrine\Type\DifficultyType;
 use App\Adventure\Repository\QuestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Uid\Ulid;
 
@@ -26,6 +31,21 @@ class Quest
     #[ManyToOne(targetEntity: Region::class, inversedBy: 'quests')]
     #[JoinColumn(nullable: false)]
     private Region $region;
+
+    #[Column(type: DifficultyType::NAME, length: 1)]
+    private Difficulty $difficulty;
+
+    /**
+     * @var Collection<int, Quest>
+     */
+    #[ManyToMany(targetEntity: Quest::class)]
+    #[JoinTable(name: 'quest_relatives')]
+    private Collection $relatives;
+
+    public function __construct()
+    {
+        $this->relatives = new ArrayCollection();
+    }
 
     public function getId(): Ulid
     {
@@ -55,5 +75,23 @@ class Quest
     public function setRegion(Region $region): void
     {
         $this->region = $region;
+    }
+
+    public function getDifficulty(): Difficulty
+    {
+        return $this->difficulty;
+    }
+
+    public function setDifficulty(Difficulty $difficulty): void
+    {
+        $this->difficulty = $difficulty;
+    }
+
+    /**
+     * @return Collection<int, Quest>
+     */
+    public function getRelatives(): Collection
+    {
+        return $this->relatives;
     }
 }
