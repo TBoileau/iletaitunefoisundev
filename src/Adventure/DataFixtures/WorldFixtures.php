@@ -6,7 +6,6 @@ namespace App\Adventure\DataFixtures;
 
 use App\Adventure\Entity\World;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Node\Entity\Course;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
