@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Adventure\DataFixtures;
 
-use App\Adventure\Entity\Region;
 use App\Adventure\Entity\Continent;
+use App\Adventure\Entity\Region;
 use App\Core\Uid\UlidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

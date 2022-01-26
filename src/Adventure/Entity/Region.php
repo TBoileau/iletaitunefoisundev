@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Adventure\Entity;
 
 use App\Adventure\Repository\RegionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: RegionRepository::class)]
@@ -26,6 +29,17 @@ class Region
     #[ManyToOne(targetEntity: Continent::class, inversedBy: 'regions')]
     #[JoinColumn(nullable: false)]
     private Continent $continent;
+
+    /**
+     * @var Collection<int, Quest>
+     */
+    #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
+    private Collection $quests;
+
+    public function __construct()
+    {
+        $this->quests = new ArrayCollection();
+    }
 
     public function getId(): Ulid
     {
@@ -55,5 +69,13 @@ class Region
     public function setContinent(Continent $continent): void
     {
         $this->continent = $continent;
+    }
+
+    /**
+     * @return Collection<int, Quest>
+     */
+    public function getQuests(): Collection
+    {
+        return $this->quests;
     }
 }
