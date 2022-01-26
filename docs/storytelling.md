@@ -21,9 +21,12 @@
   * Serialisation
   * ...
 * J'entre dans une région
-* Je passe le premier niveau
-* On me propose de poursuivre plusieurs chemins
-  * Pour aller dans une autre région connexe
-  * Pour aller vers un autre niveau de la région
+* J'ai le choix entre 
+  * Aller à la première quête qui m'est proposé
+  * Choisir la quête que l'on souhaite en ouvrant la carte
+* Pour valider la quête, je peux soit répondre à un quiz et/ou faire un ou plusieurs exercice
+* On me propose de poursuivre mon aventure
+  * En se rendant vers une quête en lien avec celle que l'on vient de valider
+  * D'ouvrir la carte pour choisir une quête
 * Je vais dans le donjon pour valider une région
 * Je change de région ou de continent
