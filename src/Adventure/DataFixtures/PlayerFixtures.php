@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\DataFixtures;
 
+use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Player;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\DataFixtures\UserFixtures;
@@ -28,6 +29,11 @@ final class PlayerFixtures extends Fixture implements DependentFixtureInterface
             $player->setId($this->ulidGenerator->generate());
             $player->setName(sprintf('Player %d', $i + 1));
             $player->setUser($user);
+
+            $journey = new Journey();
+            $journey->setId($this->ulidGenerator->generate());
+            $player->setJourney($journey);
+
             $manager->persist($player);
         }
 

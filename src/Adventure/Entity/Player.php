@@ -28,6 +28,10 @@ class Player
     #[JoinColumn(nullable: false)]
     private User $user;
 
+    #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'])]
+    #[JoinColumn(nullable: false)]
+    private Journey $journey;
+
     public function getId(): Ulid
     {
         return $this->id;
@@ -56,5 +60,15 @@ class Player
     public function setUser(User $user): void
     {
         $this->user = $user;
+    }
+
+    public function getJourney(): Journey
+    {
+        return $this->journey;
+    }
+
+    public function setJourney(Journey $journey): void
+    {
+        $this->journey = $journey;
     }
 }
