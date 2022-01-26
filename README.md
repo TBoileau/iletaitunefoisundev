@@ -1,4 +1,21 @@
-# iletaitunefoisundev
+# Il était une fois un dev
+
+## Présentation
+**Il était une fois un dev** est une plateforme proposant une nouvelle expérience d'apprentissage. 
+
+Nous nous concentrerons dans un premier temps sur le framework [**Symfony**](https://symfony.com/).
+
+Le pitch est simple : **La formation dont vous êtes le héros** !
+
+L'objectif est de permettre aux apprenants de suivre le chemin qu'il souhaite afin d'approfondir leur compétence du framework.
+
+Pour cela, il existe plusieurs formats de contenu :
+- Cours
+- Exercices
+- Quiz
+- Projets
+
+Pour mettre en forme ce concept, nous nous appuierons sur la **gamification** afin de donner un côté un peu plus vidéoludique à votre apprentissage.
 
 ## Documentation
 La documentation est disponible [ici](https://incentive-factory.github.io/iletaitunefoisundev/).
