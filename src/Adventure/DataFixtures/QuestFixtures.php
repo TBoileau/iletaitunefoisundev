@@ -23,6 +23,8 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
         /** @var array<array-key, Region> $regions */
         $regions = $manager->getRepository(Region::class)->findAll();
 
+        $relative = null;
+
         foreach ($regions as $region) {
             for ($i = 1; $i <= 5; ++$i) {
                 $quest = new Quest();
@@ -34,7 +36,12 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                     3, 4 => Difficulty::Normal,
                     default => Difficulty::Hard,
                 });
+                if (null !== $relative) {
+                    $quest->getRelatives()->add($relative);
+                    $relative->getRelatives()->add($relative);
+                }
                 $manager->persist($quest);
+                $relative = $quest;
             }
         }
 
