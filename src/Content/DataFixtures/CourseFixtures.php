@@ -17,7 +17,7 @@ final class CourseFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 50; ++$i) {
+        for ($i = 1; $i <= 125; ++$i) {
             $manager->persist($this->createCourse($i));
         }
 
