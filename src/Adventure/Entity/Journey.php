@@ -13,10 +13,11 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: JourneyRepository::class)]
-class Journey
+class Journey implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -31,9 +32,6 @@ class Journey
     #[OneToMany(mappedBy: 'journey', targetEntity: Checkpoint::class)]
     #[OrderBy(['passedAt' => 'DESC'])]
     private Collection $checkpoints;
-
-    #[OneToOne(targetEntity: Save::class, cascade: ['persist'])]
-    private ?Save $save = null;
 
     public function __construct()
     {
@@ -63,13 +61,8 @@ class Journey
         return $this->checkpoints;
     }
 
-    public function getSave(): ?Save
+    public function __toString(): string
     {
-        return $this->save;
-    }
-
-    public function setSave(?Save $save): void
-    {
-        $this->save = $save;
+        return sprintf('Journal de bord de %s', $this->player);
     }
 }

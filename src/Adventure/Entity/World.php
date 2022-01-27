@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: WorldRepository::class)]
-class World
+class World implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -61,5 +62,10 @@ class World
     public function getContinents(): Collection
     {
         return $this->continents;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

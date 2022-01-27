@@ -29,6 +29,8 @@ final class SaveFixtures extends Fixture implements DependentFixtureInterface
             $save = new Save();
             $save->setId($this->ulidGenerator->generate());
             $save->setSavedAt(new DateTimeImmutable());
+            $save->setPlayer($player);
+            $player->setSave($save);
 
             /** @var Quest $quest */
             $quest = $manager->getRepository(Quest::class)
@@ -62,8 +64,6 @@ final class SaveFixtures extends Fixture implements DependentFixtureInterface
                 3 => $save->setQuest($quest),
                 default => $save->setCheckpoint($checkpoint),
             };
-
-            $player->getJourney()->setSave($save);
         }
 
         $manager->flush();

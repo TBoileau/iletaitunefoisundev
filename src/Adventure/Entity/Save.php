@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use App\Adventure\EntityListener\SaveListener;
 use App\Adventure\Repository\SaveRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\EntityListeners;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: SaveRepository::class)]
+#[EntityListeners([SaveListener::class])]
 class Save
 {
     #[Id]
@@ -37,6 +42,10 @@ class Save
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $savedAt;
+
+    #[OneToOne(inversedBy: 'save', targetEntity: Player::class)]
+    #[JoinColumn(nullable: false)]
+    private Player $player;
 
     public function getId(): Ulid
     {
@@ -106,5 +115,15 @@ class Save
     public function setSavedAt(DateTimeImmutable $savedAt): void
     {
         $this->savedAt = $savedAt;
+    }
+
+    public function getPlayer(): Player
+    {
+        return $this->player;
+    }
+
+    public function setPlayer(Player $player): void
+    {
+        $this->player = $player;
     }
 }

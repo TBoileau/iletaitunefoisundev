@@ -14,10 +14,11 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: ContinentRepository::class)]
-class Continent
+class Continent implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -77,5 +78,10 @@ class Continent
     public function getRegions(): Collection
     {
         return $this->regions;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

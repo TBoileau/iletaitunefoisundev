@@ -29,7 +29,7 @@ php-cs-fixer:
 
 phpcpd:
 	@echo "\nRunning phpcpd...\e[0m"
-	@$(PHP) vendor/bin/phpcpd src
+	@$(PHP) vendor/bin/phpcpd src --exclude src/Admin/Controller
 
 churn-php:
 	@echo "\nRunning churn-php...\e[0m"

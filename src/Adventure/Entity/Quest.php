@@ -17,10 +17,11 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: QuestRepository::class)]
-class Quest
+class Quest implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -108,5 +109,10 @@ class Quest
     public function setCourse(Course $course): void
     {
         $this->course = $course;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

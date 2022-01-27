@@ -1,0 +1,17 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
+{# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
+{% if ea.crud.currentAction == 'detail' %}
+    <ul class="list-group">
+        {% for continent in field.value %}
+            {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\ContinentCrudController').setAction('detail').setEntityId(continent.id) %}
+            <li class="list-group-item">
+                <a href="{{ url }}">{{ continent.name }}</a>
+            </li>
+        {% else %}
+            <li class="list-group-item">Aucun continent</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <span class="badge badge-secondary">{{ field.formattedValue }}</span>
+{% endif %}
