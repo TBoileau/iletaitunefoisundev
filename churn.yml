@@ -26,7 +26,7 @@ commitsSince: One year ago
 # Default: All PHP files in the path provided to churn-php are processed.
 filesToIgnore:
   - src/Kernel.php
-  - src/Command/InstallCommand.php
+  - src/Core/Command/InstallCommand.php
   - tests/bootstrap.php
 
 # File extensions to use when processing.

@@ -1,10 +1,15 @@
-security_controllers:
-  resource: ../src/Security/Controller/
-  type: annotation
+api_login_check:
+  path: /api/login_check
 
 admin_controllers:
   resource: ../src/Admin/Controller/
   type: annotation
+
+security_actions:
+  resource: ../src/Security/Action/
+  type: annotation
+  prefix: /api/security
+  name_prefix: security_
 
 kernel:
   resource: ../src/Kernel.php

@@ -3,6 +3,10 @@
 PHP_XDEBUG = php
 PHP = XDEBUG_MODE=off php
 
+generate-keypair:
+	@echo "\nGenerate keypair...\e[0m"
+	@$(PHP) bin/console lexik:jwt:generate-keypair --overwrite -n --env=$(env)
+
 install: composer-install install-app
 
 composer-install:
@@ -66,10 +70,6 @@ component-tests:
 integration-tests:
 	@echo "\nRunning integration tests...\e[0m"
 	@$(PHP) bin/phpunit --testsuite=integration
-
-smoke-tests:
-	@echo "\nRunning smoke tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=smoke
 
 functional-tests:
 	@echo "\nRunning functional tests...\e[0m"

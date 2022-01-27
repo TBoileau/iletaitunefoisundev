@@ -73,7 +73,5 @@ jobs:
         run: make component-tests
       - name: Run integration tests
         run: make integration-tests
-      - name: Run smoke tests
-        run: make smoke-tests
       - name: Run functional tests
         run: make functional-tests

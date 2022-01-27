@@ -4,53 +4,46 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Tests\Functional\ApiTestCase;
 use Generator;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Profiler\Profile;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
-final class LoginTest extends WebTestCase
+final class LoginTest extends ApiTestCase
 {
     /**
      * @test
      */
     public function shouldBeAuthenticated(): void
     {
-        $client = self::createClient();
-
-        $client->request(Request::METHOD_GET, '/login');
+        $client = self::post('/api/login_check', self::createData());
 
         self::assertResponseIsSuccessful();
 
-        $client->enableProfiler();
+        /** @var array{token: string} $content */
+        $content = self::getContent($client->getResponse());
 
-        $client->submitForm('Se connecter', self::createData());
+        /** @var JWTTokenManagerInterface $jwtManager */
+        $jwtManager = $client->getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
-        self::assertAuthenticated($client);
+        /** @var array{username: string} $payload */
+        $payload = $jwtManager->parse($content['token']);
+
+        self::assertEquals('user+1@email.com', $payload['username']);
     }
 
     /**
-     * @param array<string, string> $formData
+     * @param array<string, string> $data
      *
      * @test
      *
      * @dataProvider provideInvalidData
      */
-    public function shouldNotBeAuthenticatedDueToInvalidData(array $formData): void
+    public function shouldNotBeAuthenticatedDueToInvalidData(array $data): void
     {
-        $client = self::createClient();
+        self::post('/api/login_check', $data);
 
-        $client->request(Request::METHOD_GET, '/login');
-
-        self::assertResponseIsSuccessful();
-
-        $client->enableProfiler();
-
-        $client->submitForm('Se connecter', $formData);
-
-        self::assertNotAuthenticated($client);
+        self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -62,28 +55,6 @@ final class LoginTest extends WebTestCase
         yield 'empty email' => [self::createData(['email' => ''])];
         yield 'wrong password' => [self::createData(['password' => 'fail'])];
         yield 'empty password' => [self::createData(['password' => ''])];
-        yield 'empty csrf' => [self::createData(['_csrf_token' => ''])];
-        yield 'wrong csrf' => [self::createData(['_csrf_token' => 'fail'])];
-    }
-
-    private static function assertAuthenticated(KernelBrowser $client): void
-    {
-        if (($profile = $client->getProfile()) instanceof Profile) {
-            /** @var SecurityDataCollector $securityCollector */
-            $securityCollector = $profile->getCollector('security');
-
-            self::assertTrue($securityCollector->isAuthenticated());
-        }
-    }
-
-    private static function assertNotAuthenticated(KernelBrowser $client): void
-    {
-        if (($profile = $client->getProfile()) instanceof Profile) {
-            /** @var SecurityDataCollector $securityCollector */
-            $securityCollector = $profile->getCollector('security');
-
-            self::assertFalse($securityCollector->isAuthenticated());
-        }
     }
 
     /**
