@@ -4,75 +4,44 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Tests\Functional\ApiTestCase;
 use Generator;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
-final class LoginTest extends WebTestCase
+final class LoginTest extends ApiTestCase
 {
     /**
      * @test
      */
     public function shouldBeAuthenticated(): void
     {
-        $client = self::createClient();
-
-        /** @var string $content */
-        $content = json_encode(self::createData());
-
-        $client->request(
-            Request::METHOD_POST,
-            '/api/login_check',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            $content
-        );
+        $client = self::post('/api/login_check', self::createData());
 
         self::assertResponseIsSuccessful();
 
-        /** @var string $content */
-        $content = $client->getResponse()->getContent();
-
-        /** @var array{token: string} $response */
-        $response = json_decode($content, true);
+        /** @var array{token: string} $content */
+        $content = self::getContent($client->getResponse());
 
         /** @var JWTTokenManagerInterface $jwtManager */
         $jwtManager = $client->getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
         /** @var array{username: string} $payload */
-        $payload = $jwtManager->parse($response['token']);
+        $payload = $jwtManager->parse($content['token']);
 
         self::assertEquals('user+1@email.com', $payload['username']);
     }
 
     /**
-     * @param array<string, string> $formData
+     * @param array<string, string> $data
      *
      * @test
      *
      * @dataProvider provideInvalidData
      */
-    public function shouldNotBeAuthenticatedDueToInvalidData(array $formData): void
+    public function shouldNotBeAuthenticatedDueToInvalidData(array $data): void
     {
-        $client = self::createClient();
-
-        /** @var string $content */
-        $content = json_encode($formData);
-
-        $client->request(
-            Request::METHOD_POST,
-            '/api/login_check',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            $content
-        );
+        self::post('/api/login_check', $data);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
