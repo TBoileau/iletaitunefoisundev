@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\UserCrudController;
-use App\Security\Entity\Administrator;
+use App\Admin\Entity\Administrator;
 use App\Security\Entity\User;
 use App\Security\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;

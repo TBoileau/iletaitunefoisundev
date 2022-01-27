@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Node\DataFixtures;
+namespace App\Content\DataFixtures;
 
+use App\Content\Entity\Course;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Node\Entity\Course;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -17,19 +17,8 @@ final class CourseFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        /** @var array<array-key, Course> $courses */
-        $courses = [];
-
-        for ($i = 1; $i <= 50; ++$i) {
-            $course = $this->createCourse($i);
-            $manager->persist($course);
-            $courses[] = $course;
-        }
-
-        foreach ($courses as $i => $course) {
-            if ($i < count($courses) - 1) {
-                $course->getSiblings()->add($courses[$i + 1]);
-            }
+        for ($i = 1; $i <= 125; ++$i) {
+            $manager->persist($this->createCourse($i));
         }
 
         $manager->flush();

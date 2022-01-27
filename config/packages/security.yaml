@@ -3,7 +3,7 @@ security:
     password_hashers:
         App\Security\Entity\User:
             algorithm: auto
-        App\Security\Entity\Administrator:
+        App\Admin\Entity\Administrator:
             algorithm: auto
     providers:
         users_doctrine:
@@ -12,7 +12,7 @@ security:
                 property: email
         administrators_doctrine:
             entity:
-                class: App\Security\Entity\Administrator
+                class: App\Admin\Entity\Administrator
                 property: email
     firewalls:
         dev:

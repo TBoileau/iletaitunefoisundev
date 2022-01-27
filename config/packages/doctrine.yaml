@@ -4,9 +4,6 @@ doctrine:
         types:
             difficulty: App\Adventure\Doctrine\Type\DifficultyType
 
-        # IMPORTANT: You MUST configure your server version,
-        # either here or in the DATABASE_URL env var (see .env file)
-        #server_version: '13'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -17,11 +14,16 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Security/Entity'
                 prefix: 'App\Security\Entity'
                 alias: Security
-            Node:
+            Admin:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Node/Entity'
-                prefix: 'App\Node\Entity'
-                alias: Node
+                dir: '%kernel.project_dir%/src/Admin/Entity'
+                prefix: 'App\Admin\Entity'
+                alias: Admin
+            Content:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Content/Entity'
+                prefix: 'App\Content\Entity'
+                alias: Content
             Adventure:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Adventure/Entity'

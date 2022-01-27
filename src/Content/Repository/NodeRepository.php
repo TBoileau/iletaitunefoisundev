@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Node\Repository;
+namespace App\Content\Repository;
 
-use App\Node\Entity\Node;
-use App\Node\Gateway\NodeGateway;
+use App\Content\Entity\Node;
+use App\Content\Gateway\NodeGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

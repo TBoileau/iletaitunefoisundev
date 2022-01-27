@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\CourseCrudController;
-use App\Node\Entity\Course;
-use App\Node\Entity\Node;
-use App\Node\Repository\CourseRepository;
-use App\Security\Entity\Administrator;
+use App\Admin\Entity\Administrator;
+use App\Content\Entity\Course;
+use App\Content\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -60,9 +59,6 @@ final class CourseTest extends WebTestCase
         /** @var Administrator $admin */
         $admin = $entityManager->getRepository(Administrator::class)->findOneBy(['email' => 'admin+1@email.com']);
 
-        /** @var Course $randomCourse */
-        $randomCourse = $entityManager->getRepository(Course::class)->findOneBy([]);
-
         $client->loginUser($admin, 'admin');
 
         /** @var AdminUrlGenerator $adminUrlGenerator */
@@ -79,11 +75,10 @@ final class CourseTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $client->submitForm('Créer', [
-            'Course[title]' => 'Course 51',
-            'Course[slug]' => 'course-51',
+            'Course[title]' => 'Course 126',
+            'Course[slug]' => 'course-126',
             'Course[description]' => 'Description',
             'Course[youtubeId]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
-            'Course[siblings]' => [(string) $randomCourse->getId()],
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -91,22 +86,14 @@ final class CourseTest extends WebTestCase
         /** @var CourseRepository<Course> $courseRepository */
         $courseRepository = $client->getContainer()->get(CourseRepository::class);
 
-        $course = $courseRepository->findOneBy(['slug' => 'course-51']);
+        $course = $courseRepository->findOneBy(['slug' => 'course-126']);
 
         self::assertNotNull($course);
-        self::assertSame('course-51', $course->getSlug());
-        self::assertSame('Course 51', $course->getTitle());
+        self::assertSame('course-126', $course->getSlug());
+        self::assertSame('Course 126', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
         self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
-        self::assertCount(1, $course->getSiblings());
-
-        /** @var Node $sibling */
-        $sibling = $course->getSiblings()->first();
-
-        self::assertCount(1, $sibling->getRelatives());
-
-        self::assertTrue($sibling->getRelatives()->contains($course));
     }
 
     /**
@@ -182,7 +169,6 @@ final class CourseTest extends WebTestCase
             'Course[slug]' => 'course-0',
             'Course[description]' => 'Description',
             'Course[youtubeId]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
-            'Course[siblings]' => [(string) $sibling->getId()],
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -198,13 +184,5 @@ final class CourseTest extends WebTestCase
         self::assertSame('Description', $course->getDescription());
         self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
-        self::assertCount(1, $course->getSiblings());
-
-        /** @var Node $sibling */
-        $sibling = $course->getSiblings()->first();
-
-        self::assertCount(2, $sibling->getRelatives());
-
-        self::assertTrue($sibling->getRelatives()->contains($course));
     }
 }

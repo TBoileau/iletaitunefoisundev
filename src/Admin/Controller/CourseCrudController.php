@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Admin\EasyAdmin\Field\YoutubeField;
+use App\Content\Entity\Course;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Node\Entity\Course;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -57,10 +56,6 @@ final class CourseCrudController extends AbstractCrudController
         yield SlugField::new('slug', 'Slug')->setTargetFieldName('title');
         yield TextEditorField::new('description', 'Description');
         yield YoutubeField::new('youtubeId', 'Vidéo Youtube');
-        yield AssociationField::new('siblings', 'Relations directes')
-            ->setTemplatePath('admin/field/siblings.html.twig');
-        yield AssociationField::new('relatives', 'Relations indirectes')
-            ->setTemplatePath('admin/field/siblings.html.twig');
     }
 
     public function createEntity(string $entityFqcn): Course

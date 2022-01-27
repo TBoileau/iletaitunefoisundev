@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use App\Node\Entity\Course;
-use App\Node\Entity\History;
-use App\Security\Entity\Administrator;
+use App\Admin\Entity\Administrator;
+use App\Content\Entity\Course;
 use App\Security\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -38,6 +37,5 @@ final class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Course::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fa fa-user', User::class);
         yield MenuItem::linkToCrud('Administrateurs', 'fa fa-user-shield', Administrator::class);
-        yield MenuItem::linkToCrud('Historique', 'fa fa-history', History::class);
     }
 }

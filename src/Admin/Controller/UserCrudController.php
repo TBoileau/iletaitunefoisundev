@@ -7,7 +7,6 @@ namespace App\Admin\Controller;
 use App\Security\Entity\AbstractUser;
 use App\Security\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 final class UserCrudController extends AbstractUserCrudController
 {
@@ -26,14 +25,5 @@ final class UserCrudController extends AbstractUserCrudController
     public function createUser(): AbstractUser
     {
         return new User();
-    }
-
-    public function configureFields(string $pageName): iterable
-    {
-        yield from parent::configureFields($pageName);
-
-        yield AssociationField::new('history', 'Historique')
-            ->setTemplatePath('admin/field/history.html.twig')
-            ->hideOnForm();
     }
 }

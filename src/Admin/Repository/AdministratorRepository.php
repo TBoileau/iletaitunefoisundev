@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Repository;
+namespace App\Admin\Repository;
 
-use App\Security\Entity\Administrator;
+use App\Admin\Entity\Administrator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

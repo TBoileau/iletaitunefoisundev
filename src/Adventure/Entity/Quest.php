@@ -6,6 +6,7 @@ namespace App\Adventure\Entity;
 
 use App\Adventure\Doctrine\Type\DifficultyType;
 use App\Adventure\Repository\QuestRepository;
+use App\Content\Entity\Course;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -41,6 +42,10 @@ class Quest
     #[ManyToMany(targetEntity: Quest::class)]
     #[JoinTable(name: 'quest_relatives')]
     private Collection $relatives;
+
+    #[ManyToOne(targetEntity: Course::class)]
+    #[JoinColumn(nullable: false)]
+    private Course $course;
 
     public function __construct()
     {
@@ -93,5 +98,15 @@ class Quest
     public function getRelatives(): Collection
     {
         return $this->relatives;
+    }
+
+    public function getCourse(): Course
+    {
+        return $this->course;
+    }
+
+    public function setCourse(Course $course): void
+    {
+        $this->course = $course;
     }
 }
