@@ -8,7 +8,7 @@
 2. **Test de composant** : le but est de valider le paramétrage de l'application (mapping, validation, etc...).
 3. **Test d'intégration** : l'intérêt de ces tests est de s'assurer que les adapteurs avec les infrastructures sont fonctionnels.
 4. **Test fonctionnel** : l'objectif est de simuler des requêtes (HTTP, commandes, ...) afin de s'assurer que la réponse est bien traitée.
-5**Test de bout en bout** : le but est de valider l'intégration de tous les composants entre eux dans un environnement proche de celui des utilisateurs finaux.
+5. **Test de bout en bout** : le but est de valider l'intégration de tous les composants entre eux dans un environnement proche de celui des utilisateurs finaux.
 
 ## Executer les tests
 
