@@ -20,3 +20,8 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+
+    App\Adventure\EntityListener\:
+        resource: '../src/Adventure/EntityListener/'
+        tags:
+            - doctrine.orm.entity_listener

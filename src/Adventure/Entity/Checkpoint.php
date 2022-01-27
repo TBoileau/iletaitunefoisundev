@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: CheckpointRepository::class)]
-class Checkpoint
+class Checkpoint implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -70,5 +71,10 @@ class Checkpoint
     public function setPassedAt(DateTimeImmutable $passedAt): void
     {
         $this->passedAt = $passedAt;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s validée le %s', $this->quest, $this->passedAt->format('d/m/Y H:i:s'));
     }
 }

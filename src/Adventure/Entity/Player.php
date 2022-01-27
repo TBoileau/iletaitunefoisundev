@@ -12,10 +12,11 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
+use Stringable;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: PlayerRepository::class)]
-class Player
+class Player implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
@@ -31,6 +32,9 @@ class Player
     #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'])]
     #[JoinColumn(nullable: false)]
     private Journey $journey;
+
+    #[OneToOne(mappedBy: 'player', targetEntity: Save::class, cascade: ['persist'])]
+    private ?Save $save = null;
 
     public function getId(): Ulid
     {
@@ -70,5 +74,20 @@ class Player
     public function setJourney(Journey $journey): void
     {
         $this->journey = $journey;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+
+    public function getSave(): ?Save
+    {
+        return $this->save;
+    }
+
+    public function setSave(?Save $save): void
+    {
+        $this->save = $save;
     }
 }

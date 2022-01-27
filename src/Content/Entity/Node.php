@@ -33,8 +33,6 @@ abstract class Node implements Stringable
     #[Column(type: Types::STRING, unique: true)]
     protected string $slug;
 
-    abstract public function getType(): string;
-
     public function getId(): Ulid
     {
         return $this->id;

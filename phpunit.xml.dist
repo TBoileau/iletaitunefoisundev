@@ -13,7 +13,8 @@
             <file>src/Core/Command/InstallCommand.php</file>
             <directory>src/Security/DataFixtures</directory>
             <directory>src/Adventure/DataFixtures</directory>
-            <directory>src/Node/DataFixtures</directory>
+            <directory>src/Content/DataFixtures</directory>
+            <directory>src/Admin/DataFixtures</directory>
         </exclude>
         <report>
             <clover outputFile="var/coverage/clover.xml"/>
