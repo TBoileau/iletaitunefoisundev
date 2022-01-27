@@ -14,4 +14,9 @@ class User extends AbstractUser
     {
         return ['ROLE_USER'];
     }
+
+    public function getUsername(): string
+    {
+        return $this->getUserIdentifier();
+    }
 }

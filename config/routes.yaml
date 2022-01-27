@@ -1,6 +1,5 @@
-security_controllers:
-  resource: ../src/Security/Controller/
-  type: annotation
+api_login_check:
+  path: /api/login_check
 
 admin_controllers:
   resource: ../src/Admin/Controller/

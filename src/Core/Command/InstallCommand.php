@@ -169,7 +169,11 @@ final class InstallCommand extends Command
 
     private function generateKeypair(InputInterface $input, OutputInterface $output): void
     {
-        $process = new Process(['make', 'generate-keypair']);
+        $process = new Process([
+            'make',
+            'generate-keypair',
+            sprintf('env=%s', $this->environment),
+        ]);
 
         $process->run();
 

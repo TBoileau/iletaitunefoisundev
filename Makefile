@@ -5,7 +5,7 @@ PHP = XDEBUG_MODE=off php
 
 generate-keypair:
 	@echo "\nGenerate keypair...\e[0m"
-	@$(PHP) bin/console lexik:jwt:generate-keypair --skip-if-exists
+	@$(PHP) bin/console lexik:jwt:generate-keypair --overwrite -n --env=$(env)
 
 install: composer-install install-app
 

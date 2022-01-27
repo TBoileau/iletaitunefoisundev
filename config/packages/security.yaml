@@ -26,16 +26,26 @@ security:
                 check_path: admin_security_login
             logout:
                 path: admin_security_logout
-        main:
-            pattern: ^/
-            lazy: true
+        login:
+            pattern: ^/api/login
+            stateless: true
             provider: users_doctrine
-            custom_authenticator: App\Security\Guard\WebAuthenticator
-            logout:
-                path: security_logout
+            json_login:
+                username_path: email
+                password_path: password
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~
+            provider: users_doctrine
     access_control:
         - { path: ^/admin/security/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
