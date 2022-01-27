@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Node\Repository;
+namespace App\Content\Repository;
 
-use App\Node\Entity\Course;
-use App\Node\Gateway\CourseGateway;
+use App\Content\Entity\Course;
+use App\Content\Gateway\CourseGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

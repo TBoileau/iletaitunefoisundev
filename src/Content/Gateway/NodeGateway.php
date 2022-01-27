@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Node\Gateway;
+namespace App\Content\Gateway;
 
 /**
  * @template T
  */
-interface CourseGateway
+interface NodeGateway
 {
 }
