@@ -66,7 +66,8 @@ final class InstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->configureEnvironment($input, $output);
-        $this->setupDatabase($input, $output);
+        $this->generateKeypair($input, $output);
+        $this->setupDatabase($output);
 
         return self::SUCCESS;
     }
@@ -166,6 +167,21 @@ final class InstallCommand extends Command
         }
     }
 
+    private function generateKeypair(InputInterface $input, OutputInterface $output): void
+    {
+        $process = new Process(['make', 'generate-keypair']);
+
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            $output->writeln(sprintf('<error>%s</error>', $process->getErrorOutput()));
+
+            return;
+        }
+
+        $output->writeln('<info>Keypair generated</info>');
+    }
+
     private function configureEnvironment(InputInterface $input, OutputInterface $output): void
     {
         $filesystem = new Filesystem();
@@ -212,7 +228,7 @@ final class InstallCommand extends Command
         $output->writeln('<info>Configure DATABASE_URL env</info>');
     }
 
-    private function setupDatabase(InputInterface $input, OutputInterface $output): void
+    private function setupDatabase(OutputInterface $output): void
     {
         $process = new Process([
             'make',

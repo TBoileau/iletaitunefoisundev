@@ -3,6 +3,10 @@
 PHP_XDEBUG = php
 PHP = XDEBUG_MODE=off php
 
+generate-keypair:
+	@echo "\nGenerate keypair...\e[0m"
+	@$(PHP) bin/console lexik:jwt:generate-keypair --skip-if-exists
+
 install: composer-install install-app
 
 composer-install:
