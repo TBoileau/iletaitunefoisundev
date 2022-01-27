@@ -23,12 +23,14 @@ final class RegistrationHandler implements HandlerInterface
     ) {
     }
 
-    public function __invoke(Registration $registration): void
+    public function __invoke(Registration $registration): User
     {
         $user = new User();
         $user->setId($this->ulidGenerator->generate());
         $user->setEmail($registration->getEmail());
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $registration->getPlainPassword()));
         $this->userGateway->register($user);
+
+        return $user;
     }
 }

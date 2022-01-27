@@ -6,31 +6,22 @@ namespace App\Tests\Functional\Security;
 
 use App\Security\Entity\User;
 use App\Security\Repository\UserRepository;
+use App\Tests\Functional\ApiTestCase;
 use Generator;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Ulid;
 
-final class RegistrationTest extends WebTestCase
+final class RegistrationTest extends ApiTestCase
 {
     /**
      * @test
      */
     public function shouldRegisterAnUser(): void
     {
-        $client = self::createClient();
+        $client = self::post('/api/security/register', self::createData());
 
-        $client->request(Request::METHOD_GET, '/register');
-
-        self::assertResponseIsSuccessful();
-
-        $client->enableProfiler();
-
-        $client->submitForm('S\'inscrire', self::createData());
-
-        self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
         /** @var UserRepository<User> $userRepository */
         $userRepository = $client->getContainer()->get(UserRepository::class);
@@ -45,34 +36,20 @@ final class RegistrationTest extends WebTestCase
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
         self::assertTrue(Ulid::isValid((string) $user->getId()));
-
-        $client->followRedirect();
-
-        self::assertRouteSame('security_login');
     }
 
     /**
-     * @param array<string, string> $formData
+     * @param array<string, string> $data
      *
      * @test
      *
      * @dataProvider provideInvalidData
      */
-    public function shouldNotRegisterDueToInvalidData(array $formData): void
+    public function shouldNotRegisterDueToInvalidData(array $data): void
     {
-        $client = self::createClient();
-
-        $client->request(Request::METHOD_GET, '/register');
-
-        self::assertResponseIsSuccessful();
-
-        $client->enableProfiler();
-
-        $client->submitForm('S\'inscrire', $formData);
+        self::post('/api/security/register', $data);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        self::assertRouteSame('security_register');
     }
 
     /**
@@ -80,13 +57,11 @@ final class RegistrationTest extends WebTestCase
      */
     public function provideInvalidData(): Generator
     {
-        yield 'invalid email' => [self::createData(['registration[email]' => 'fail'])];
-        yield 'non unique email' => [self::createData(['registration[email]' => 'user+1@email.com'])];
-        yield 'empty email' => [self::createData(['registration[email]' => ''])];
-        yield 'wrong plain password' => [self::createData(['registration[plainPassword]' => 'fail'])];
-        yield 'empty plain password' => [self::createData(['registration[plainPassword]' => ''])];
-        yield 'empty csrf' => [self::createData(['registration[_token]' => ''])];
-        yield 'wrong csrf' => [self::createData(['registration[_token]' => 'fail'])];
+        yield 'invalid email' => [self::createData(['email' => 'fail'])];
+        yield 'non unique email' => [self::createData(['email' => 'user+1@email.com'])];
+        yield 'empty email' => [self::createData(['email' => ''])];
+        yield 'wrong plain password' => [self::createData(['plainPassword' => 'fail'])];
+        yield 'empty plain password' => [self::createData(['plainPassword' => ''])];
     }
 
     /**
@@ -97,8 +72,8 @@ final class RegistrationTest extends WebTestCase
     private static function createData(array $extra = []): array
     {
         return $extra + [
-                'registration[email]' => 'user+6@email.com',
-                'registration[plainPassword]' => 'Password123!',
+                'email' => 'user+6@email.com',
+                'plainPassword' => 'Password123!',
             ];
     }
 }

@@ -71,10 +71,6 @@ integration-tests:
 	@echo "\nRunning integration tests...\e[0m"
 	@$(PHP) bin/phpunit --testsuite=integration
 
-smoke-tests:
-	@echo "\nRunning smoke tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=smoke
-
 functional-tests:
 	@echo "\nRunning functional tests...\e[0m"
 	@$(PHP) bin/phpunit --testsuite=functional

@@ -52,6 +52,6 @@ final class RegistrationTest extends TestCase
 
         $command = new RegistrationHandler($uuidGenerator, $userGateway, $userPasswordHasher);
 
-        $command($registration);
+        self::assertEquals($user, $command($registration));
     }
 }

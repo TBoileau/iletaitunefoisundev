@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Security\Controller\SecurityController;
+use App\Security\Action\Register;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,31 +51,13 @@ final class RoutingTest extends KernelTestCase
      */
     public function provideRoutes(): Generator
     {
-        yield 'security login' => [
-            'route' => 'security_login',
-            'path' => '/login',
-            'methods' => [Request::METHOD_GET, Request::METHOD_POST],
-            'requirements' => [],
-            'defaults' => [
-                '_controller' => sprintf('%s::%s', SecurityController::class, 'login'),
-            ],
-        ];
-        yield 'security logout' => [
-            'route' => 'security_logout',
-            'path' => '/logout',
-            'methods' => [Request::METHOD_GET],
-            'requirements' => [],
-            'defaults' => [
-                '_controller' => sprintf('%s::%s', SecurityController::class, 'logout'),
-            ],
-        ];
         yield 'security register' => [
             'route' => 'security_register',
-            'path' => '/register',
-            'methods' => [Request::METHOD_GET, Request::METHOD_POST],
+            'path' => '/api/security/register',
+            'methods' => [Request::METHOD_POST],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s::%s', SecurityController::class, 'register'),
+                '_controller' => sprintf('%s', Register::class),
             ],
         ];
     }
