@@ -14,6 +14,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Security/Entity'
                 prefix: 'App\Security\Entity'
                 alias: Security
+            Admin:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Admin/Entity'
+                prefix: 'App\Admin\Entity'
+                alias: Admin
             Content:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/Content/Entity'

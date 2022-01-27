@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Entity;
+namespace App\Admin\Entity;
 
-use App\Security\Repository\AdministratorRepository;
+use App\Admin\Repository\AdministratorRepository;
+use App\Security\Entity\AbstractUser;
 use Doctrine\ORM\Mapping\Entity;
 
 #[Entity(repositoryClass: AdministratorRepository::class)]

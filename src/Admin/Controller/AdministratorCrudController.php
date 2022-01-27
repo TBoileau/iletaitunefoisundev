@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
+use App\Admin\Entity\Administrator;
 use App\Security\Entity\AbstractUser;
-use App\Security\Entity\Administrator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 final class AdministratorCrudController extends AbstractUserCrudController

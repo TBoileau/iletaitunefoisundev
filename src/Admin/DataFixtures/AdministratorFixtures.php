@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Security\DataFixtures;
+namespace App\Admin\DataFixtures;
 
+use App\Admin\Entity\Administrator;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Security\Entity\Administrator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

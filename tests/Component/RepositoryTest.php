@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Admin\Entity\Administrator;
+use App\Admin\Repository\AdministratorRepository;
 use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\Journey;
@@ -58,6 +60,7 @@ final class RepositoryTest extends KernelTestCase
     public function provideEntities(): Generator
     {
         yield 'user entity' => [User::class, UserRepository::class]; /* @phpstan-ignore-line */
+        yield 'administrator entity' => [Administrator::class, AdministratorRepository::class]; /* @phpstan-ignore-line */
         yield 'node entity' => [Node::class, NodeRepository::class]; /* @phpstan-ignore-line */
         yield 'course entity' => [Course::class, CourseRepository::class]; /* @phpstan-ignore-line */
         yield 'world entity' => [World::class, WorldRepository::class]; /* @phpstan-ignore-line */

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
+use App\Admin\Entity\Administrator;
 use App\Content\Entity\Course;
-use App\Security\Entity\Administrator;
 use App\Security\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
