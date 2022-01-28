@@ -1,94 +1,25 @@
-.PHONY: build tests
+p:
+	make -C server prepare
 
-PHP_XDEBUG = php
-PHP = XDEBUG_MODE=off php
+q:
+	make -C server analyse
 
-generate-keypair:
-	@echo "\nGenerate keypair...\e[0m"
-	@$(PHP) bin/console lexik:jwt:generate-keypair --overwrite -n --env=$(env)
+x:
+	make -C server fix
 
-install: composer-install install-app
+i:
+	cd client; npm install
+	make -C server install-app
 
-composer-install:
-	@echo "\nInstall dependencies...\e[0m"
-	composer install
+t:
+	make -C server tests
 
-composer-update:
-	@echo "\Update dependencies...\e[0m"
-	composer update
+c:
+	make -C server tests-coverage
 
-install-app:
-	@echo "\Install application...\e[0m"
-	$(PHP) bin/console app:install
+s:
+	make -C server server-start
+	cd client; ng serve
 
-analyse: composer-valid container-linter mapping-valid phpcpd churn-php phpstan
-
-phpstan:
-	@echo "\nRunning phpstan...\e[0m"
-	$(PHP) vendor/bin/phpstan analyse --configuration=phpstan.neon
-
-php-cs-fixer:
-	@echo "\nRunning php-cs-fixer...\e[0m"
-	@$(PHP) vendor/bin/php-cs-fixer fix
-
-phpcpd:
-	@echo "\nRunning phpcpd...\e[0m"
-	@$(PHP) vendor/bin/phpcpd src --exclude src/Admin/Controller
-
-churn-php:
-	@echo "\nRunning churn-php...\e[0m"
-	@$(PHP) vendor/bin/churn run --configuration=churn.yml
-
-container-linter:
-	@echo "\nRunning container linter...\e[0m"
-	@$(PHP) bin/console lint:container
-
-composer-valid:
-	@echo "\nRunning container valid...\e[0m"
-	composer valid
-
-mapping-valid:
-	@echo "\nRunning mapping valid...\e[0m"
-	@$(PHP) bin/console doctrine:schema:valid --skip-sync
-
-tests:
-	@echo "\nRunning tests...\e[0m"
-	@$(PHP) bin/phpunit
-
-tests-coverage:
-	@echo "\nRunning tests coverage...\e[0m"
-	$(PHP_XDEBUG) bin/phpunit
-
-unit-tests:
-	@echo "\nRunning unit tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=unit
-
-component-tests:
-	@echo "\nRunning component tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=component
-
-integration-tests:
-	@echo "\nRunning integration tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=integration
-
-functional-tests:
-	@echo "\nRunning functional tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=functional
-
-end-to-end-tests:
-	@echo "\nRunning end to end tests...\e[0m"
-	@$(PHP) bin/phpunit --testsuite=end-to-end
-
-database:
-	echo "\nSetup database...\e[0m"
-	$(PHP) bin/console doctrine:database:drop --if-exists --force --env=$(env)
-	$(PHP) bin/console doctrine:database:create --env=$(env)
-	$(PHP) bin/console doctrine:schema:update --force --env=$(env)
-
-fixtures:
-	@echo "\nLoad fixtures...\e[0m"
-	$(PHP) bin/console doctrine:fixtures:load -n --env=$(env)
-
-fix: php-cs-fixer
-
-prepare: database fixtures
+d:
+	make -C server server-start
