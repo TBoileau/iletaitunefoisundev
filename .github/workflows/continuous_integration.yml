@@ -27,9 +27,9 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: make composer-install
+        run: make -C server composer-install
       - name: Run analyse
-        run: make analyse
+        run: make q
 
   tests:
     name: Tests
@@ -64,14 +64,16 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: make composer-install
+        run: make -C server composer-install
       - name: Install application
-        run: php bin/console app:install --env=test --db-driver=mysql --db-name=iletaitunefoisundev --db-user=root --db-password=Password123!
+        run: |
+          cd server
+          php bin/console app:install --env=test --db-driver=mysql --db-name=iletaitunefoisundev --db-user=root --db-password=Password123!
       - name: Run unit tests
-        run: make unit-tests
+        run: make -C server unit-tests
       - name: Run component tests
-        run: make component-tests
+        run: make -C server component-tests
       - name: Run integration tests
-        run: make integration-tests
+        run: make -C server integration-tests
       - name: Run functional tests
-        run: make functional-tests
+        run: make -C server functional-tests

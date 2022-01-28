@@ -18,4 +18,4 @@
 * Tests fonctionnels : `make functional-tests`
 * Tests de bout en bout : `make end-to-end-tests`
 
-Vous pouvez aussi lancer tous les tests avec la commande `make tests`. Si vous souhaitez avoir la couverture de code, éxecutez la commande `make tests-coverage`.
+Vous pouvez aussi lancer tous les tests avec la commande `make t`. Si vous souhaitez avoir la couverture de code, éxecutez la commande `make c`.
