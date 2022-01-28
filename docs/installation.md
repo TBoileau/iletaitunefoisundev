@@ -38,7 +38,7 @@ Please provide the database user password (default to password) : |
 Please provide the database name (default to iletaitunefoisundev) : |
 ```
 
-## Remise à zér de la base de données et chargement des fixtures
+## Remise à zéro de la base de données et chargement des fixtures
 
 ```
 make p env=test|dev
