@@ -16,6 +16,7 @@
         "easycorp/easyadmin-bundle": "^4.0",
         "gesdinet/jwt-refresh-token-bundle": "^1.0",
         "lexik/jwt-authentication-bundle": "^2.14",
+        "nelmio/api-doc-bundle": "^4.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.2",
         "symfony/apache-pack": "^1.0",
