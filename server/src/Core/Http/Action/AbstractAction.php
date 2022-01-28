@@ -29,7 +29,7 @@ abstract class AbstractAction
         /** @var HandledStamp[] $handledStamps */
         $handledStamps = $envelope->all(HandledStamp::class);
 
-        if (count($handledStamps) !== 1) {
+        if (1 !== count($handledStamps)) {
             throw new LogicException(sprintf('Message of type "%s" was handled zero times. Exactly one handler is expected when using "%s::%s()".', get_debug_type($envelope->getMessage()), static::class, __FUNCTION__));
         }
 

@@ -21,4 +21,9 @@ final class WorldRepository extends ServiceEntityRepository implements WorldGate
     {
         parent::__construct($registry, World::class);
     }
+
+    public function getWorlds(): array
+    {
+        return $this->findAll();
+    }
 }

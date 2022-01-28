@@ -18,7 +18,7 @@ final class LoginTest extends ApiTestCase
      */
     public function shouldBeAuthenticated(): void
     {
-        $client = self::post('/api/login_check', self::createData());
+        $client = self::post('/api/login_check', self::createData(), false);
 
         self::assertResponseIsSuccessful();
 
@@ -50,7 +50,7 @@ final class LoginTest extends ApiTestCase
      */
     public function shouldNotBeAuthenticatedDueToInvalidData(array $data): void
     {
-        self::post('/api/login_check', $data);
+        self::post('/api/login_check', $data, false);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
