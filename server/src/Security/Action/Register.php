@@ -8,6 +8,7 @@ use App\Security\Entity\User;
 use App\Security\Message\Registration;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use OpenApi\Attributes as OpenApi;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,6 @@ use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[OpenApi\RequestBody(
     description: 'Send user\'s information like email and plain password.',
@@ -59,6 +57,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 )]
 #[OpenApi\Tag('Security')]
 #[Route('/register', name: 'register', methods: [Request::METHOD_POST])]
+#[ParamConverter('registration')]
 final class Register extends AbstractController
 {
     use HandleTrait;
@@ -68,27 +67,16 @@ final class Register extends AbstractController
         $this->messageBus = $messageBus;
     }
 
-    public function __invoke(
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): JsonResponse {
-        $registration = $serializer->deserialize($request->getContent(), Registration::class, 'json');
-
-        $constraintViolationList = $validator->validate($registration);
-
-        if ($constraintViolationList->count() > 0) {
-            throw new ValidationFailedException($registration, $constraintViolationList);
-        }
-
+    public function __invoke(Registration $registration): JsonResponse
+    {
         /** @var User $user */
         $user = $this->handle($registration);
 
-        return new JsonResponse(
-            $serializer->serialize($user, 'json', [ObjectNormalizer::GROUPS => ['get']]),
+        return $this->json(
+            $user,
             Response::HTTP_CREATED,
-            ['Content-Type' => 'application/json'],
-            true
+            [],
+            [ObjectNormalizer::GROUPS => ['get']]
         );
     }
 }
