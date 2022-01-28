@@ -7,7 +7,7 @@
 ## Analyse du back-end
 
 Afin de vérifier en partie la qualité du code et de la configuration de Symfony, nous utiliserons les outils suivants :
-* Composer - `make composer-valid` : Permet de vérifier si les fichiers [`composer.json`](/composer.json) et [`composer.lock`](/composer.lock) sont bien synchronisés.
+* Composer - `make composer-valid` : Permet de vérifier si les fichiers [`composer.json`](/server/composer.jsoner.json) et [`composer.lock`](/server/composer.locker.lock) sont bien synchronisés.
 * Lint container - `make container-lint` : Permet de vérifier les services définis dans le conteneur, notamment la bonne conformité des arguments injectés.
 * PHP Copy Paste Detector - `make phpcpd` : Permet de vérifier la présence de code copier/coller.
 * Churn PHP - `make curn-php` : Permet d'identifier des fichiers qui peuvent être refactorés.
