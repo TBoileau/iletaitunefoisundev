@@ -7,18 +7,23 @@ namespace App\Security\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Id;
+use OpenApi\Attributes as OpenApi;
 use Stringable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
+    #[Groups(['get'])]
+    #[OpenApi\Property(type: 'string')]
     protected Ulid $id;
 
     #[Column(type: Types::STRING, unique: true)]
+    #[Groups(['get'])]
     protected string $email;
 
     #[Column(type: Types::STRING, nullable: true)]
