@@ -145,6 +145,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v1.0.1"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
