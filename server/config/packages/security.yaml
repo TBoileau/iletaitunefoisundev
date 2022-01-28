@@ -26,6 +26,11 @@ security:
                 check_path: admin_security_login
             logout:
                 path: admin_security_logout
+        api_token_refresh:
+            pattern: ^/api/token/refresh
+            stateless: true
+            refresh_jwt:
+                provider: users_doctrine
         login:
             pattern: ^/api/login
             stateless: true
@@ -46,6 +51,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

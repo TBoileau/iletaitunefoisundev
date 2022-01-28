@@ -6,6 +6,8 @@ namespace App\Tests\Functional\Security;
 
 use App\Tests\Functional\ApiTestCase;
 use Generator;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,16 +22,23 @@ final class LoginTest extends ApiTestCase
 
         self::assertResponseIsSuccessful();
 
-        /** @var array{token: string} $content */
+        /** @var array{token: string, refresh_token: string} $content */
         $content = self::getContent($client->getResponse());
 
         /** @var JWTTokenManagerInterface $jwtManager */
         $jwtManager = $client->getContainer()->get('lexik_jwt_authentication.jwt_manager');
 
+        /** @var RefreshTokenManagerInterface $refreshTokenManager */
+        $refreshTokenManager = $client->getContainer()->get('gesdinet.jwtrefreshtoken.refresh_token_manager');
+
         /** @var array{username: string} $payload */
         $payload = $jwtManager->parse($content['token']);
 
+        /** @var RefreshTokenInterface $refreshToken */
+        $refreshToken = $refreshTokenManager->get($content['refresh_token']);
+
         self::assertEquals('user+1@email.com', $payload['username']);
+        self::assertEquals('user+1@email.com', $refreshToken->getUsername());
     }
 
     /**
