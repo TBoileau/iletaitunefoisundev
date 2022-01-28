@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile.dev
+    volumes:
+      - ./server:/var/www/html:delegated
+      - /var/www/html/vendor/
+    ports:
+      - "8000:80"
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'rootroot'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_HOST: '%'

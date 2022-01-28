@@ -1,0 +1,58 @@
+FROM php:8.1.2-fpm
+
+USER root
+
+WORKDIR /
+
+# Install dependencies
+RUN apt-get update \
+	# gd
+	&& apt-get install -y --no-install-recommends build-essential  openssl nginx libfreetype6-dev libjpeg-dev libpng-dev libwebp-dev zlib1g-dev libzip-dev gcc g++ make vim unzip curl git jpegoptim optipng pngquant gifsicle locales libonig-dev nodejs npm \
+	&& docker-php-ext-configure gd  \
+	&& docker-php-ext-install gd \
+    && apt-get install -y libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+	# gmp
+	&& apt-get install -y --no-install-recommends libgmp-dev \
+	&& docker-php-ext-install gmp \
+	# pdo_mysql
+	&& docker-php-ext-install pdo_mysql mbstring \
+	# pdo
+	&& docker-php-ext-install pdo \
+	# opcache
+	&& docker-php-ext-enable opcache \
+	# zip
+	&& docker-php-ext-install zip \
+	&& apt-get autoclean -y \
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /tmp/pear/ \
+    && apt-get update \
+    && apt-get install -y wget gpg apt-utils
+
+COPY /server /var/www/html/
+
+#Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer.phar /usr/local/bin/composer
+
+RUN chmod 777 -R /var/www
+RUN chown -R root:root /var/www/html/
+
+COPY /server/composer.json server/composer.lock /var/www/html/
+WORKDIR /var/www/html
+RUN composer install
+WORKDIR /
+
+COPY ./docker/conf.d/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 8080
+RUN nginx -t
+
+COPY ./docker/script/post_deploy.sh /post_deploy.sh
+RUN ["chmod", "+x", "post_deploy.sh"]
+
+CMD [ "sh", "./post_deploy.sh" ]

@@ -43,3 +43,9 @@ Please provide the database name (default to iletaitunefoisundev) : |
 ```
 make p env=test|dev
 ```
+
+## Lancer le projet avec docker
+
+```
+docker-compose up -d --build
+```
