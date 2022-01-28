@@ -19,7 +19,9 @@ final class RegistrationTest extends ApiTestCase
      */
     public function shouldRegisterAnUser(): void
     {
-        $client = self::post('/api/security/register', self::createData(), false);
+        $client = self::createClient();
+
+        self::post($client, '/api/security/register', self::createData());
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
@@ -47,7 +49,9 @@ final class RegistrationTest extends ApiTestCase
      */
     public function shouldNotRegisterDueToInvalidData(array $data): void
     {
-        self::post('/api/security/register', $data, false);
+        $client = self::createClient();
+
+        self::post($client, '/api/security/register', $data);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }

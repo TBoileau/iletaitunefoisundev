@@ -18,12 +18,12 @@ final class LoginTest extends ApiTestCase
      */
     public function shouldBeAuthenticated(): void
     {
-        $client = self::post('/api/login_check', self::createData(), false);
-
-        self::assertResponseIsSuccessful();
+        $client = self::createClient();
 
         /** @var array{token: string, refresh_token: string} $content */
-        $content = self::getContent($client->getResponse());
+        $content = self::post($client, '/api/login_check', self::createData());
+
+        self::assertResponseIsSuccessful();
 
         /** @var JWTTokenManagerInterface $jwtManager */
         $jwtManager = $client->getContainer()->get('lexik_jwt_authentication.jwt_manager');
@@ -50,7 +50,9 @@ final class LoginTest extends ApiTestCase
      */
     public function shouldNotBeAuthenticatedDueToInvalidData(array $data): void
     {
-        self::post('/api/login_check', $data, false);
+        $client = self::createClient();
+
+        self::post($client, '/api/login_check', $data);
 
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Adventure;
+namespace App\Tests\Unit\Adventure;
 
 use App\Adventure\Entity\World;
 use App\Adventure\Gateway\WorldGateway;
@@ -24,13 +24,13 @@ final class RetrieveWorldsTest extends TestCase
         $world->setId(new Ulid());
         $world->setName('Monde');
 
-        $userGateway = self::createMock(WorldGateway::class);
-        $userGateway
+        $worldGateway = self::createMock(WorldGateway::class);
+        $worldGateway
             ->expects(self::once())
             ->method('getWorlds')
             ->willReturn([$world]);
 
-        $handler = new RetrieveWorldsHandler($userGateway);
+        $handler = new RetrieveWorldsHandler($worldGateway);
 
         /** @var array<int, World> $worlds */
         $worlds = $handler($retrieveWorlds);

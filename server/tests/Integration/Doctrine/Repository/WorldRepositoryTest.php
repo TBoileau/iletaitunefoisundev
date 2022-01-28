@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
+use App\Adventure\Entity\World;
 use App\Adventure\Repository\WorldRepository;
-use App\Security\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class WorldRepositoryTest extends KernelTestCase
@@ -13,14 +13,14 @@ final class WorldRepositoryTest extends KernelTestCase
     /**
      * @test
      */
-    public function loadUserByIdentifierShouldReturnUser(): void
+    public function getWorldsShouldReturnsOneWorld(): void
     {
         self::bootKernel();
 
-        /** @var WorldRepository<User> $userRepository */
-        $userRepository = self::getContainer()->get(WorldRepository::class);
+        /** @var WorldRepository<World> $worldRepository */
+        $worldRepository = self::getContainer()->get(WorldRepository::class);
 
-        $worlds = $userRepository->getWorlds();
+        $worlds = $worldRepository->getWorlds();
 
         self::assertCount(1, $worlds);
     }
