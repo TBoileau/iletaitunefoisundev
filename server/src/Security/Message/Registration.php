@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Security\Message;
 
+use App\Core\CQRS\MessageInterface;
 use App\Security\Validator\UniqueEmail;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-final class Registration
+final class Registration implements MessageInterface
 {
     #[NotBlank]
     #[Email]

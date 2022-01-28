@@ -4,21 +4,15 @@ declare(strict_types=1);
 
 namespace App\Security\Action;
 
+use App\Core\Http\Action\AbstractAction;
 use App\Security\Entity\User;
 use App\Security\Message\Registration;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use OpenApi\Attributes as OpenApi;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Exception\ValidationFailedException;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[OpenApi\RequestBody(
     description: 'Send user\'s information like email and plain password.',
@@ -27,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[OpenApi\Response(
     response: Response::HTTP_CREATED,
     description: 'Returns the newly registered user.',
-    content: new OpenApi\JsonContent(ref: new Nelmio\Model(type: User::class, groups: ['get'])),
+    content: new OpenApi\JsonContent(ref: new Nelmio\Model(type: User::class, groups: ['Default', 'get'])),
 )]
 #[OpenApi\Response(
     response: Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -59,36 +53,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 )]
 #[OpenApi\Tag('Security')]
 #[Route('/register', name: 'register', methods: [Request::METHOD_POST])]
-final class Register extends AbstractController
+#[ParamConverter('registration')]
+final class Register extends AbstractAction
 {
-    use HandleTrait;
-
-    public function __construct(MessageBusInterface $messageBus)
+    public function __invoke(Registration $registration): User
     {
-        $this->messageBus = $messageBus;
-    }
-
-    public function __invoke(
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): JsonResponse {
-        $registration = $serializer->deserialize($request->getContent(), Registration::class, 'json');
-
-        $constraintViolationList = $validator->validate($registration);
-
-        if ($constraintViolationList->count() > 0) {
-            throw new ValidationFailedException($registration, $constraintViolationList);
-        }
-
         /** @var User $user */
         $user = $this->handle($registration);
 
-        return new JsonResponse(
-            $serializer->serialize($user, 'json', [ObjectNormalizer::GROUPS => ['get']]),
-            Response::HTTP_CREATED,
-            ['Content-Type' => 'application/json'],
-            true
-        );
+        return $user;
     }
 }

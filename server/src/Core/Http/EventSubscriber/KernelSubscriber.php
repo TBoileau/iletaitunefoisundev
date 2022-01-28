@@ -2,21 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Core\EventSubscriber;
+namespace App\Core\Http\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Exception\ValidationFailedException;
 
 final class KernelSubscriber implements EventSubscriberInterface
 {
+    public function __construct(private SerializerInterface $serializer)
+    {
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
             'kernel.exception' => ['onKernelException'],
+            'kernel.view' => ['onKernelView'],
         ];
     }
 
@@ -49,5 +58,25 @@ final class KernelSubscriber implements EventSubscriberInterface
                 )
             );
         }
+    }
+
+    public function onKernelView(ViewEvent $event): void
+    {
+        $result = $event->getControllerResult();
+
+        $status = match ($event->getRequest()->getMethod()) {
+            Request::METHOD_POST => Response::HTTP_CREATED,
+            Request::METHOD_GET => Response::HTTP_OK,
+            default => Response::HTTP_NO_CONTENT,
+        };
+
+        $event->setResponse(
+            new JsonResponse(
+                $this->serializer->serialize($result, 'json', [ObjectNormalizer::GROUPS => ['Default', 'get']]),
+                $status,
+                ['Content-Type' => 'application/json'],
+                true
+            )
+        );
     }
 }
