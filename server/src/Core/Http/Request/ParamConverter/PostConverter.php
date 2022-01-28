@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Core\Request\ParamConverter;
+namespace App\Core\Http\Request\ParamConverter;
 
 use App\Core\CQRS\MessageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

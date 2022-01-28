@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace App\Security\Action;
 
+use App\Core\Http\Action\AbstractAction;
 use App\Security\Entity\User;
 use App\Security\Message\Registration;
 use Nelmio\ApiDocBundle\Annotation as Nelmio;
 use OpenApi\Attributes as OpenApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[OpenApi\RequestBody(
     description: 'Send user\'s information like email and plain password.',
@@ -25,7 +21,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 #[OpenApi\Response(
     response: Response::HTTP_CREATED,
     description: 'Returns the newly registered user.',
-    content: new OpenApi\JsonContent(ref: new Nelmio\Model(type: User::class, groups: ['get'])),
+    content: new OpenApi\JsonContent(ref: new Nelmio\Model(type: User::class, groups: ['Default', 'get'])),
 )]
 #[OpenApi\Response(
     response: Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -58,25 +54,13 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 #[OpenApi\Tag('Security')]
 #[Route('/register', name: 'register', methods: [Request::METHOD_POST])]
 #[ParamConverter('registration')]
-final class Register extends AbstractController
+final class Register extends AbstractAction
 {
-    use HandleTrait;
-
-    public function __construct(MessageBusInterface $messageBus)
-    {
-        $this->messageBus = $messageBus;
-    }
-
-    public function __invoke(Registration $registration): JsonResponse
+    public function __invoke(Registration $registration): User
     {
         /** @var User $user */
         $user = $this->handle($registration);
 
-        return $this->json(
-            $user,
-            Response::HTTP_CREATED,
-            [],
-            [ObjectNormalizer::GROUPS => ['get']]
-        );
+        return $user;
     }
 }

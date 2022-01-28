@@ -25,3 +25,8 @@ services:
         resource: '../src/Adventure/EntityListener/'
         tags:
             - doctrine.orm.entity_listener
+
+    App\Security\Action\:
+        resource: '../src/Security/Action/'
+        tags:
+            - controller.service_arguments
