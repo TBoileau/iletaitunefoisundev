@@ -25,10 +25,11 @@ abstract class ApiTestCase extends WebTestCase
         return $decodedContent;
     }
 
-    public static function get(string $route): KernelBrowser
+    /**
+     * @return array<array-key, mixed>
+     */
+    public static function get(KernelBrowser $client, string $route): array
     {
-        $client = self::createClient();
-
         $client->request(
             Request::METHOD_GET,
             $route,
@@ -37,16 +38,16 @@ abstract class ApiTestCase extends WebTestCase
             ['CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'],
         );
 
-        return $client;
+        return self::getContent($client->getResponse());
     }
 
     /**
      * @param array<string, mixed> $data
+     *
+     * @return array<array-key, mixed>
      */
-    public static function post(string $route, array $data): KernelBrowser
+    public static function post(KernelBrowser $client, string $route, array $data): array
     {
-        $client = self::createClient();
-
         /** @var string $body */
         $body = json_encode($data);
 
@@ -58,6 +59,25 @@ abstract class ApiTestCase extends WebTestCase
             ['CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'],
             $body
         );
+
+        return self::getContent($client->getResponse());
+    }
+
+    public static function createAuthenticatedClient(): KernelBrowser
+    {
+        $client = self::createClient();
+
+        /** @var array{token: string, refresh_token: string} $content */
+        $content = self::post(
+            $client,
+            '/api/login_check',
+            [
+                'email' => 'user+1@email.com',
+                'password' => 'password',
+            ],
+        );
+
+        $client->setServerParameter('HTTP_AUTHORIZATION', sprintf('Bearer %s', $content['token']));
 
         return $client;
     }

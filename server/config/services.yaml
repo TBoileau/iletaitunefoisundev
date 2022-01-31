@@ -30,3 +30,8 @@ services:
         resource: '../src/Security/Action/'
         tags:
             - controller.service_arguments
+
+    App\Adventure\Action\:
+        resource: '../src/Adventure/Action/'
+        tags:
+            - controller.service_arguments

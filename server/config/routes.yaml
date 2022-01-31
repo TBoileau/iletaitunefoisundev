@@ -8,6 +8,12 @@ security_actions:
   prefix: /api/security
   name_prefix: security_
 
+adventure_actions:
+  resource: ../src/Adventure/Action/
+  type: annotation
+  prefix: /api/adventure
+  name_prefix: adventure_
+
 kernel:
   resource: ../src/Kernel.php
   type: annotation
