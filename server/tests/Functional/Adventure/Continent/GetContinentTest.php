@@ -22,6 +22,7 @@ final class GetContinentTest extends ApiTestCase
         /** @var ContinentRepository<Continent> $continentRepository */
         $continentRepository = $client->getContainer()->get(ContinentRepository::class);
 
+        /** @var Continent $continent */
         $continent = $continentRepository->findOneBy([]);
 
         /** @var array{id: string, name: string} $content */

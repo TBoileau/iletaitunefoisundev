@@ -22,6 +22,7 @@ final class GetWorldTest extends ApiTestCase
         /** @var WorldRepository<World> $worldRepository */
         $worldRepository = $client->getContainer()->get(WorldRepository::class);
 
+        /** @var World $world */
         $world = $worldRepository->findOneBy([]);
 
         /** @var array{id: string, name: string} $content */

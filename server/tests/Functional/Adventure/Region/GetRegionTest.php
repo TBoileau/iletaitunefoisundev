@@ -22,6 +22,7 @@ final class GetRegionTest extends ApiTestCase
         /** @var RegionRepository<Region> $regionRepository */
         $regionRepository = $client->getContainer()->get(RegionRepository::class);
 
+        /** @var Region $region */
         $region = $regionRepository->findOneBy([]);
 
         /** @var array{id: string, name: string} $content */

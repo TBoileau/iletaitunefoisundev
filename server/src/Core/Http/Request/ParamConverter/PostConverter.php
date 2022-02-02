@@ -31,12 +31,13 @@ final class PostConverter implements ParamConverterInterface
 
     public function supports(ParamConverter $configuration): bool
     {
+        /** @phpstan-ignore-next-line */
         if (null === $configuration->getClass() || !class_exists($configuration->getClass())) {
             return false;
         }
 
         $interfaces = class_implements($configuration->getClass());
 
-        return is_array($interfaces) && in_array(CommandInterface::class, $interfaces);
+        return is_array($interfaces) && in_array(CommandInterface::class, $interfaces, true);
     }
 }
