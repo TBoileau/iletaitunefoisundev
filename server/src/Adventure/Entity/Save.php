@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\EntityListener\SaveListener;
-use App\Adventure\Repository\SaveRepository;
+use App\Adventure\Doctrine\EntityListener\SaveListener;
+use App\Adventure\Doctrine\Repository\SaveRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;

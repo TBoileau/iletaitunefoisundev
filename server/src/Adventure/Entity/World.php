@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\Repository\WorldRepository;
+use App\Adventure\Doctrine\Repository\WorldRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

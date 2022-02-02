@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Entity;
 
-use App\Admin\Repository\AdministratorRepository;
+use App\Admin\Doctrine\Repository\AdministratorRepository;
 use App\Security\Entity\AbstractUser;
 use Doctrine\ORM\Mapping\Entity;
 

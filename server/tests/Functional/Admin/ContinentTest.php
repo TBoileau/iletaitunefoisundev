@@ -6,9 +6,9 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\ContinentCrudController;
 use App\Admin\Entity\Administrator;
+use App\Adventure\Doctrine\Repository\ContinentRepository;
 use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\World;
-use App\Adventure\Repository\ContinentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;

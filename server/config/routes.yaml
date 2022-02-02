@@ -3,7 +3,7 @@ admin_controllers:
   type: annotation
 
 security_actions:
-  resource: ../src/Security/Http/Action/
+  resource: ../src/Security/Action/
   type: annotation
   prefix: /api/security
   name_prefix: security_

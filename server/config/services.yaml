@@ -30,7 +30,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\Adventure\EntityListener\:
-        resource: '../src/Adventure/EntityListener/'
+    App\Adventure\Doctrine\EntityListener\:
+        resource: '../src/Adventure/Doctrine/EntityListener/'
         tags:
             - doctrine.orm.entity_listener

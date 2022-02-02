@@ -34,7 +34,6 @@ final class RegistrationTest extends ApiTestCase
         $userPasswordHasher = $client->getContainer()->get(UserPasswordHasherInterface::class);
 
         self::assertNotNull($user);
-        self::assertInstanceOf(User::class, $user);
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
         self::assertTrue(Ulid::isValid((string) $user->getId()));

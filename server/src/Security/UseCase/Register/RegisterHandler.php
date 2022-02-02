@@ -6,8 +6,8 @@ namespace App\Security\UseCase\Register;
 
 use App\Core\Bus\Command\CommandHandlerInterface;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Security\Entity\User;
 use App\Security\Contract\Gateway\UserGateway;
+use App\Security\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class RegisterHandler implements CommandHandlerInterface

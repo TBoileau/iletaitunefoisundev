@@ -7,7 +7,7 @@ namespace App\Admin\Controller;
 use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Player;
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Security\Gateway\UserGateway;
+use App\Security\Contract\Gateway\UserGateway;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -55,7 +55,8 @@ final class PlayerCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('name', 'Nom');
+        yield TextField::new('name', 'Nom')
+            ->setFormTypeOption('empty_data', '');
         yield AssociationField::new('user', 'Utilisateur')
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption(

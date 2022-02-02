@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content\Entity;
 
-use App\Content\Repository\NodeRepository;
+use App\Content\Doctrine\Repository\NodeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
@@ -28,10 +28,10 @@ abstract class Node implements Stringable
     protected Ulid $id;
 
     #[Column(type: Types::STRING)]
-    protected string $title;
+    protected string $title = '';
 
     #[Column(type: Types::STRING, unique: true)]
-    protected string $slug;
+    protected string $slug = '';
 
     public function getId(): Ulid
     {

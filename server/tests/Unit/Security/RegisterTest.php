@@ -7,11 +7,10 @@ namespace App\Tests\Unit\Security;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\UseCase\Find\Find;
-use App\Security\UseCase\Find\FindHandler;
+use App\Security\UseCase\GetUser\GetUser;
+use App\Security\UseCase\GetUser\GetUserHandler;
 use App\Security\UseCase\Register\Register;
 use App\Security\UseCase\Register\RegisterHandler;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Ulid;
@@ -62,8 +61,8 @@ final class RegisterTest extends TestCase
 
         $commandHandler($register);
 
-        $queryHandler = new FindHandler($userGateway);
+        $queryHandler = new GetUserHandler($userGateway);
 
-        $queryHandler(Find::createFromRegister($register));
+        $queryHandler(GetUser::createFromRegister($register));
     }
 }

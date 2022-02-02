@@ -24,10 +24,10 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
 
     #[Column(type: Types::STRING, unique: true)]
     #[Groups(['get'])]
-    protected string $email;
+    protected string $email = '';
 
     #[Column(type: Types::STRING, nullable: true)]
-    protected ?string $password;
+    protected ?string $password = '';
 
     public function getId(): Ulid
     {

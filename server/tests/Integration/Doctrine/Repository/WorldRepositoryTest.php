@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
+use App\Adventure\Doctrine\Repository\WorldRepository;
 use App\Adventure\Entity\World;
-use App\Adventure\Repository\WorldRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class WorldRepositoryTest extends KernelTestCase

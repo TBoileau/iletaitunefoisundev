@@ -52,10 +52,15 @@ final class CourseCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('title', 'Titre');
-        yield SlugField::new('slug', 'Slug')->setTargetFieldName('title');
-        yield TextEditorField::new('description', 'Description');
-        yield YoutubeField::new('youtubeId', 'Vidéo Youtube');
+        yield TextField::new('title', 'Titre')
+            ->setFormTypeOption('empty_data', '');
+        yield SlugField::new('slug', 'Slug')
+            ->setFormTypeOption('empty_data', '')
+            ->setTargetFieldName('title');
+        yield TextEditorField::new('description', 'Description')
+            ->setFormTypeOption('empty_data', '');
+        yield YoutubeField::new('youtubeUrl', 'Vidéo Youtube')
+            ->setFormTypeOption('empty_data', '');
     }
 
     public function createEntity(string $entityFqcn): Course
