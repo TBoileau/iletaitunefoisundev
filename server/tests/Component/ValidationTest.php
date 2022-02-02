@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Security\Message\Registration;
+use App\Security\UseCase\Register\Register;
 use App\Security\Validator\UniqueEmail;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -54,8 +54,8 @@ final class ValidationTest extends KernelTestCase
      */
     public function provideMetadataByEntity(): Generator
     {
-        yield 'registration' => [
-            'class' => Registration::class,
+        yield 'register user' => [
+            'class' => Register::class,
             'constraints' => [
                 'email' => [
                     UniqueEmail::class,

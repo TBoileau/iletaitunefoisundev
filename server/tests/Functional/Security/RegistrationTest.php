@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
 use App\Tests\Functional\ApiTestCase;
 use Generator;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +34,6 @@ final class RegistrationTest extends ApiTestCase
         $userPasswordHasher = $client->getContainer()->get(UserPasswordHasherInterface::class);
 
         self::assertNotNull($user);
-        self::assertInstanceOf(User::class, $user);
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
         self::assertTrue(Ulid::isValid((string) $user->getId()));

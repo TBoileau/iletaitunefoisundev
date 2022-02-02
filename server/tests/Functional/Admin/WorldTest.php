@@ -6,8 +6,8 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\WorldCrudController;
 use App\Admin\Entity\Administrator;
+use App\Adventure\Doctrine\Repository\WorldRepository;
 use App\Adventure\Entity\World;
-use App\Adventure\Repository\WorldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;

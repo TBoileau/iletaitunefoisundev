@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\Repository\JourneyRepository;
+use App\Adventure\Doctrine\Repository\JourneyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;

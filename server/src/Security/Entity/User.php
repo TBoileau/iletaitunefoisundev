@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Entity;
 
-use App\Security\Repository\UserRepository;
+use App\Security\Doctrine\Repository\UserRepository;
 use Doctrine\ORM\Mapping\Entity;
 
 #[Entity(repositoryClass: UserRepository::class)]

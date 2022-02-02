@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Adventure\Action\GetContinentsByWorld;
-use App\Adventure\Action\GetWorlds;
-use App\Security\Action\Register;
+use App\Adventure\Action\Continent\GetContinentsByWorldAction;
+use App\Adventure\Action\World\GetWorldsAction;
+use App\Security\Action\RegisterAction;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +59,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_POST],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s', Register::class),
+                '_controller' => sprintf('%s', RegisterAction::class),
             ],
         ];
         yield 'adventure get worlds' => [
@@ -68,7 +68,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_GET],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s', GetWorlds::class),
+                '_controller' => sprintf('%s', GetWorldsAction::class),
             ],
         ];
         yield 'adventure get continents by world' => [
@@ -77,7 +77,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_GET],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s', GetContinentsByWorld::class),
+                '_controller' => sprintf('%s', GetContinentsByWorldAction::class),
             ],
         ];
     }

@@ -6,8 +6,8 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\CourseCrudController;
 use App\Admin\Entity\Administrator;
+use App\Content\Doctrine\Repository\CourseRepository;
 use App\Content\Entity\Course;
-use App\Content\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -78,7 +78,7 @@ final class CourseTest extends WebTestCase
             'Course[title]' => 'Course 126',
             'Course[slug]' => 'course-126',
             'Course[description]' => 'Description',
-            'Course[youtubeId]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
+            'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -92,7 +92,7 @@ final class CourseTest extends WebTestCase
         self::assertSame('course-126', $course->getSlug());
         self::assertSame('Course 126', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
-        self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
+        self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
     }
 
@@ -168,7 +168,7 @@ final class CourseTest extends WebTestCase
             'Course[title]' => 'Course 0',
             'Course[slug]' => 'course-0',
             'Course[description]' => 'Description',
-            'Course[youtubeId]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
+            'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -182,7 +182,7 @@ final class CourseTest extends WebTestCase
         self::assertSame('course-0', $course->getSlug());
         self::assertSame('Course 0', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
-        self::assertSame('-S94RNjjb4I', $course->getYoutubeId());
+        self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
         self::assertTrue(Ulid::isValid((string) $course->getId()));
     }
 }

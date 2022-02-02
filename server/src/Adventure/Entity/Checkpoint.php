@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\Repository\CheckpointRepository;
+use App\Adventure\Doctrine\Repository\CheckpointRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;

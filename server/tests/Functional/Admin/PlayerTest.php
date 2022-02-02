@@ -6,9 +6,9 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\PlayerCrudController;
 use App\Admin\Entity\Administrator;
+use App\Adventure\Doctrine\Repository\PlayerRepository;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Region;
-use App\Adventure\Repository\PlayerRepository;
 use App\Content\Entity\Course;
 use App\Security\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
