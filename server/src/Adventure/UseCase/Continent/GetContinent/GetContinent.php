@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Adventure\UseCase\Continent\GetContinentsByWorld;
+namespace App\Adventure\UseCase\Continent\GetContinent;
 
 use App\Core\Bus\Query\QueryInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-final class GetContinentsByWorld implements QueryInterface
+final class GetContinent implements QueryInterface
 {
     #[NotBlank]
     private string $id;

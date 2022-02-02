@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Stringable;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: ContinentRepository::class)]
@@ -22,9 +23,11 @@ class Continent implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
+    #[Groups(['get'])]
     private Ulid $id;
 
     #[Column(type: Types::STRING)]
+    #[Groups(['get'])]
     private string $name;
 
     #[ManyToOne(targetEntity: World::class, inversedBy: 'continents')]

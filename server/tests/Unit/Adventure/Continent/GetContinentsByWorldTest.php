@@ -19,11 +19,13 @@ final class GetContinentsByWorldTest extends TestCase
      */
     public function shouldGetContinentsByWorld(): void
     {
+        $worldId = new Ulid();
+
         $world = new World();
-        $world->setId(new Ulid());
+        $world->setId($worldId);
         $world->setName('Monde');
 
-        $retrieveContinentsByWorld = new GetContinentsByWorld($world);
+        $retrieveContinentsByWorld = new GetContinentsByWorld((string) $worldId);
 
         $continent = new Continent();
         $continent->setWorld($world);
@@ -34,7 +36,7 @@ final class GetContinentsByWorldTest extends TestCase
         $continentGateway
             ->expects(self::once())
             ->method('getContinentsByWorld')
-            ->with(self::equalTo($world))
+            ->with(self::equalTo((string) $worldId))
             ->willReturn([$continent]);
 
         $handler = new GetContinentsByWorldHandler($continentGateway);
