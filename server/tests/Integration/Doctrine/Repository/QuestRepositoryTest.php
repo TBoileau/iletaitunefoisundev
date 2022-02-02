@@ -34,9 +34,27 @@ final class QuestRepositoryTest extends KernelTestCase
         /** @var QuestRepository<Quest> $questRepository */
         $questRepository = self::getContainer()->get(QuestRepository::class);
 
-        $quest = $questRepository->getQuestsByRegion((string) $region->getId());
+        $quests = $questRepository->getQuestsByRegion((string) $region->getId());
 
-        self::assertCount(5, $quest);
+        self::assertCount(5, $quests);
+    }
+
+    /**
+     * @test
+     */
+    public function getRelativesByQuestShouldReturnFiveQuests(): void
+    {
+        self::bootKernel();
+
+        /** @var QuestRepository<Quest> $questRepository */
+        $questRepository = self::getContainer()->get(QuestRepository::class);
+
+        /** @var Quest $quest */
+        $quest = $questRepository->findOneBy([]);
+
+        $relatives = $questRepository->getRelativesByQuest((string) $quest->getId());
+
+        self::assertCount(1, $relatives);
     }
 
     /**

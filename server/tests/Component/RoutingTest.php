@@ -8,6 +8,7 @@ use App\Adventure\Action\Continent\GetContinentAction;
 use App\Adventure\Action\Continent\GetContinentsByWorldAction;
 use App\Adventure\Action\Quest\GetQuestAction;
 use App\Adventure\Action\Quest\GetQuestsByRegionAction;
+use App\Adventure\Action\Quest\GetRelativesByQuestAction;
 use App\Adventure\Action\Region\GetRegionAction;
 use App\Adventure\Action\Region\GetRegionsByContinentAction;
 use App\Adventure\Action\World\GetWorldAction;
@@ -138,6 +139,15 @@ final class RoutingTest extends KernelTestCase
             'requirements' => ['id' => '[0-9A-Z]{26}'],
             'defaults' => [
                 '_controller' => sprintf('%s', GetQuestAction::class),
+            ],
+        ];
+        yield 'adventure get relatives by quest' => [
+            'route' => 'adventure_get_relatives_by_quest',
+            'path' => '/api/adventure/quests/{id}/relatives',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetRelativesByQuestAction::class),
             ],
         ];
     }

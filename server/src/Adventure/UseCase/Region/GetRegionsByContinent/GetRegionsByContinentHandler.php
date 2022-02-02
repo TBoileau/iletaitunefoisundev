@@ -20,8 +20,8 @@ final class GetRegionsByContinentHandler implements QueryHandlerInterface
     /**
      * @return array<array-key, Region>
      */
-    public function __invoke(GetRegionsByContinent $findRegionsByWorld): array
+    public function __invoke(GetRegionsByContinent $getRegionsByContinent): array
     {
-        return $this->regionGateway->getRegionsByContinent($findRegionsByWorld->getId());
+        return $this->regionGateway->getRegionsByContinent($getRegionsByContinent->getId());
     }
 }

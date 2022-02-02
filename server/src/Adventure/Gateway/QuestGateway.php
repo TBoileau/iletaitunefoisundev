@@ -17,4 +17,9 @@ interface QuestGateway
     public function getQuestsByRegion(string $id): array;
 
     public function getQuestById(string $id): Quest;
+
+    /**
+     * @return array<array-key, Quest>
+     */
+    public function getRelativesByQuest(string $id): array;
 }

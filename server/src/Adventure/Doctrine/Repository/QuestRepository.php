@@ -28,6 +28,11 @@ final class QuestRepository extends ServiceEntityRepository implements QuestGate
         return $this->findBy(['region' => $id]);
     }
 
+    public function getRelativesByQuest(string $id): array
+    {
+        return $this->getQuestById($id)->getRelatives()->toArray();
+    }
+
     public function getQuestById(string $id): Quest
     {
         $quest = $this->find($id);
