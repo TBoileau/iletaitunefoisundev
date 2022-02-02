@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Doctrine\Repository;
 
+use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\Region;
 use App\Adventure\Gateway\RegionGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -20,5 +21,10 @@ final class RegionRepository extends ServiceEntityRepository implements RegionGa
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Region::class);
+    }
+
+    public function getRegionsByContinent(Continent $continent): array
+    {
+        return $this->findBy(['continent' => $continent]);
     }
 }

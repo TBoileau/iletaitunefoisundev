@@ -7,8 +7,8 @@ namespace App\Tests\Unit\Security;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\UseCase\GetUser\GetUser;
-use App\Security\UseCase\GetUser\GetUserHandler;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmailHandler;
 use App\Security\UseCase\Register\Register;
 use App\Security\UseCase\Register\RegisterHandler;
 use PHPUnit\Framework\TestCase;
@@ -61,8 +61,8 @@ final class RegisterTest extends TestCase
 
         $commandHandler($register);
 
-        $queryHandler = new GetUserHandler($userGateway);
+        $queryHandler = new GetUserByEmailHandler($userGateway);
 
-        $queryHandler(GetUser::createFromRegister($register));
+        $queryHandler(GetUserByEmail::createFromRegister($register));
     }
 }

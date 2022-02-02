@@ -9,7 +9,7 @@ use App\Core\Bus\Event\EventBusInterface;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use App\Security\Entity\User;
-use App\Security\UseCase\GetUser\GetUser;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
 use App\Security\UseCase\Register\Register;
 use App\Security\UseCase\Register\Registered;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ final class RegisterAction implements ActionInterface
         $commandBus->dispatch($register);
 
         /** @var User $user */
-        $user = $queryBus->fetch(GetUser::createFromRegister($register));
+        $user = $queryBus->fetch(GetUserByEmail::createFromRegister($register));
 
         $eventBus->publish(new Registered($user));
 

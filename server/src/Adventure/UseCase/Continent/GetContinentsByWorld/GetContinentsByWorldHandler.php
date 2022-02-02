@@ -20,8 +20,8 @@ final class GetContinentsByWorldHandler implements QueryHandlerInterface
     /**
      * @return array<array-key, Continent>
      */
-    public function __invoke(GetContinentsByWorld $findContinentsByWorld): array
+    public function __invoke(GetContinentsByWorld $getContinentsByWorld): array
     {
-        return $this->continentGateway->getContinentsByWorld($findContinentsByWorld->getWorld());
+        return $this->continentGateway->getContinentsByWorld($getContinentsByWorld->getWorld());
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Component;
 
 use App\Adventure\Action\Continent\GetContinentsByWorldAction;
+use App\Adventure\Action\Region\GetRegionsByContinentAction;
 use App\Adventure\Action\World\GetWorldsAction;
 use App\Security\Action\RegisterAction;
 use Generator;
@@ -78,6 +79,15 @@ final class RoutingTest extends KernelTestCase
             'requirements' => [],
             'defaults' => [
                 '_controller' => sprintf('%s', GetContinentsByWorldAction::class),
+            ],
+        ];
+        yield 'adventure get regions by continent' => [
+            'route' => 'adventure_get_regions_by_continent',
+            'path' => '/api/adventure/continents/{id}/regions',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => [],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetRegionsByContinentAction::class),
             ],
         ];
     }
