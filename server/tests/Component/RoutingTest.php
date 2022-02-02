@@ -6,6 +6,8 @@ namespace App\Tests\Component;
 
 use App\Adventure\Action\Continent\GetContinentAction;
 use App\Adventure\Action\Continent\GetContinentsByWorldAction;
+use App\Adventure\Action\Quest\GetQuestAction;
+use App\Adventure\Action\Quest\GetQuestsByRegionAction;
 use App\Adventure\Action\Region\GetRegionAction;
 use App\Adventure\Action\Region\GetRegionsByContinentAction;
 use App\Adventure\Action\World\GetWorldAction;
@@ -118,6 +120,24 @@ final class RoutingTest extends KernelTestCase
             'requirements' => ['id' => '[0-9A-Z]{26}'],
             'defaults' => [
                 '_controller' => sprintf('%s', GetWorldAction::class),
+            ],
+        ];
+        yield 'adventure get quests by region' => [
+            'route' => 'adventure_get_quests_by_region',
+            'path' => '/api/adventure/regions/{id}/quests',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetQuestsByRegionAction::class),
+            ],
+        ];
+        yield 'adventure get quest' => [
+            'route' => 'adventure_get_quest',
+            'path' => '/api/adventure/quests/{id}',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetQuestAction::class),
             ],
         ];
     }

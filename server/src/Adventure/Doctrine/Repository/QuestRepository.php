@@ -8,6 +8,7 @@ use App\Adventure\Entity\Quest;
 use App\Adventure\Gateway\QuestGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
 
 /**
  * @template T
@@ -20,5 +21,21 @@ final class QuestRepository extends ServiceEntityRepository implements QuestGate
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Quest::class);
+    }
+
+    public function getQuestsByRegion(string $id): array
+    {
+        return $this->findBy(['region' => $id]);
+    }
+
+    public function getQuestById(string $id): Quest
+    {
+        $quest = $this->find($id);
+
+        if (null === $quest) {
+            throw new InvalidArgumentException(sprintf('Quest %s is not found.', $id));
+        }
+
+        return $quest;
     }
 }
