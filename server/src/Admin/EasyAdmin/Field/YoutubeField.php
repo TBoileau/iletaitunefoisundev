@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Admin\EasyAdmin\Field;
 
-use App\Admin\Form\YoutubeType;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 final class YoutubeField implements FieldInterface
 {
@@ -20,6 +20,6 @@ final class YoutubeField implements FieldInterface
             ->addCssClass('field-text')
             ->setDefaultColumns('col-md-6 col-xxl-5')
             ->setTemplatePath('admin/field/youtube.html.twig')
-            ->setFormType(YoutubeType::class);
+            ->setFormType(UrlType::class);
     }
 }

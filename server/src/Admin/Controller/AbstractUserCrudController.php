@@ -45,8 +45,11 @@ abstract class AbstractUserCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('email', 'Email');
-        yield TextField::new('password', 'Mot de passe')->onlyWhenCreating();
+        yield TextField::new('email', 'Email')
+            ->setFormTypeOption('empty_data', '');
+        yield TextField::new('password', 'Mot de passe')
+            ->setFormTypeOption('empty_data', '')
+            ->onlyWhenCreating();
     }
 
     abstract public function createUser(): AbstractUser;

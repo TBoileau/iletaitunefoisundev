@@ -6,10 +6,10 @@ namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\QuestCrudController;
 use App\Admin\Entity\Administrator;
+use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Entity\Difficulty;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
-use App\Adventure\Repository\QuestRepository;
 use App\Content\Entity\Course;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;

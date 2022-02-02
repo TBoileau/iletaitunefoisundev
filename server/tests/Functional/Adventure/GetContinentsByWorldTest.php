@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Adventure;
 
+use App\Adventure\Doctrine\Repository\WorldRepository;
 use App\Adventure\Entity\World;
-use App\Adventure\Repository\WorldRepository;
 use App\Tests\Functional\ApiTestCase;
 use Symfony\Component\HttpFoundation\Response;
 

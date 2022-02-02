@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Admin;
 
 use App\Admin\Controller\AdministratorCrudController;
+use App\Admin\Doctrine\Repository\AdministratorRepository;
 use App\Admin\Entity\Administrator;
-use App\Admin\Repository\AdministratorRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;

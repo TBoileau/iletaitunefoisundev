@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use App\Adventure\Repository\PlayerRepository;
+use App\Adventure\Doctrine\Repository\PlayerRepository;
 use App\Security\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -23,7 +23,7 @@ class Player implements Stringable
     private Ulid $id;
 
     #[Column(type: Types::STRING)]
-    private string $name;
+    private string $name = '';
 
     #[OneToOne(targetEntity: User::class)]
     #[JoinColumn(nullable: false)]
