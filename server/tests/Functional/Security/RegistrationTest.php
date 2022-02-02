@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
+use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
 use App\Tests\Functional\ApiTestCase;
 use Generator;
 use Symfony\Component\HttpFoundation\Response;

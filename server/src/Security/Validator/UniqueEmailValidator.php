@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Validator;
 
 use App\Security\Entity\User;
-use App\Security\Gateway\UserGateway;
+use App\Security\Contract\Gateway\UserGateway;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 

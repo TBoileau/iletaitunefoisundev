@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Command;
+namespace App\Security\UseCase\Register;
 
-use App\Core\CQRS\HandlerInterface;
+use App\Core\Bus\Command\CommandHandlerInterface;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Entity\User;
-use App\Security\Gateway\UserGateway;
-use App\Security\Message\Registration;
+use App\Security\Contract\Gateway\UserGateway;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class RegistrationHandler implements HandlerInterface
+final class RegisterHandler implements CommandHandlerInterface
 {
     /**
      * @param UserGateway<User> $userGateway
@@ -23,14 +22,12 @@ final class RegistrationHandler implements HandlerInterface
     ) {
     }
 
-    public function __invoke(Registration $registration): User
+    public function __invoke(Register $register): void
     {
         $user = new User();
         $user->setId($this->ulidGenerator->generate());
-        $user->setEmail($registration->getEmail());
-        $user->setPassword($this->userPasswordHasher->hashPassword($user, $registration->getPlainPassword()));
+        $user->setEmail($register->getEmail());
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $register->getPlainPassword()));
         $this->userGateway->register($user);
-
-        return $user;
     }
 }

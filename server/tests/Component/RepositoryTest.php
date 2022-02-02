@@ -27,7 +27,7 @@ use App\Content\Entity\Node;
 use App\Content\Repository\CourseRepository;
 use App\Content\Repository\NodeRepository;
 use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
+use App\Security\Doctrine\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

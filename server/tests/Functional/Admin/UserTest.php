@@ -7,7 +7,7 @@ namespace App\Tests\Functional\Admin;
 use App\Admin\Controller\UserCrudController;
 use App\Admin\Entity\Administrator;
 use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
+use App\Security\Doctrine\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;

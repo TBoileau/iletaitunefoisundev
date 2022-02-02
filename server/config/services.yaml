@@ -9,9 +9,18 @@ services:
             string $environment: '%kernel.environment%'
 
     _instanceof:
-        App\Core\CQRS\HandlerInterface:
+        App\Core\Bus\Command\CommandHandlerInterface:
             tags:
-                - messenger.message_handler
+                - { name: messenger.message_handler, bus: command.bus }
+        App\Core\Bus\Query\QueryHandlerInterface:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+        App\Core\Bus\Event\EventSubscriberInterface:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }
+        App\Core\Http\Action\ActionInterface:
+            tags:
+                - controller.service_arguments
 
     App\:
         resource: '../src/'
@@ -25,13 +34,3 @@ services:
         resource: '../src/Adventure/EntityListener/'
         tags:
             - doctrine.orm.entity_listener
-
-    App\Security\Action\:
-        resource: '../src/Security/Action/'
-        tags:
-            - controller.service_arguments
-
-    App\Adventure\Action\:
-        resource: '../src/Adventure/Action/'
-        tags:
-            - controller.service_arguments

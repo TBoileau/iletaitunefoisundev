@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Security\DataFixtures;
+namespace App\Security\Doctrine\DataFixtures;
 
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Entity\User;

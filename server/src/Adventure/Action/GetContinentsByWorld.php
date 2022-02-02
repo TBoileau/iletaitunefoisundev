@@ -7,12 +7,12 @@ namespace App\Adventure\Action;
 use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\World;
 use App\Adventure\Message\RetrieveContinentsByWorld;
-use App\Core\Http\Action\AbstractAction;
+use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/worlds/{id}/continents', name: 'get_continents_by_world', methods: [Request::METHOD_GET])]
-final class GetContinentsByWorld extends AbstractAction
+final class GetContinentsByWorld implements ActionInterface
 {
     /**
      * @return array<array-key, Continent>

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Message;
+namespace App\Security\UseCase\Register;
 
-use App\Core\CQRS\MessageInterface;
+use App\Core\Bus\Command\CommandInterface;
 use App\Security\Validator\UniqueEmail;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-final class Registration implements MessageInterface
+final class Register implements CommandInterface
 {
     #[NotBlank]
     #[Email]

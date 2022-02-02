@@ -5,24 +5,27 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Security;
 
 use App\Core\Uid\UlidGeneratorInterface;
-use App\Security\Command\RegistrationHandler;
+use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\Gateway\UserGateway;
-use App\Security\Message\Registration;
+use App\Security\UseCase\Find\Find;
+use App\Security\UseCase\Find\FindHandler;
+use App\Security\UseCase\Register\Register;
+use App\Security\UseCase\Register\RegisterHandler;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Ulid;
 
-final class RegistrationTest extends TestCase
+final class RegisterTest extends TestCase
 {
     /**
      * @test
      */
-    public function shouldRegisterUser(): void
+    public function shouldRegisterAndFindUser(): void
     {
-        $registration = new Registration();
-        $registration->setEmail('user+6@email.com');
-        $registration->setPlainPassword('Password123!');
+        $register = new Register();
+        $register->setEmail('user+6@email.com');
+        $register->setPlainPassword('Password123!');
 
         $ulid = Ulid::fromString('01FSY13PXFRJSR7FPBHZ5B2FNT');
 
@@ -49,9 +52,18 @@ final class RegistrationTest extends TestCase
             ->expects(self::once())
             ->method('register')
             ->with(self::equalTo($user));
+        $userGateway
+            ->expects(self::once())
+            ->method('findUserByEmail')
+            ->with(self::equalTo('user+6@email.com'))
+            ->willReturn($user);
 
-        $command = new RegistrationHandler($uuidGenerator, $userGateway, $userPasswordHasher);
+        $commandHandler = new RegisterHandler($uuidGenerator, $userGateway, $userPasswordHasher);
 
-        self::assertEquals($user, $command($registration));
+        $commandHandler($register);
+
+        $queryHandler = new FindHandler($userGateway);
+
+        $queryHandler(Find::createFromRegister($register));
     }
 }

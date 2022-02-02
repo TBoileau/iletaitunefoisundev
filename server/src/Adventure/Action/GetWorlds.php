@@ -6,12 +6,12 @@ namespace App\Adventure\Action;
 
 use App\Adventure\Entity\World;
 use App\Adventure\Message\RetrieveWorlds;
-use App\Core\Http\Action\AbstractAction;
+use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/worlds', name: 'get_worlds', methods: [Request::METHOD_GET])]
-final class GetWorlds extends AbstractAction
+final class GetWorlds implements ActionInterface
 {
     /**
      * @return array<array-key, World>

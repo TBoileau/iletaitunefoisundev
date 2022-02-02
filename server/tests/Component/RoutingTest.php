@@ -6,7 +6,7 @@ namespace App\Tests\Component;
 
 use App\Adventure\Action\GetContinentsByWorld;
 use App\Adventure\Action\GetWorlds;
-use App\Security\Action\Register;
+use App\Security\Http\Action\RegisterAction;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,7 +59,7 @@ final class RoutingTest extends KernelTestCase
             'methods' => [Request::METHOD_POST],
             'requirements' => [],
             'defaults' => [
-                '_controller' => sprintf('%s', Register::class),
+                '_controller' => sprintf('%s', RegisterAction::class),
             ],
         ];
         yield 'adventure get worlds' => [

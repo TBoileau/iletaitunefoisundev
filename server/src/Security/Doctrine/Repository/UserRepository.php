@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Security\Repository;
+namespace App\Security\Doctrine\Repository;
 
 use App\Adventure\Entity\Player;
+use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\Gateway\UserGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -26,9 +27,20 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
         parent::__construct($registry, User::class);
     }
 
-    public function loadUserByIdentifier(string $identifier): ?UserInterface
+    public function loadUserByIdentifier(string $identifier): ?User
     {
         return $this->findOneBy(['email' => $identifier]);
+    }
+
+    public function findUserByEmail(string $email): User
+    {
+        $user = $this->loadUserByIdentifier($email);
+
+        if (null === $user) {
+            throw new InvalidArgumentException(sprintf('User %s is not found.', $email));
+        }
+
+        return $user;
     }
 
     public function register(User $user): void

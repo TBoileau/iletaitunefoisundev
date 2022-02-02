@@ -6,7 +6,7 @@ namespace App\Tests\Integration\Doctrine\Repository;
 
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Entity\User;
-use App\Security\Repository\UserRepository;
+use App\Security\Doctrine\Repository\UserRepository;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Ulid;
@@ -24,6 +24,22 @@ final class UserRepositoryTest extends KernelTestCase
         $userRepository = self::getContainer()->get(UserRepository::class);
 
         $user = $userRepository->loadUserByIdentifier('user+1@email.com');
+
+        self::assertNotNull($user);
+        self::assertInstanceOf(User::class, $user);
+    }
+
+    /**
+     * @test
+     */
+    public function findUserByEmailShouldReturnUser(): void
+    {
+        self::bootKernel();
+
+        /** @var UserRepository<User> $userRepository */
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        $user = $userRepository->findUserByEmail('user+1@email.com');
 
         self::assertNotNull($user);
         self::assertInstanceOf(User::class, $user);
