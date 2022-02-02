@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Adventure\Doctrine\Repository;
 
-use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\Region;
 use App\Adventure\Gateway\RegionGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
 
 /**
  * @template T
@@ -23,8 +23,19 @@ final class RegionRepository extends ServiceEntityRepository implements RegionGa
         parent::__construct($registry, Region::class);
     }
 
-    public function getRegionsByContinent(Continent $continent): array
+    public function getRegionsByContinent(string $id): array
     {
-        return $this->findBy(['continent' => $continent]);
+        return $this->findBy(['continent' => $id]);
+    }
+
+    public function getRegionById(string $id): Region
+    {
+        $region = $this->find($id);
+
+        if (null === $region) {
+            throw new InvalidArgumentException(sprintf('Region %s is not found.', $id));
+        }
+
+        return $region;
     }
 }

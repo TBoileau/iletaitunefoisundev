@@ -19,11 +19,13 @@ final class GetRegionsByContinentTest extends TestCase
      */
     public function shouldGetRegionsByContinent(): void
     {
+        $continentId = new Ulid();
+
         $continent = new Continent();
-        $continent->setId(new Ulid());
+        $continent->setId($continentId);
         $continent->setName('Monde');
 
-        $retrieveRegionsByContinent = new GetRegionsByContinent($continent);
+        $retrieveRegionsByContinent = new GetRegionsByContinent((string) $continentId);
 
         $region = new Region();
         $region->setContinent($continent);
@@ -34,7 +36,7 @@ final class GetRegionsByContinentTest extends TestCase
         $regionGateway
             ->expects(self::once())
             ->method('getRegionsByContinent')
-            ->with(self::equalTo($continent))
+            ->with(self::equalTo((string) $continentId))
             ->willReturn([$region]);
 
         $handler = new GetRegionsByContinentHandler($regionGateway);

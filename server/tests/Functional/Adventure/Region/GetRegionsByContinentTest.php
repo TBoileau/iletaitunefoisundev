@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Adventure;
+namespace App\Tests\Functional\Adventure\Region;
 
 use App\Adventure\Doctrine\Repository\ContinentRepository;
 use App\Adventure\Entity\Continent;
