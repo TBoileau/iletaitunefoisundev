@@ -11,7 +11,11 @@ use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/worlds', name: 'get_worlds', methods: [Request::METHOD_GET])]
+#[Route(
+    path: '/worlds',
+    name: 'get_worlds',
+    methods: [Request::METHOD_GET]
+)]
 final class GetWorldsAction implements ActionInterface
 {
     /**

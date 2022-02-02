@@ -15,4 +15,6 @@ interface WorldGateway
      * @return array<array-key, World>
      */
     public function getWorlds(): array;
+
+    public function getWorldById(string $id): World;
 }
