@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Security;
 
+use App\Core\Bus\Event\EventBusInterface;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\UseCase\GetUser\GetUser;
-use App\Security\UseCase\GetUser\GetUserHandler;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmailHandler;
 use App\Security\UseCase\Register\Register;
+use App\Security\UseCase\Register\Registered;
 use App\Security\UseCase\Register\RegisterHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -57,12 +59,23 @@ final class RegisterTest extends TestCase
             ->with(self::equalTo('user+6@email.com'))
             ->willReturn($user);
 
-        $commandHandler = new RegisterHandler($uuidGenerator, $userGateway, $userPasswordHasher);
+        $eventBus = self::createMock(EventBusInterface::class);
+        $eventBus
+            ->expects(self::once())
+            ->method('publish')
+            ->with(self::isInstanceOf(Registered::class));
+
+        $commandHandler = new RegisterHandler(
+            $uuidGenerator,
+            $userGateway,
+            $eventBus,
+            $userPasswordHasher
+        );
 
         $commandHandler($register);
 
-        $queryHandler = new GetUserHandler($userGateway);
+        $queryHandler = new GetUserByEmailHandler($userGateway);
 
-        $queryHandler(GetUser::createFromRegister($register));
+        $queryHandler(GetUserByEmail::createFromRegister($register));
     }
 }

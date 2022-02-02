@@ -20,7 +20,7 @@ final class GetWorldsHandler implements QueryHandlerInterface
     /**
      * @return array<array-key, World>
      */
-    public function __invoke(GetWorlds $findWorlds): array
+    public function __invoke(GetWorlds $getWorlds): array
     {
         return $this->worldGateway->getWorlds();
     }

@@ -4,7 +4,14 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
+use App\Adventure\Action\Continent\GetContinentAction;
 use App\Adventure\Action\Continent\GetContinentsByWorldAction;
+use App\Adventure\Action\Quest\GetQuestAction;
+use App\Adventure\Action\Quest\GetQuestsByRegionAction;
+use App\Adventure\Action\Quest\GetRelativesByQuestAction;
+use App\Adventure\Action\Region\GetRegionAction;
+use App\Adventure\Action\Region\GetRegionsByContinentAction;
+use App\Adventure\Action\World\GetWorldAction;
 use App\Adventure\Action\World\GetWorldsAction;
 use App\Security\Action\RegisterAction;
 use Generator;
@@ -75,9 +82,72 @@ final class RoutingTest extends KernelTestCase
             'route' => 'adventure_get_continents_by_world',
             'path' => '/api/adventure/worlds/{id}/continents',
             'methods' => [Request::METHOD_GET],
-            'requirements' => [],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
             'defaults' => [
                 '_controller' => sprintf('%s', GetContinentsByWorldAction::class),
+            ],
+        ];
+        yield 'adventure get regions by continent' => [
+            'route' => 'adventure_get_regions_by_continent',
+            'path' => '/api/adventure/continents/{id}/regions',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetRegionsByContinentAction::class),
+            ],
+        ];
+        yield 'adventure get region' => [
+            'route' => 'adventure_get_region',
+            'path' => '/api/adventure/regions/{id}',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetRegionAction::class),
+            ],
+        ];
+        yield 'adventure get continent' => [
+            'route' => 'adventure_get_continent',
+            'path' => '/api/adventure/continents/{id}',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetContinentAction::class),
+            ],
+        ];
+        yield 'adventure get world' => [
+            'route' => 'adventure_get_world',
+            'path' => '/api/adventure/worlds/{id}',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetWorldAction::class),
+            ],
+        ];
+        yield 'adventure get quests by region' => [
+            'route' => 'adventure_get_quests_by_region',
+            'path' => '/api/adventure/regions/{id}/quests',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetQuestsByRegionAction::class),
+            ],
+        ];
+        yield 'adventure get quest' => [
+            'route' => 'adventure_get_quest',
+            'path' => '/api/adventure/quests/{id}',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetQuestAction::class),
+            ],
+        ];
+        yield 'adventure get relatives by quest' => [
+            'route' => 'adventure_get_relatives_by_quest',
+            'path' => '/api/adventure/quests/{id}/relatives',
+            'methods' => [Request::METHOD_GET],
+            'requirements' => ['id' => '[0-9A-Z]{26}'],
+            'defaults' => [
+                '_controller' => sprintf('%s', GetRelativesByQuestAction::class),
             ],
         ];
     }

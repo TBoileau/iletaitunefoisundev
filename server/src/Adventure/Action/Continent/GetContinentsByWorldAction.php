@@ -5,24 +5,26 @@ declare(strict_types=1);
 namespace App\Adventure\Action\Continent;
 
 use App\Adventure\Entity\Continent;
-use App\Adventure\Entity\World;
 use App\Adventure\UseCase\Continent\GetContinentsByWorld\GetContinentsByWorld;
+use App\Adventure\ViewModel\ContinentsViewModel;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/worlds/{id}/continents', name: 'get_continents_by_world', methods: [Request::METHOD_GET])]
+#[Route(
+    path: '/worlds/{id}/continents',
+    name: 'get_continents_by_world',
+    requirements: ['id' => '%routing.ulid%'],
+    methods: [Request::METHOD_GET]
+)]
 final class GetContinentsByWorldAction implements ActionInterface
 {
-    /**
-     * @return array<array-key, Continent>
-     */
-    public function __invoke(QueryBusInterface $queryBus, World $world): array
+    public function __invoke(QueryBusInterface $queryBus, string $id): ContinentsViewModel
     {
         /** @var array<array-key, Continent> $continents */
-        $continents = $queryBus->fetch(new GetContinentsByWorld($world));
+        $continents = $queryBus->fetch(new GetContinentsByWorld($id));
 
-        return $continents;
+        return ContinentsViewModel::createFromContinents($continents);
     }
 }

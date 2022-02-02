@@ -1,4 +1,5 @@
 parameters:
+    routing.ulid: '^[0-9A-Z]{26}$'
 
 services:
     _defaults:

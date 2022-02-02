@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Adventure;
+namespace App\Tests\Functional\Adventure\World;
 
 use App\Tests\Functional\ApiTestCase;
 use Symfony\Component\HttpFoundation\Response;

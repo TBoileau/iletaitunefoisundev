@@ -30,6 +30,8 @@ final class PlayerFixtures extends Fixture implements DependentFixtureInterface
             $player->setName(sprintf('Player %d', $i + 1));
             $player->setUser($user);
 
+            $user->setPlayer($player);
+
             $journey = new Journey();
             $journey->setId($this->ulidGenerator->generate());
             $player->setJourney($journey);

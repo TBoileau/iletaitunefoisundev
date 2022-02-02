@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCase\GetUser;
+namespace App\Security\UseCase\GetUserByEmail;
 
 use App\Core\Bus\Query\QueryInterface;
 use App\Security\UseCase\Register\Register;
 
-final class GetUser implements QueryInterface
+final class GetUserByEmail implements QueryInterface
 {
     private function __construct(private string $email)
     {
     }
 
-    public static function createFromRegister(Register $register): GetUser
+    public static function createFromRegister(Register $register): GetUserByEmail
     {
         return new self($register->getEmail());
     }

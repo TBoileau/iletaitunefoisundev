@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace App\Adventure\UseCase\Continent\GetContinentsByWorld;
 
-use App\Adventure\Entity\World;
 use App\Core\Bus\Query\QueryInterface;
-use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class GetContinentsByWorld implements QueryInterface
 {
-    #[NotNull]
-    private World $world;
+    #[NotBlank]
+    private string $id;
 
-    public function __construct(World $world)
+    public function __construct(string $id)
     {
-        $this->world = $world;
+        $this->id = $id;
     }
 
-    public function getWorld(): World
+    public function getId(): string
     {
-        return $this->world;
+        return $this->id;
     }
 }

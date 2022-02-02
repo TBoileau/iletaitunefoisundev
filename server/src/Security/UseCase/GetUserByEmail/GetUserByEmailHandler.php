@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCase\GetUser;
+namespace App\Security\UseCase\GetUserByEmail;
 
 use App\Core\Bus\Query\QueryHandlerInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
 
-final class GetUserHandler implements QueryHandlerInterface
+final class GetUserByEmailHandler implements QueryHandlerInterface
 {
     /**
      * @param UserGateway<User> $userGateway
@@ -17,8 +17,8 @@ final class GetUserHandler implements QueryHandlerInterface
     {
     }
 
-    public function __invoke(GetUser $find): User
+    public function __invoke(GetUserByEmail $getUserByEmail): User
     {
-        return $this->userGateway->findUserByEmail($find->getEmail());
+        return $this->userGateway->findUserByEmail($getUserByEmail->getEmail());
     }
 }

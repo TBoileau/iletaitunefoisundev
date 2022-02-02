@@ -9,9 +9,9 @@ use App\Core\Bus\Event\EventBusInterface;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use App\Security\Entity\User;
-use App\Security\UseCase\GetUser\GetUser;
+use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
 use App\Security\UseCase\Register\Register;
-use App\Security\UseCase\Register\Registered;
+use App\Security\ViewModel\UserViewModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,14 +23,12 @@ final class RegisterAction implements ActionInterface
         QueryBusInterface $queryBus,
         EventBusInterface $eventBus,
         Register $register
-    ): User {
+    ): UserViewModel {
         $commandBus->dispatch($register);
 
         /** @var User $user */
-        $user = $queryBus->fetch(GetUser::createFromRegister($register));
+        $user = $queryBus->fetch(GetUserByEmail::createFromRegister($register));
 
-        $eventBus->publish(new Registered($user));
-
-        return $user;
+        return UserViewModel::createFromUser($user);
     }
 }
