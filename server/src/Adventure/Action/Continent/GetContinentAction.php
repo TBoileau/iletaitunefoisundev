@@ -6,6 +6,7 @@ namespace App\Adventure\Action\Continent;
 
 use App\Adventure\Entity\Continent;
 use App\Adventure\UseCase\Continent\GetContinent\GetContinent;
+use App\Adventure\ViewModel\ContinentViewModel;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 )]
 final class GetContinentAction implements ActionInterface
 {
-    public function __invoke(QueryBusInterface $queryBus, string $id): Continent
+    public function __invoke(QueryBusInterface $queryBus, string $id): ContinentViewModel
     {
         /** @var Continent $continent */
         $continent = $queryBus->fetch(new GetContinent($id));
 
-        return $continent;
+        return ContinentViewModel::createFromContinent($continent);
     }
 }

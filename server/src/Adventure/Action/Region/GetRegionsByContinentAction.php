@@ -6,6 +6,7 @@ namespace App\Adventure\Action\Region;
 
 use App\Adventure\Entity\Region;
 use App\Adventure\UseCase\Region\GetRegionsByContinent\GetRegionsByContinent;
+use App\Adventure\ViewModel\RegionsViewModel;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 )]
 final class GetRegionsByContinentAction implements ActionInterface
 {
-    /**
-     * @return array<array-key, Region>
-     */
-    public function __invoke(QueryBusInterface $queryBus, string $id): array
+    public function __invoke(QueryBusInterface $queryBus, string $id): RegionsViewModel
     {
         /** @var array<array-key, Region> $regions */
         $regions = $queryBus->fetch(new GetRegionsByContinent($id));
 
-        return $regions;
+        return RegionsViewModel::createFromRegions($regions);
     }
 }

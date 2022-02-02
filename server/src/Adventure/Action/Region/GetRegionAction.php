@@ -6,6 +6,7 @@ namespace App\Adventure\Action\Region;
 
 use App\Adventure\Entity\Region;
 use App\Adventure\UseCase\Region\GetRegion\GetRegion;
+use App\Adventure\ViewModel\RegionViewModel;
 use App\Core\Bus\Query\QueryBusInterface;
 use App\Core\Http\Action\ActionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,11 +20,11 @@ use Symfony\Component\Routing\Annotation\Route;
 )]
 final class GetRegionAction implements ActionInterface
 {
-    public function __invoke(QueryBusInterface $queryBus, string $id): Region
+    public function __invoke(QueryBusInterface $queryBus, string $id): RegionViewModel
     {
         /** @var Region $region */
         $region = $queryBus->fetch(new GetRegion($id));
 
-        return $region;
+        return RegionViewModel::createFromRegion($region);
     }
 }

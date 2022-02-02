@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\Messenger\Exception\ValidationFailedException;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -72,7 +71,7 @@ final class KernelSubscriber implements EventSubscriberInterface
 
         $event->setResponse(
             new JsonResponse(
-                $this->serializer->serialize($result, 'json', [ObjectNormalizer::GROUPS => ['Default', 'get']]),
+                $this->serializer->serialize($result, 'json'),
                 $status,
                 ['Content-Type' => 'application/json'],
                 true

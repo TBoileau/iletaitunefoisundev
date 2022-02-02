@@ -31,7 +31,7 @@ final class PostConverter implements ParamConverterInterface
 
     public function supports(ParamConverter $configuration): bool
     {
-        /** @phpstan-ignore-next-line */
+        /* @phpstan-ignore-next-line */
         if (null === $configuration->getClass() || !class_exists($configuration->getClass())) {
             return false;
         }
