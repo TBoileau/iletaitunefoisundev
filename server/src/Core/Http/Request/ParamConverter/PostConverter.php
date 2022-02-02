@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Core\Http\Request\ParamConverter;
 
 use App\Core\Bus\Command\CommandInterface;
-use App\Core\Bus\Query\QueryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,9 +31,13 @@ final class PostConverter implements ParamConverterInterface
 
     public function supports(ParamConverter $configuration): bool
     {
+        /* @phpstan-ignore-next-line */
+        if (null === $configuration->getClass() || !class_exists($configuration->getClass())) {
+            return false;
+        }
+
         $interfaces = class_implements($configuration->getClass());
 
-        return is_array($interfaces)
-            && count(array_intersect([QueryInterface::class, CommandInterface::class], $interfaces)) > 0;
+        return is_array($interfaces) && in_array(CommandInterface::class, $interfaces, true);
     }
 }

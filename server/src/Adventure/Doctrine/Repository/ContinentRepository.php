@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Adventure\Doctrine\Repository;
 
 use App\Adventure\Entity\Continent;
-use App\Adventure\Entity\World;
 use App\Adventure\Gateway\ContinentGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use InvalidArgumentException;
 
 /**
  * @template T
@@ -26,8 +26,19 @@ final class ContinentRepository extends ServiceEntityRepository implements Conti
     /**
      * @return array<array-key, Continent>
      */
-    public function getContinentsByWorld(World $world): array
+    public function getContinentsByWorld(string $id): array
     {
-        return $this->findBy(['world' => $world]);
+        return $this->findBy(['world' => $id]);
+    }
+
+    public function getContinentById(string $id): Continent
+    {
+        $continent = $this->find($id);
+
+        if (null === $continent) {
+            throw new InvalidArgumentException(sprintf('Continent %s is not found.', $id));
+        }
+
+        return $continent;
     }
 }

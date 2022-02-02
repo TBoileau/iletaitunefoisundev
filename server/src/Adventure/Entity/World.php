@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Stringable;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: WorldRepository::class)]
@@ -21,11 +20,9 @@ class World implements Stringable
 {
     #[Id]
     #[Column(type: 'ulid', unique: true)]
-    #[Groups(['get'])]
     private Ulid $id;
 
     #[Column(type: Types::STRING)]
-    #[Groups(['get'])]
     private string $name;
 
     /**
