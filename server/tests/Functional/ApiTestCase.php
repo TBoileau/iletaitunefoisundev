@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class ApiTestCase extends WebTestCase
 {
     /**
-     * @return array<array-key, mixed>
+     * @return array<array-key, mixed>|null
      */
-    public static function getContent(Response $response): array
+    public static function getContent(Response $response): ?array
     {
         /** @var string $content */
         $content = $response->getContent();
@@ -26,9 +26,9 @@ abstract class ApiTestCase extends WebTestCase
     }
 
     /**
-     * @return array<array-key, mixed>
+     * @return array<array-key, mixed>|null
      */
-    public static function get(KernelBrowser $client, string $route): array
+    public static function get(KernelBrowser $client, string $route): ?array
     {
         $client->request(
             Request::METHOD_GET,
@@ -46,7 +46,7 @@ abstract class ApiTestCase extends WebTestCase
      *
      * @return array<array-key, mixed>
      */
-    public static function post(KernelBrowser $client, string $route, array $data): array
+    public static function post(KernelBrowser $client, string $route, array $data): ?array
     {
         /** @var string $body */
         $body = json_encode($data);

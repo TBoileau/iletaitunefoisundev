@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security\UseCase\Register;
 
 use App\Core\Bus\Command\CommandHandlerInterface;
+use App\Core\Bus\Event\EventBusInterface;
 use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
@@ -18,6 +19,7 @@ final class RegisterHandler implements CommandHandlerInterface
     public function __construct(
         private UlidGeneratorInterface $ulidGenerator,
         private UserGateway $userGateway,
+        private EventBusInterface $eventBus,
         private UserPasswordHasherInterface $userPasswordHasher
     ) {
     }
@@ -29,5 +31,6 @@ final class RegisterHandler implements CommandHandlerInterface
         $user->setEmail($register->getEmail());
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $register->getPlainPassword()));
         $this->userGateway->register($user);
+        $this->eventBus->publish(new Registered($user));
     }
 }

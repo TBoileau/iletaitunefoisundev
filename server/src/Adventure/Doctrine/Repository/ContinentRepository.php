@@ -36,7 +36,7 @@ final class ContinentRepository extends ServiceEntityRepository implements Conti
         $continent = $this->find($id);
 
         if (null === $continent) {
-            throw new InvalidArgumentException(sprintf('Region %s is not found.', $id));
+            throw new InvalidArgumentException(sprintf('Continent %s is not found.', $id));
         }
 
         return $continent;

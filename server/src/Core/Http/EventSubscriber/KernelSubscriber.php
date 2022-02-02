@@ -69,6 +69,10 @@ final class KernelSubscriber implements EventSubscriberInterface
             default => Response::HTTP_NO_CONTENT,
         };
 
+        if (null === $result) {
+            $status = Response::HTTP_NO_CONTENT;
+        }
+
         $event->setResponse(
             new JsonResponse(
                 $this->serializer->serialize($result, 'json'),

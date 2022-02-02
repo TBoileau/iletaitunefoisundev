@@ -11,7 +11,6 @@ use App\Core\Http\Action\ActionInterface;
 use App\Security\Entity\User;
 use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
 use App\Security\UseCase\Register\Register;
-use App\Security\UseCase\Register\Registered;
 use App\Security\ViewModel\UserViewModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,8 +28,6 @@ final class RegisterAction implements ActionInterface
 
         /** @var User $user */
         $user = $queryBus->fetch(GetUserByEmail::createFromRegister($register));
-
-        $eventBus->publish(new Registered($user));
 
         return UserViewModel::createFromUser($user);
     }

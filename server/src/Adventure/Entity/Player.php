@@ -25,11 +25,11 @@ class Player implements Stringable
     #[Column(type: Types::STRING)]
     private string $name = '';
 
-    #[OneToOne(targetEntity: User::class)]
+    #[OneToOne(mappedBy: 'player', targetEntity: User::class)]
     #[JoinColumn(nullable: false)]
     private User $user;
 
-    #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'])]
+    #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'], fetch: 'EAGER')]
     #[JoinColumn(nullable: false)]
     private Journey $journey;
 
