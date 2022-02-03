@@ -68,7 +68,7 @@ final class PlayerTest extends WebTestCase
 
         $user = new User();
         $user->setPassword('password');
-        $user->setEmail('user+6@email.com');
+        $user->setEmail('user+7@email.com');
         $entityManager->persist($user);
         $entityManager->flush();
 

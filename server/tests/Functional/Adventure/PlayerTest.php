@@ -2,30 +2,33 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\Security;
+namespace App\Tests\Functional\Adventure;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use App\Security\Entity\User;
+use App\Adventure\Entity\Player;
+use App\Tests\Functional\AuthenticatedClientTrait;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class RegistrationTest extends ApiTestCase
+final class PlayerTest extends ApiTestCase
 {
+    use AuthenticatedClientTrait;
+
     /**
      * @test
      */
-    public function shouldRegisterAnUser(): void
+    public function shouldCreatePlayer(): void
     {
-        $client = self::createClient();
+        $client = self::createAuthenticatedClient('user+6@email.com');
         $client->request(
             Request::METHOD_POST,
-            '/api/security/register',
+            '/api/adventure/players',
             ['json' => self::createData()]
         );
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
-        self::assertJsonContains(['email' => 'user+7@email.com']);
-        self::assertMatchesResourceItemJsonSchema(User::class);
+        self::assertJsonContains(['name' => 'Joueur 0']);
+        self::assertMatchesResourceItemJsonSchema(Player::class);
     }
 
     /**
@@ -37,10 +40,10 @@ final class RegistrationTest extends ApiTestCase
      */
     public function shouldNotRegisterDueToInvalidData(array $data): void
     {
-        $client = self::createClient();
+        $client = self::createAuthenticatedClient('user+6@email.com');
         $client->request(
             Request::METHOD_POST,
-            '/api/security/register',
+            '/api/adventure/players',
             [
                 'json' => $data,
                 'headers' => [
@@ -56,11 +59,7 @@ final class RegistrationTest extends ApiTestCase
      */
     public function provideInvalidData(): Generator
     {
-        yield 'invalid email' => [self::createData(['email' => 'fail'])];
-        yield 'non unique email' => [self::createData(['email' => 'user+1@email.com'])];
-        yield 'empty email' => [self::createData(['email' => ''])];
-        yield 'wrong plain password' => [self::createData(['plainPassword' => 'fail'])];
-        yield 'empty plain password' => [self::createData(['plainPassword' => ''])];
+        yield 'empty name' => [self::createData(['name' => ''])];
     }
 
     /**
@@ -71,8 +70,7 @@ final class RegistrationTest extends ApiTestCase
     private static function createData(array $extra = []): array
     {
         return $extra + [
-                'email' => 'user+7@email.com',
-                'plainPassword' => 'Password123!',
+                'name' => 'Joueur 0',
             ];
     }
 }

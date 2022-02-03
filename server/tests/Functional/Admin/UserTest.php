@@ -108,7 +108,7 @@ final class UserTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $client->submitForm('Créer', [
-            'User[email]' => 'user+6@email.com',
+            'User[email]' => 'user+7@email.com',
             'User[password]' => 'Password123!',
         ]);
 
@@ -117,13 +117,13 @@ final class UserTest extends WebTestCase
         /** @var UserRepository<User> $userRepository */
         $userRepository = $client->getContainer()->get(UserRepository::class);
 
-        $user = $userRepository->findOneBy(['email' => 'user+6@email.com']);
+        $user = $userRepository->findOneBy(['email' => 'user+7@email.com']);
 
         /** @var UserPasswordHasherInterface $userPasswordHasher */
         $userPasswordHasher = $client->getContainer()->get(UserPasswordHasherInterface::class);
 
         self::assertNotNull($user);
-        self::assertSame('user+6@email.com', $user->getEmail());
+        self::assertSame('user+7@email.com', $user->getEmail());
         self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
     }
 
@@ -160,7 +160,7 @@ final class UserTest extends WebTestCase
         self::assertResponseIsSuccessful();
 
         $client->submitForm('Sauvegarder les modifications', [
-            'User[email]' => 'user+6@email.com',
+            'User[email]' => 'user+7@email.com',
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
