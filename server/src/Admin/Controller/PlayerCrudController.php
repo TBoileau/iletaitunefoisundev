@@ -6,7 +6,6 @@ namespace App\Admin\Controller;
 
 use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Player;
-use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -21,10 +20,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 final class PlayerCrudController extends AbstractCrudController
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public static function getEntityFqcn(): string
     {
         return Player::class;
@@ -68,18 +63,13 @@ final class PlayerCrudController extends AbstractCrudController
         yield AssociationField::new('journey', 'Journal de bord')
             ->setCrudController(JourneyCrudController::class)
             ->hideOnForm();
-        yield AssociationField::new('save', 'Sauvegarde')
-            ->setCrudController(SaveCrudController::class)
-            ->hideOnForm();
     }
 
     public function createEntity(string $entityFqcn): Player
     {
         $player = new Player();
-        $player->setId($this->ulidGenerator->generate());
 
         $journey = new Journey();
-        $journey->setId($this->ulidGenerator->generate());
         $player->setJourney($journey);
 
         return $player;

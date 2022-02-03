@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\Ulid;
 
 final class CourseTest extends WebTestCase
 {
@@ -93,7 +92,6 @@ final class CourseTest extends WebTestCase
         self::assertSame('Course 126', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
         self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
-        self::assertTrue(Ulid::isValid((string) $course->getId()));
     }
 
     /**
@@ -183,6 +181,5 @@ final class CourseTest extends WebTestCase
         self::assertSame('Course 0', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
         self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
-        self::assertTrue(Ulid::isValid((string) $course->getId()));
     }
 }

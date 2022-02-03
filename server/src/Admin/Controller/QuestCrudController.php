@@ -7,7 +7,6 @@ namespace App\Admin\Controller;
 use App\Admin\EasyAdmin\Field\DifficultyField;
 use App\Admin\EasyAdmin\Filter\DifficultyFilter;
 use App\Adventure\Entity\Quest;
-use App\Core\Uid\UlidGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -20,10 +19,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 final class QuestCrudController extends AbstractCrudController
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public static function getEntityFqcn(): string
     {
         return Quest::class;
@@ -63,13 +58,5 @@ final class QuestCrudController extends AbstractCrudController
         yield AssociationField::new('relatives', 'Quêtes connexes')
             ->setTemplatePath('admin/field/quests.html.twig')
             ->hideOnForm();
-    }
-
-    public function createEntity(string $entityFqcn): Quest
-    {
-        $quest = new Quest();
-        $quest->setId($this->ulidGenerator->generate());
-
-        return $quest;
     }
 }

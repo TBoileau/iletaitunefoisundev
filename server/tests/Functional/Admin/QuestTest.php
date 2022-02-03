@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\Ulid;
 
 final class QuestTest extends WebTestCase
 {
@@ -102,7 +101,6 @@ final class QuestTest extends WebTestCase
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
-        self::assertTrue(Ulid::isValid((string) $quest->getId()));
     }
 
     /**
@@ -195,6 +193,5 @@ final class QuestTest extends WebTestCase
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
-        self::assertTrue(Ulid::isValid((string) $quest->getId()));
     }
 }

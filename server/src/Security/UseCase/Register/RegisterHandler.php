@@ -4,33 +4,29 @@ declare(strict_types=1);
 
 namespace App\Security\UseCase\Register;
 
-use App\Core\Bus\Command\CommandHandlerInterface;
-use App\Core\Bus\Event\EventBusInterface;
-use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class RegisterHandler implements CommandHandlerInterface
+final class RegisterHandler implements MessageHandlerInterface
 {
     /**
      * @param UserGateway<User> $userGateway
      */
     public function __construct(
-        private UlidGeneratorInterface $ulidGenerator,
         private UserGateway $userGateway,
-        private EventBusInterface $eventBus,
         private UserPasswordHasherInterface $userPasswordHasher
     ) {
     }
 
-    public function __invoke(Register $register): void
+    public function __invoke(RegisterInput $register): User
     {
         $user = new User();
-        $user->setId($this->ulidGenerator->generate());
-        $user->setEmail($register->getEmail());
-        $user->setPassword($this->userPasswordHasher->hashPassword($user, $register->getPlainPassword()));
+        $user->setEmail($register->email);
+        $user->setPassword($this->userPasswordHasher->hashPassword($user, $register->plainPassword));
         $this->userGateway->register($user);
-        $this->eventBus->publish(new Registered($user));
+
+        return $user;
     }
 }

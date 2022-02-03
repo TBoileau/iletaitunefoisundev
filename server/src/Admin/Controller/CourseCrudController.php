@@ -6,7 +6,6 @@ namespace App\Admin\Controller;
 
 use App\Admin\EasyAdmin\Field\YoutubeField;
 use App\Content\Entity\Course;
-use App\Core\Uid\UlidGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -20,10 +19,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 final class CourseCrudController extends AbstractCrudController
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public static function getEntityFqcn(): string
     {
         return Course::class;
@@ -61,13 +56,5 @@ final class CourseCrudController extends AbstractCrudController
             ->setFormTypeOption('empty_data', '');
         yield YoutubeField::new('youtubeUrl', 'Vidéo Youtube')
             ->setFormTypeOption('empty_data', '');
-    }
-
-    public function createEntity(string $entityFqcn): Course
-    {
-        $course = new Course();
-        $course->setId($this->ulidGenerator->generate());
-
-        return $course;
     }
 }

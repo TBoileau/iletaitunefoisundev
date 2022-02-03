@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Adventure\Entity\World;
-use App\Core\Uid\UlidGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -18,10 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 final class WorldCrudController extends AbstractCrudController
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public static function getEntityFqcn(): string
     {
         return World::class;
@@ -54,13 +49,5 @@ final class WorldCrudController extends AbstractCrudController
         yield AssociationField::new('continents', 'Continents')
             ->setTemplatePath('admin/field/continents.html.twig')
             ->hideOnForm();
-    }
-
-    public function createEntity(string $entityFqcn): World
-    {
-        $world = new World();
-        $world->setId($this->ulidGenerator->generate());
-
-        return $world;
     }
 }

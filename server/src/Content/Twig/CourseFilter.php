@@ -11,9 +11,7 @@ final class CourseFilter extends AbstractExtension
 {
     public function getFilters(): array
     {
-        return [
-            new TwigFilter('youtube', [$this, 'youtube']),
-        ];
+        return [new TwigFilter('youtube', [$this, 'youtube'])];
     }
 
     public function youtube(string $url): string

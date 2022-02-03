@@ -12,7 +12,6 @@ use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Quest;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Uid\Ulid;
 
 final class CheckpointRepositoryTest extends KernelTestCase
 {
@@ -37,22 +36,19 @@ final class CheckpointRepositoryTest extends KernelTestCase
 
         $queryBuilder = $questRepository->createQueryBuilder('q');
 
+        /** @var array<array-key, int> $questsId */
+        $questsId = $journey->getCheckpoints()
+            ->map(static fn (Checkpoint $checkpoint): int => $checkpoint->getQuest()->getId()) /* @phpstan-ignore-line */
+            ->toArray();
+
         /** @var Quest $quest */
         $quest = $queryBuilder
-            ->where(
-                $queryBuilder->expr()->notIn(
-                    'q.id',
-                    $journey->getCheckpoints()
-                        ->map(static fn (Checkpoint $checkpoint): string => (string) $checkpoint->getQuest()->getId())
-                        ->toArray()
-                )
-            )
+            ->where($queryBuilder->expr()->notIn('q.id', $questsId))
             ->getQuery()
             ->setMaxResults(1)
             ->getSingleResult();
 
         $checkpoint = new Checkpoint();
-        $checkpoint->setId(new Ulid());
         $checkpoint->setJourney($journey);
         $checkpoint->setPassedAt(new DateTimeImmutable());
         $checkpoint->setQuest($quest);
@@ -62,7 +58,6 @@ final class CheckpointRepositoryTest extends KernelTestCase
         $checkpoint = $checkpointRepository->find($checkpoint->getId());
 
         self::assertNotNull($checkpoint);
-        self::assertTrue(Ulid::isValid((string) $checkpoint->getId()));
         self::assertEquals($quest, $checkpoint->getQuest());
         self::assertEquals($journey, $checkpoint->getJourney());
     }

@@ -6,34 +6,31 @@ namespace App\Security\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use OpenApi\Attributes as OpenApi;
 use Stringable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Ulid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserInterface, Stringable
 {
+    #[Groups('read')]
     #[Id]
-    #[Column(type: 'ulid', unique: true)]
-    #[OpenApi\Property(type: 'string')]
-    protected Ulid $id;
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue]
+    protected ?int $id = null;
 
     #[Column(type: Types::STRING, unique: true)]
+    #[Groups('read')]
     protected string $email = '';
 
     #[Column(type: Types::STRING, nullable: true)]
     protected ?string $password = '';
 
-    public function getId(): Ulid
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(Ulid $id): void
-    {
-        $this->id = $id;
     }
 
     public function getEmail(): string

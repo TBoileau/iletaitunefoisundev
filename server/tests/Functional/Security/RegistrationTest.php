@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
-use App\Security\Doctrine\Repository\UserRepository;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use App\Security\Entity\User;
-use App\Tests\Functional\ApiTestCase;
 use Generator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Ulid;
 
 final class RegistrationTest extends ApiTestCase
 {
@@ -20,23 +18,14 @@ final class RegistrationTest extends ApiTestCase
     public function shouldRegisterAnUser(): void
     {
         $client = self::createClient();
-
-        self::post($client, '/api/security/register', self::createData());
-
+        $client->request(
+            Request::METHOD_POST,
+            '/api/security/register',
+            ['json' => self::createData()]
+        );
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
-
-        /** @var UserRepository<User> $userRepository */
-        $userRepository = $client->getContainer()->get(UserRepository::class);
-
-        $user = $userRepository->loadUserByIdentifier('user+6@email.com');
-
-        /** @var UserPasswordHasherInterface $userPasswordHasher */
-        $userPasswordHasher = $client->getContainer()->get(UserPasswordHasherInterface::class);
-
-        self::assertNotNull($user);
-        self::assertSame('user+6@email.com', $user->getEmail());
-        self::assertTrue($userPasswordHasher->isPasswordValid($user, 'Password123!'));
-        self::assertTrue(Ulid::isValid((string) $user->getId()));
+        self::assertJsonContains(['email' => 'user+6@email.com']);
+        self::assertMatchesResourceItemJsonSchema(User::class);
     }
 
     /**
@@ -49,9 +38,16 @@ final class RegistrationTest extends ApiTestCase
     public function shouldNotRegisterDueToInvalidData(array $data): void
     {
         $client = self::createClient();
-
-        self::post($client, '/api/security/register', $data);
-
+        $client->request(
+            Request::METHOD_POST,
+            '/api/security/register',
+            [
+                'json' => $data,
+                'headers' => [
+                    'accept' => ['application/json'],
+                ],
+            ]
+        );
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
