@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 trait AuthenticatedClientTrait
 {
-    public static function createAuthenticatedClient(): Client
+    public static function createAuthenticatedClient(string $email = 'user+1@email.com'): Client
     {
         $client = self::createClient();
         $response = $client->request(
@@ -17,7 +17,7 @@ trait AuthenticatedClientTrait
             '/api/security/login',
             [
                 'json' => [
-                    'email' => 'user+1@email.com',
+                    'email' => $email,
                     'password' => 'password',
                 ],
                 'headers' => [

@@ -37,15 +37,15 @@ final class UserRepositoryTest extends KernelTestCase
         $userRepository = self::getContainer()->get(UserRepository::class);
 
         $user = new User();
-        $user->setEmail('user+6@email.com');
+        $user->setEmail('user+7@email.com');
         $user->setPassword('password');
 
         $userRepository->register($user);
 
-        $user = $userRepository->loadUserByIdentifier('user+6@email.com');
+        $user = $userRepository->loadUserByIdentifier('user+7@email.com');
 
         self::assertNotNull($user);
-        self::assertSame('user+6@email.com', $user->getEmail());
+        self::assertSame('user+7@email.com', $user->getEmail());
         self::assertSame('password', $user->getPassword());
     }
 
@@ -69,7 +69,7 @@ final class UserRepositoryTest extends KernelTestCase
      */
     public function provideEmailAndUniqueState(): Generator
     {
-        yield 'unique' => ['email' => 'user+6@email.com', 'unique' => true];
+        yield 'unique' => ['email' => 'user+7@email.com', 'unique' => true];
         yield 'non unique' => ['email' => 'user+1@email.com', 'unique' => false];
     }
 }

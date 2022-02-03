@@ -21,4 +21,10 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
     {
         parent::__construct($registry, Player::class);
     }
+
+    public function create(Player $player): void
+    {
+        $this->_em->persist($player);
+        $this->_em->flush();
+    }
 }
