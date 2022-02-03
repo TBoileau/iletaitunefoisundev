@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Adventure\Doctrine\Repository;
 
 use App\Adventure\Entity\Checkpoint;
+use App\Adventure\Entity\Journey;
+use App\Adventure\Entity\Quest;
 use App\Adventure\Gateway\CheckpointGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
 
 /**
  * @template T
@@ -29,14 +30,8 @@ final class CheckpointRepository extends ServiceEntityRepository implements Chec
         $this->_em->flush();
     }
 
-    public function getCheckpointById(string $id): Checkpoint
+    public function hasAlreadySavedCheckpoint(Journey $journey, Quest $quest): bool
     {
-        $checkpoint = $this->find($id);
-
-        if (null === $checkpoint) {
-            throw new InvalidArgumentException(sprintf('Checkpoint %s is not found.', $id));
-        }
-
-        return $checkpoint;
+        return $this->count(['journey' => $journey, 'quest' => $quest]) > 0;
     }
 }

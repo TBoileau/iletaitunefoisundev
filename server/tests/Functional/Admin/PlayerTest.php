@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\Ulid;
 
 final class PlayerTest extends WebTestCase
 {
@@ -68,7 +67,6 @@ final class PlayerTest extends WebTestCase
         $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
 
         $user = new User();
-        $user->setId(new Ulid());
         $user->setPassword('password');
         $user->setEmail('user+6@email.com');
         $entityManager->persist($user);
@@ -99,7 +97,6 @@ final class PlayerTest extends WebTestCase
         self::assertNotNull($player);
         self::assertSame('Player 6', $player->getName());
         self::assertEquals($user->getId(), $player->getUser()->getId());
-        self::assertTrue(Ulid::isValid((string) $player->getId()));
     }
 
     /**

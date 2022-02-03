@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Security;
 
-use App\Tests\Functional\ApiTestCase;
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
 use Generator;
-use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenInterface;
-use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 final class LoginTest extends ApiTestCase
@@ -19,26 +17,17 @@ final class LoginTest extends ApiTestCase
     public function shouldBeAuthenticated(): void
     {
         $client = self::createClient();
-
-        /** @var array{token: string, refresh_token: string} $content */
-        $content = self::post($client, '/api/login_check', self::createData());
-
+        $client->request(
+            Request::METHOD_POST,
+            '/api/security/login',
+            [
+                'json' => self::createData(),
+                'headers' => [
+                    'accept' => ['application/json'],
+                ],
+            ]
+        );
         self::assertResponseIsSuccessful();
-
-        /** @var JWTTokenManagerInterface $jwtManager */
-        $jwtManager = $client->getContainer()->get('lexik_jwt_authentication.jwt_manager');
-
-        /** @var RefreshTokenManagerInterface $refreshTokenManager */
-        $refreshTokenManager = $client->getContainer()->get('gesdinet.jwtrefreshtoken.refresh_token_manager');
-
-        /** @var array{username: string} $payload */
-        $payload = $jwtManager->parse($content['token']);
-
-        /** @var RefreshTokenInterface $refreshToken */
-        $refreshToken = $refreshTokenManager->get($content['refresh_token']);
-
-        self::assertEquals('user+1@email.com', $payload['username']);
-        self::assertEquals('user+1@email.com', $refreshToken->getUsername());
     }
 
     /**
@@ -51,9 +40,16 @@ final class LoginTest extends ApiTestCase
     public function shouldNotBeAuthenticatedDueToInvalidData(array $data): void
     {
         $client = self::createClient();
-
-        self::post($client, '/api/login_check', $data);
-
+        $client->request(
+            Request::METHOD_POST,
+            '/api/security/login',
+            [
+                'json' => $data,
+                'headers' => [
+                    'accept' => ['application/json'],
+                ],
+            ]
+        );
         self::assertResponseStatusCodeSame(Response::HTTP_UNAUTHORIZED);
     }
 

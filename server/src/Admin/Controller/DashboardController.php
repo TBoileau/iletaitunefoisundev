@@ -11,7 +11,6 @@ use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
-use App\Adventure\Entity\Save;
 use App\Adventure\Entity\World;
 use App\Content\Entity\Course;
 use App\Security\Entity\User;
@@ -56,7 +55,6 @@ final class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Quêtes', 'fa fa-exclamation-circle', Quest::class),
             MenuItem::linkToCrud('Joueur', 'fa fa-chalkboard-teacher', Player::class),
             MenuItem::linkToCrud('Journaux de bord', 'fa fa-atlas', Journey::class),
-            MenuItem::linkToCrud('Sauvegardes', 'fa fa-save', Save::class),
             MenuItem::linkToCrud('Checkpoints', 'fa fa-flag-checkered', Checkpoint::class),
         ]);
     }

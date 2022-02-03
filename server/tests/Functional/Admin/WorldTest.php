@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\Ulid;
 
 final class WorldTest extends WebTestCase
 {
@@ -87,7 +86,6 @@ final class WorldTest extends WebTestCase
 
         self::assertNotNull($world);
         self::assertSame('World 2', $world->getName());
-        self::assertTrue(Ulid::isValid((string) $world->getId()));
         self::assertCount(0, $world->getContinents());
     }
 

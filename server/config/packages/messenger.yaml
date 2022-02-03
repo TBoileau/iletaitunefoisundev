@@ -7,13 +7,6 @@ framework:
                 middleware:
                     - validation
                     - doctrine_transaction
-            query.bus:
-                middleware:
-                    - validation
-            event.bus:
-                default_middleware: allow_no_handlers
-                middleware:
-                    - validation
         transports:
             sync: 'sync://'
             async: '%env(MESSENGER_TRANSPORT_DSN)%'

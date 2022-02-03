@@ -12,7 +12,6 @@ use App\Adventure\Doctrine\Repository\JourneyRepository;
 use App\Adventure\Doctrine\Repository\PlayerRepository;
 use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Doctrine\Repository\RegionRepository;
-use App\Adventure\Doctrine\Repository\SaveRepository;
 use App\Adventure\Doctrine\Repository\WorldRepository;
 use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Continent;
@@ -20,7 +19,6 @@ use App\Adventure\Entity\Journey;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
-use App\Adventure\Entity\Save;
 use App\Adventure\Entity\World;
 use App\Content\Doctrine\Repository\CourseRepository;
 use App\Content\Doctrine\Repository\NodeRepository;
@@ -70,6 +68,5 @@ final class RepositoryTest extends KernelTestCase
         yield 'player entity' => [Player::class, PlayerRepository::class]; /* @phpstan-ignore-line */
         yield 'journey entity' => [Journey::class, JourneyRepository::class]; /* @phpstan-ignore-line */
         yield 'checkpoint entity' => [Checkpoint::class, CheckpointRepository::class]; /* @phpstan-ignore-line */
-        yield 'save entity' => [Save::class, SaveRepository::class]; /* @phpstan-ignore-line */
     }
 }

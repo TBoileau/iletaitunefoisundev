@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
-use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Entity\AbstractUser;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -19,10 +18,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 abstract class AbstractUserCrudController extends AbstractCrudController
 {
-    public function __construct(
-        private UlidGeneratorInterface $ulidGenerator,
-        private UserPasswordHasherInterface $userPasswordHasher
-    ) {
+    public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
+    {
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -50,16 +47,6 @@ abstract class AbstractUserCrudController extends AbstractCrudController
         yield TextField::new('password', 'Mot de passe')
             ->setFormTypeOption('empty_data', '')
             ->onlyWhenCreating();
-    }
-
-    abstract public function createUser(): AbstractUser;
-
-    public function createEntity(string $entityFqcn): AbstractUser
-    {
-        $user = $this->createUser();
-        $user->setId($this->ulidGenerator->generate());
-
-        return $user;
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void

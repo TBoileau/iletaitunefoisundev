@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Integration\Doctrine\Repository;
 
-use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
 use Generator;
-use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Uid\Ulid;
 
 final class UserRepositoryTest extends KernelTestCase
 {
@@ -32,39 +29,6 @@ final class UserRepositoryTest extends KernelTestCase
     /**
      * @test
      */
-    public function findUserByEmailShouldReturnUser(): void
-    {
-        self::bootKernel();
-
-        /** @var UserRepository<User> $userRepository */
-        $userRepository = self::getContainer()->get(UserRepository::class);
-
-        $user = $userRepository->findUserByEmail('user+1@email.com');
-
-        self::assertTrue(Ulid::isValid((string) $user->getId()));
-        self::assertSame('user+1@email.com', $user->getEmail());
-    }
-
-    /**
-     * @t
-
-    /**
-     * @test
-     */
-    public function findUserByEmailShouldRaiseAnException(): void
-    {
-        self::bootKernel();
-
-        /** @var UserRepository<User> $userRepository */
-        $userRepository = self::getContainer()->get(UserRepository::class);
-
-        self::expectException(InvalidArgumentException::class);
-        $userRepository->findUserByEmail('fail@email.com');
-    }
-
-    /**
-     * @test
-     */
     public function registerShouldInsertUserInDatabase(): void
     {
         self::bootKernel();
@@ -72,11 +36,7 @@ final class UserRepositoryTest extends KernelTestCase
         /** @var UserRepository<User> $userRepository */
         $userRepository = self::getContainer()->get(UserRepository::class);
 
-        /** @var UlidGeneratorInterface $uuidGenerator */
-        $uuidGenerator = self::getContainer()->get(UlidGeneratorInterface::class);
-
         $user = new User();
-        $user->setId($uuidGenerator->generate());
         $user->setEmail('user+6@email.com');
         $user->setPassword('password');
 
@@ -85,7 +45,6 @@ final class UserRepositoryTest extends KernelTestCase
         $user = $userRepository->loadUserByIdentifier('user+6@email.com');
 
         self::assertNotNull($user);
-        self::assertTrue(Ulid::isValid((string) $user->getId()));
         self::assertSame('user+6@email.com', $user->getEmail());
         self::assertSame('password', $user->getPassword());
     }

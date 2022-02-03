@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Ulid;
 
 final class AdministratorTest extends WebTestCase
 {
@@ -125,7 +124,6 @@ final class AdministratorTest extends WebTestCase
         self::assertNotNull($admin);
         self::assertSame('admin+6@email.com', $admin->getEmail());
         self::assertTrue($adminPasswordHasher->isPasswordValid($admin, 'Password123!'));
-        self::assertTrue(Ulid::isValid((string) $admin->getId()));
     }
 
     /**
