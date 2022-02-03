@@ -27,18 +27,18 @@ security:
             logout:
                 path: admin_security_logout
         api_token_refresh:
-            pattern: ^/api/token/refresh
+            pattern: ^/api/security/token-refresh
             stateless: true
             refresh_jwt:
                 provider: users_doctrine
         login:
-            pattern: ^/api/login
+            pattern: ^/api/security/login
             stateless: true
             provider: users_doctrine
             json_login:
                 username_path: email
                 password_path: password
-                check_path: /api/login_check
+                check_path: /api/security/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
         api:
@@ -49,11 +49,11 @@ security:
     access_control:
         - { path: ^/admin/security/login, roles: PUBLIC_ACCESS }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/security/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/register, roles: PUBLIC_ACCESS }
-        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api/security/token-refresh, roles: PUBLIC_ACCESS }
         - { path: ^/api/doc, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/adventure, roles: ROLE_PLAYER }
 
 when@test:
     security:

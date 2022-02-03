@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Admin\Entity\Administrator;
-use App\Security\Entity\AbstractUser;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 final class AdministratorCrudController extends AbstractUserCrudController
@@ -20,10 +19,5 @@ final class AdministratorCrudController extends AbstractUserCrudController
         return parent::configureCrud($crud)
             ->setEntityLabelInSingular('Administrateur')
             ->setEntityLabelInPlural('Administrateurs');
-    }
-
-    public function createUser(): AbstractUser
-    {
-        return new Administrator();
     }
 }

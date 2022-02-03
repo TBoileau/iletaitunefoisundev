@@ -14,7 +14,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Uid\Ulid;
 
 final class RegionTest extends WebTestCase
 {
@@ -93,7 +92,6 @@ final class RegionTest extends WebTestCase
         self::assertNotNull($region);
         self::assertSame('Region 6', $region->getName());
         self::assertEquals($continent->getId(), $region->getContinent()->getId());
-        self::assertTrue(Ulid::isValid((string) $region->getId()));
         self::assertCount(0, $region->getQuests());
     }
 
@@ -180,7 +178,6 @@ final class RegionTest extends WebTestCase
         self::assertNotNull($region);
         self::assertSame('Region 0', $region->getName());
         self::assertEquals($continent->getId(), $region->getContinent()->getId());
-        self::assertTrue(Ulid::isValid((string) $region->getId()));
         self::assertCount(5, $region->getQuests());
     }
 }

@@ -16,7 +16,5 @@ interface UserGateway
 
     public function isUniqueEmail(string $email): bool;
 
-    public function findUserByEmail(string $email): User;
-
     public function createQueryBuilderUsersWhoHaveNotCreatedTheirPlayer(): QueryBuilder;
 }

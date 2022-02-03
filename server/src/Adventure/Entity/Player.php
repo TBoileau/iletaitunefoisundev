@@ -9,18 +9,19 @@ use App\Security\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
-use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: PlayerRepository::class)]
 class Player implements Stringable
 {
     #[Id]
-    #[Column(type: 'ulid', unique: true)]
-    private Ulid $id;
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue]
+    private ?int $id = null;
 
     #[Column(type: Types::STRING)]
     private string $name = '';
@@ -33,17 +34,9 @@ class Player implements Stringable
     #[JoinColumn(nullable: false)]
     private Journey $journey;
 
-    #[OneToOne(mappedBy: 'player', targetEntity: Save::class, cascade: ['persist'])]
-    private ?Save $save = null;
-
-    public function getId(): Ulid
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(Ulid $id): void
-    {
-        $this->id = $id;
     }
 
     public function getName(): string
@@ -64,6 +57,7 @@ class Player implements Stringable
     public function setUser(User $user): void
     {
         $this->user = $user;
+        $this->user->setPlayer($this);
     }
 
     public function getJourney(): Journey
@@ -79,15 +73,5 @@ class Player implements Stringable
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    public function getSave(): ?Save
-    {
-        return $this->save;
-    }
-
-    public function setSave(?Save $save): void
-    {
-        $this->save = $save;
     }
 }

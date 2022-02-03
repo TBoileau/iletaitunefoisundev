@@ -9,18 +9,19 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Stringable;
-use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: CheckpointRepository::class)]
 class Checkpoint implements Stringable
 {
     #[Id]
-    #[Column(type: 'ulid', unique: true)]
-    private Ulid $id;
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue]
+    private ?int $id = null;
 
     #[ManyToOne(targetEntity: Journey::class, inversedBy: 'checkpoints')]
     #[JoinColumn(nullable: false)]
@@ -33,14 +34,9 @@ class Checkpoint implements Stringable
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $passedAt;
 
-    public function getId(): Ulid
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(Ulid $id): void
-    {
-        $this->id = $id;
     }
 
     public function getJourney(): Journey

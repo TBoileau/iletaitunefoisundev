@@ -7,21 +7,23 @@ namespace App\Adventure\Entity;
 use App\Adventure\Doctrine\Repository\JourneyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\OrderBy;
 use Stringable;
-use Symfony\Component\Uid\Ulid;
 
 #[Entity(repositoryClass: JourneyRepository::class)]
 class Journey implements Stringable
 {
     #[Id]
-    #[Column(type: 'ulid', unique: true)]
-    private Ulid $id;
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue]
+    private ?int $id = null;
 
     #[OneToOne(mappedBy: 'journey', targetEntity: Player::class)]
     private Player $player; /* @phpstan-ignore-line */
@@ -38,14 +40,9 @@ class Journey implements Stringable
         $this->checkpoints = new ArrayCollection();
     }
 
-    public function getId(): Ulid
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(Ulid $id): void
-    {
-        $this->id = $id;
     }
 
     public function getPlayer(): Player

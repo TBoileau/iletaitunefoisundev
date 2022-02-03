@@ -10,10 +10,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\DiscriminatorColumn;
 use Doctrine\ORM\Mapping\DiscriminatorMap;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\InheritanceType;
 use Stringable;
-use Symfony\Component\Uid\Ulid;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Entity(repositoryClass: NodeRepository::class)]
 #[InheritanceType('SINGLE_TABLE')]
@@ -24,23 +25,20 @@ use Symfony\Component\Uid\Ulid;
 abstract class Node implements Stringable
 {
     #[Id]
-    #[Column(type: 'ulid', unique: true)]
-    protected Ulid $id;
+    #[Column(type: Types::INTEGER)]
+    #[GeneratedValue]
+    protected ?int $id = null;
 
     #[Column(type: Types::STRING)]
+    #[Groups('read')]
     protected string $title = '';
 
     #[Column(type: Types::STRING, unique: true)]
     protected string $slug = '';
 
-    public function getId(): Ulid
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(Ulid $id): void
-    {
-        $this->id = $id;
     }
 
     public function getTitle(): string

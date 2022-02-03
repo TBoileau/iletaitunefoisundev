@@ -1,0 +1,111 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Functional\Adventure;
+
+use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use App\Adventure\Doctrine\Repository\QuestRepository;
+use App\Adventure\Entity\Checkpoint;
+use App\Adventure\Entity\Player;
+use App\Adventure\Entity\Quest;
+use App\Adventure\Entity\Region;
+use App\Security\Entity\User;
+use App\Tests\Functional\AuthenticatedClientTrait;
+use App\Tests\Functional\DatabaseAccessTrait;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+final class QuestTest extends ApiTestCase
+{
+    use AuthenticatedClientTrait;
+    use DatabaseAccessTrait;
+
+    /**
+     * @test
+     */
+    public function shouldFinishQuest(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+1@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()->getCheckpoints()->first();
+        $playerQuest = $checkpoint->getQuest();
+
+        /** @var QuestRepository<Quest> $questRepository */
+        $questRepository = $this->getRepository(Quest::class);
+
+        /** @var Quest $quest */
+        $quest = $questRepository->createQueryBuilder('q')
+            ->where('q != :quest')
+            ->setParameter('quest', $playerQuest)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $client->request(
+            Request::METHOD_POST,
+            sprintf('/api/adventure/quests/%s/finish', $quest->getId()),
+            ['json' => []]
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @test
+     */
+    public function finishQuestShouldRaiseAnException(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+1@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()->getCheckpoints()->first();
+        $client->request(
+            Request::METHOD_POST,
+            sprintf('/api/adventure/quests/%s/finish', $checkpoint->getQuest()->getId()),
+            ['json' => []]
+        );
+        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @test
+     */
+    public function getItemShouldReturnQuest(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var Quest $quest */
+        $quest = $this->findOneBy(Quest::class, [[]]);
+        $client->request(Request::METHOD_GET, sprintf('/api/adventure/quests/%s', $quest->getId()));
+        self::assertResponseIsSuccessful();
+        self::assertMatchesResourceItemJsonSchema(Quest::class);
+    }
+
+    /**
+     * @test
+     */
+    public function getSubresourceOfRegionShouldReturnQuests(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var Region $region */
+        $region = $this->findOneBy(Region::class, [[]]);
+        $response = $client->request(
+            Request::METHOD_GET,
+            sprintf('/api/adventure/regions/%s/quests', $region->getId())
+        );
+        self::assertResponseIsSuccessful();
+        self::assertCount(5, $response->toArray()['hydra:member']);
+        self::assertMatchesResourceCollectionJsonSchema(Quest::class);
+    }
+}

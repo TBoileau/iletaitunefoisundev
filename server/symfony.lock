@@ -165,6 +165,9 @@
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v1.0.1"
     },
+    "justinrainbow/json-schema": {
+        "version": "5.2.11"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -191,19 +194,6 @@
     },
     "namshi/jose": {
         "version": "7.2.3"
-    },
-    "nelmio/api-doc-bundle": {
-        "version": "4.8",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "3.0",
-            "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
-        },
-        "files": [
-            "config/packages/nelmio_api_doc.yaml",
-            "config/routes/nelmio_api_doc.yaml"
-        ]
     },
     "nelmio/cors-bundle": {
         "version": "2.2",
@@ -478,6 +468,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v6.0.3"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v3.0.0"
+    },
     "symfony/http-foundation": {
         "version": "v6.0.0"
     },
@@ -690,8 +686,5 @@
     },
     "willdurand/negotiation": {
         "version": "3.1.0"
-    },
-    "zircote/swagger-php": {
-        "version": "4.2.4"
     }
 }

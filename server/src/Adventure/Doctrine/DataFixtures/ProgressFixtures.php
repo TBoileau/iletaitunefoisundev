@@ -10,7 +10,6 @@ use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
 use App\Adventure\Entity\World;
-use App\Core\Uid\UlidGeneratorInterface;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,10 +18,6 @@ use Doctrine\Persistence\ObjectManager;
 
 final class ProgressFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public function load(ObjectManager $manager): void
     {
         /** @var array<array-key, Player> $players */
@@ -42,7 +37,6 @@ final class ProgressFixtures extends Fixture implements DependentFixtureInterfac
                 /** @var Quest $quest */
                 foreach ($region->getQuests()->slice(0, $index + 1) as $quest) {
                     $checkpoint = new Checkpoint();
-                    $checkpoint->setId($this->ulidGenerator->generate());
                     $checkpoint->setJourney($player->getJourney());
                     $checkpoint->setQuest($quest);
                     $checkpoint->setPassedAt($passedAt);

@@ -8,6 +8,7 @@ use App\Content\Doctrine\Repository\CourseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
@@ -17,9 +18,11 @@ class Course extends Node
     #[Url]
     #[Regex(pattern: '/^https:\/\/www\.youtube\.com\/watch\?v=(.+)$/')]
     #[Column(type: Types::STRING)]
+    #[Groups('read')]
     private string $youtubeUrl = '';
 
     #[Column(type: Types::TEXT)]
+    #[Groups('read')]
     private string $description = '';
 
     public function getYoutubeUrl(): string

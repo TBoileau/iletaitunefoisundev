@@ -9,29 +9,23 @@ services:
             string $projectDir: '%kernel.project_dir%'
             string $environment: '%kernel.environment%'
 
-    _instanceof:
-        App\Core\Bus\Command\CommandHandlerInterface:
-            tags:
-                - { name: messenger.message_handler, bus: command.bus }
-        App\Core\Bus\Query\QueryHandlerInterface:
-            tags:
-                - { name: messenger.message_handler, bus: query.bus }
-        App\Core\Bus\Event\EventSubscriberInterface:
-            tags:
-                - { name: messenger.message_handler, bus: event.bus }
-        App\Core\Http\Action\ActionInterface:
-            tags:
-                - controller.service_arguments
-
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/*/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    App\Adventure\Doctrine\EntityListener\:
-        resource: '../src/Adventure/Doctrine/EntityListener/'
+    App\Adventure\Controller\:
+        resource: '../src/Adventure/Controller/'
         tags:
-            - doctrine.orm.entity_listener
+            - controller.service_arguments
+
+    App\Adventure\OpenApi\QuestDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']
+
+    App\Security\OpenApi\LoginDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']

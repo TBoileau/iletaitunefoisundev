@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b9e64237bd9d73120ddb4ccc2ba7ee5",
+    "content-hash": "250f18761deeef83a1fc3cf923556b87",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2219,117 +2219,6 @@
                 "source": "https://github.com/namshi/jose/tree/master"
             },
             "time": "2016-12-05T07:27:31+00:00"
-        },
-        {
-            "name": "nelmio/api-doc-bundle",
-            "version": "v4.8.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "1885d25cd95810b376b670e7f5f23a33c0dda068"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/1885d25cd95810b376b670e7f5f23a33c0dda068",
-                "reference": "1885d25cd95810b376b670e7f5f23a33c0dda068",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/annotations": "^1.11",
-                "ext-json": "*",
-                "php": ">=7.2",
-                "phpdocumentor/reflection-docblock": "^3.1|^4.0|^5.0",
-                "psr/cache": "^1.0|^2.0|^3.0",
-                "psr/container": "^1.0|^2.0",
-                "psr/log": "^1.0|^2.0|^3.0",
-                "symfony/config": "^4.4|^5.0|^6.0",
-                "symfony/console": "^4.4|^5.0|^6.0",
-                "symfony/dependency-injection": "^4.4|^5.0|^6.0",
-                "symfony/framework-bundle": "^4.4|^5.0|^6.0",
-                "symfony/http-foundation": "^4.4|^5.0|^6.0",
-                "symfony/http-kernel": "^4.4|^5.0|^6.0",
-                "symfony/options-resolver": "^4.4|^5.0|^6.0",
-                "symfony/property-info": "^4.4|^5.0|^6.0",
-                "symfony/routing": "^4.4|^5.0|^6.0",
-                "zircote/swagger-php": "^3.2|^4.0"
-            },
-            "conflict": {
-                "symfony/framework-bundle": "4.2.7"
-            },
-            "require-dev": {
-                "api-platform/core": "^2.4",
-                "composer/package-versions-deprecated": "1.11.99.1",
-                "friendsofsymfony/rest-bundle": "^2.8|^3.0",
-                "jms/serializer": "^1.14|^3.0",
-                "jms/serializer-bundle": "^2.3|^3.0|^4.0",
-                "sensio/framework-extra-bundle": "^4.4|^5.2|^6.0",
-                "symfony/asset": "^4.4|^5.2|^6.0",
-                "symfony/browser-kit": "^4.4|^5.2|^6.0",
-                "symfony/cache": "^4.4|^5.2|^6.0",
-                "symfony/dom-crawler": "^4.4|^5.2|^6.0",
-                "symfony/form": "^4.4|^5.2|^6.0",
-                "symfony/phpunit-bridge": "^5.2",
-                "symfony/property-access": "^4.4|^5.2|^6.0",
-                "symfony/serializer": "^4.4|^5.2|^6.0",
-                "symfony/stopwatch": "^4.4|^5.2|^6.0",
-                "symfony/templating": "^4.4|^5.2|^6.0",
-                "symfony/twig-bundle": "^4.4|^5.2|^6.0",
-                "symfony/validator": "^4.4|^5.2|^6.0",
-                "willdurand/hateoas-bundle": "^1.0|^2.0"
-            },
-            "suggest": {
-                "api-platform/core": "For using an API oriented framework.",
-                "friendsofsymfony/rest-bundle": "For using the parameters annotations.",
-                "jms/serializer-bundle": "For describing your models.",
-                "symfony/asset": "For using the Swagger UI.",
-                "symfony/cache": "For using a PSR-6 compatible cache implementation with the API doc generator.",
-                "symfony/form": "For describing your form type models.",
-                "symfony/monolog-bundle": "For using a PSR-3 compatible logger implementation with the API PHP describer.",
-                "symfony/serializer": "For describing your models.",
-                "symfony/validator": "For describing the validation constraints in your models.",
-                "twig/twig-bundle": "For using the Swagger UI.",
-                "willdurand/hateoas-bundle": "For extracting HATEOAS metadata."
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Nelmio\\ApiDocBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nelmio",
-                    "homepage": "http://nelm.io"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://github.com/nelmio/NelmioApiDocBundle/contributors"
-                }
-            ],
-            "description": "Generates documentation for your REST API from annotations",
-            "keywords": [
-                "api",
-                "doc",
-                "documentation",
-                "rest"
-            ],
-            "support": {
-                "issues": "https://github.com/nelmio/NelmioApiDocBundle/issues",
-                "source": "https://github.com/nelmio/NelmioApiDocBundle/tree/v4.8.2"
-            },
-            "time": "2022-01-10T16:10:58+00:00"
         },
         {
             "name": "nelmio/cors-bundle",
@@ -7789,81 +7678,6 @@
                 "source": "https://github.com/willdurand/Negotiation/tree/3.1.0"
             },
             "time": "2022-01-30T20:08:53+00:00"
-        },
-        {
-            "name": "zircote/swagger-php",
-            "version": "4.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "f00ba9db74722f029412705419c67bdd98e707fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/f00ba9db74722f029412705419c67bdd98e707fb",
-                "reference": "f00ba9db74722f029412705419c67bdd98e707fb",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/annotations": "^1.7",
-                "ext-json": "*",
-                "php": ">=7.2",
-                "psr/log": "^1.1 || ^2.0 || 3.0",
-                "symfony/finder": ">=2.2",
-                "symfony/yaml": ">=3.3"
-            },
-            "require-dev": {
-                "composer/package-versions-deprecated": "^1.11",
-                "friendsofphp/php-cs-fixer": "^2.17 || ^3.0",
-                "phpunit/phpunit": ">=8"
-            },
-            "bin": [
-                "bin/openapi"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "OpenApi\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Robert Allen",
-                    "email": "zircote@gmail.com"
-                },
-                {
-                    "name": "Bob Fanger",
-                    "email": "bfanger@gmail.com",
-                    "homepage": "https://bfanger.nl"
-                },
-                {
-                    "name": "Martin Rademacher",
-                    "email": "mano@radebatz.net",
-                    "homepage": "https://radebatz.net"
-                }
-            ],
-            "description": "swagger-php - Generate interactive documentation for your RESTful API using phpdoc annotations",
-            "homepage": "https://github.com/zircote/swagger-php/",
-            "keywords": [
-                "api",
-                "json",
-                "rest",
-                "service discovery"
-            ],
-            "support": {
-                "issues": "https://github.com/zircote/swagger-php/issues",
-                "source": "https://github.com/zircote/swagger-php/tree/4.2.4"
-            },
-            "time": "2022-01-20T08:28:48+00:00"
         }
     ],
     "packages-dev": [
@@ -8533,6 +8347,76 @@
                 }
             ],
             "time": "2022-01-14T00:29:20+00:00"
+        },
+        {
+            "name": "justinrainbow/json-schema",
+            "version": "5.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/justinrainbow/json-schema.git",
+                "reference": "2ab6744b7296ded80f8cc4f9509abbff393399aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/2ab6744b7296ded80f8cc4f9509abbff393399aa",
+                "reference": "2ab6744b7296ded80f8cc4f9509abbff393399aa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
+                "json-schema/json-schema-test-suite": "1.2.0",
+                "phpunit/phpunit": "^4.8.35"
+            },
+            "bin": [
+                "bin/validate-json"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JsonSchema\\": "src/JsonSchema/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ],
+            "support": {
+                "issues": "https://github.com/justinrainbow/json-schema/issues",
+                "source": "https://github.com/justinrainbow/json-schema/tree/5.2.11"
+            },
+            "time": "2021-07-22T09:24:00+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -10689,16 +10573,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208"
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/3e2f1610a25edc2afc2f5f37cc421049d6bef208",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/0ec66df981406fd2c9e41acbb526249bd18a0123",
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123",
                 "shasum": ""
             },
             "require": {
@@ -10740,7 +10624,7 @@
             "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/browser-kit/tree/v6.0.1"
+                "source": "https://github.com/symfony/browser-kit/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -10756,7 +10640,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -10895,6 +10779,168 @@
                 }
             ],
             "time": "2021-12-28T17:22:37+00:00"
+        },
+        {
+            "name": "symfony/http-client",
+            "version": "v6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client.git",
+                "reference": "45b95017f6a20d564584bdee6a376c9a79caa316"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/45b95017f6a20d564584bdee6a376c9a79caa316",
+                "reference": "45b95017f6a20d564584bdee6a376c9a79caa316",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "psr/log": "^1|^2|^3",
+                "symfony/http-client-contracts": "^3",
+                "symfony/service-contracts": "^1.0|^2|^3"
+            },
+            "provide": {
+                "php-http/async-client-implementation": "*",
+                "php-http/client-implementation": "*",
+                "psr/http-client-implementation": "1.0",
+                "symfony/http-client-implementation": "3.0"
+            },
+            "require-dev": {
+                "amphp/amp": "^2.5",
+                "amphp/http-client": "^4.2.1",
+                "amphp/http-tunnel": "^1.0",
+                "amphp/socket": "^1.1",
+                "guzzlehttp/promises": "^1.4",
+                "nyholm/psr7": "^1.0",
+                "php-http/httplug": "^1.0|^2.0",
+                "psr/http-client": "^1.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/process": "^5.4|^6.0",
+                "symfony/stopwatch": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HttpClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides powerful methods to fetch HTTP resources synchronously or asynchronously",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/http-client/tree/v6.0.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-01-22T06:58:00+00:00"
+        },
+        {
+            "name": "symfony/http-client-contracts",
+            "version": "v3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/http-client-contracts.git",
+                "reference": "265f03fed057044a8e4dc159aa33596d0f48ed3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/265f03fed057044a8e4dc159aa33596d0f48ed3f",
+                "reference": "265f03fed057044a8e4dc159aa33596d0f48ed3f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2"
+            },
+            "suggest": {
+                "symfony/http-client-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.0-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\HttpClient\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Generic abstractions related to HTTP clients",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/http-client-contracts/tree/v3.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-11-03T13:44:55+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

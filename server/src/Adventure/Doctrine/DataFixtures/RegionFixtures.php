@@ -6,17 +6,12 @@ namespace App\Adventure\Doctrine\DataFixtures;
 
 use App\Adventure\Entity\Continent;
 use App\Adventure\Entity\Region;
-use App\Core\Uid\UlidGeneratorInterface;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 final class RegionFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public function load(ObjectManager $manager): void
     {
         /** @var array<array-key, Continent> $continents */
@@ -25,7 +20,6 @@ final class RegionFixtures extends Fixture implements DependentFixtureInterface
         foreach ($continents as $continent) {
             for ($i = 1; $i <= 5; ++$i) {
                 $region = new Region();
-                $region->setId($this->ulidGenerator->generate());
                 $region->setName(sprintf('Region %d', $i));
                 $region->setContinent($continent);
                 $manager->persist($region);

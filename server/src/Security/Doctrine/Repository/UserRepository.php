@@ -10,7 +10,6 @@ use App\Security\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
@@ -29,17 +28,6 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
     public function loadUserByIdentifier(string $identifier): ?User
     {
         return $this->findOneBy(['email' => $identifier]);
-    }
-
-    public function findUserByEmail(string $email): User
-    {
-        $user = $this->loadUserByIdentifier($email);
-
-        if (null === $user) {
-            throw new InvalidArgumentException(sprintf('User %s is not found.', $email));
-        }
-
-        return $user;
     }
 
     public function register(User $user): void

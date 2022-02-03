@@ -12,6 +12,8 @@
             <file>src/Kernel.php</file>
             <file>src/Core/Command/InstallCommand.php</file>
             <directory>src/Security/Doctrine/DataFixtures</directory>
+            <directory>src/Security/OpenApi</directory>
+            <directory>src/Adventure/OpenApi</directory>
             <directory>src/Adventure/Doctrine/DataFixtures</directory>
             <directory>src/Content/Doctrine/DataFixtures</directory>
             <directory>src/Admin/Doctrine/DataFixtures</directory>

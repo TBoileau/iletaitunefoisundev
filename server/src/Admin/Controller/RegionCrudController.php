@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Admin\Controller;
 
 use App\Adventure\Entity\Region;
-use App\Core\Uid\UlidGeneratorInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -18,10 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 final class RegionCrudController extends AbstractCrudController
 {
-    public function __construct(private UlidGeneratorInterface $ulidGenerator)
-    {
-    }
-
     public static function getEntityFqcn(): string
     {
         return Region::class;
@@ -56,13 +51,5 @@ final class RegionCrudController extends AbstractCrudController
         yield AssociationField::new('quests', 'Quêtes')
             ->setTemplatePath('admin/field/quests.html.twig')
             ->hideOnForm();
-    }
-
-    public function createEntity(string $entityFqcn): Region
-    {
-        $region = new Region();
-        $region->setId($this->ulidGenerator->generate());
-
-        return $region;
     }
 }

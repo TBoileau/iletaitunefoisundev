@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Security;
 
-use App\Core\Bus\Event\EventBusInterface;
-use App\Core\Uid\UlidGeneratorInterface;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
-use App\Security\UseCase\GetUserByEmail\GetUserByEmail;
-use App\Security\UseCase\GetUserByEmail\GetUserByEmailHandler;
-use App\Security\UseCase\Register\Register;
-use App\Security\UseCase\Register\Registered;
 use App\Security\UseCase\Register\RegisterHandler;
+use App\Security\UseCase\Register\RegisterInput;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Uid\Ulid;
 
 final class RegisterTest extends TestCase
 {
@@ -24,20 +18,11 @@ final class RegisterTest extends TestCase
      */
     public function shouldRegisterAndFindUser(): void
     {
-        $register = new Register();
-        $register->setEmail('user+6@email.com');
-        $register->setPlainPassword('Password123!');
-
-        $ulid = Ulid::fromString('01FSY13PXFRJSR7FPBHZ5B2FNT');
-
-        $uuidGenerator = self::createMock(UlidGeneratorInterface::class);
-        $uuidGenerator
-            ->expects(self::once())
-            ->method('generate')
-            ->willReturn($ulid);
+        $register = new RegisterInput();
+        $register->email = 'user+6@email.com';
+        $register->plainPassword = 'Password123!';
 
         $user = new User();
-        $user->setId($ulid);
         $user->setEmail('user+6@email.com');
         $user->setPassword('hashed_password');
 
@@ -53,29 +38,11 @@ final class RegisterTest extends TestCase
             ->expects(self::once())
             ->method('register')
             ->with(self::equalTo($user));
-        $userGateway
-            ->expects(self::once())
-            ->method('findUserByEmail')
-            ->with(self::equalTo('user+6@email.com'))
-            ->willReturn($user);
 
-        $eventBus = self::createMock(EventBusInterface::class);
-        $eventBus
-            ->expects(self::once())
-            ->method('publish')
-            ->with(self::isInstanceOf(Registered::class));
+        $commandHandler = new RegisterHandler($userGateway, $userPasswordHasher);
 
-        $commandHandler = new RegisterHandler(
-            $uuidGenerator,
-            $userGateway,
-            $eventBus,
-            $userPasswordHasher
-        );
+        $output = $commandHandler($register);
 
-        $commandHandler($register);
-
-        $queryHandler = new GetUserByEmailHandler($userGateway);
-
-        $queryHandler(GetUserByEmail::createFromRegister($register));
+        self::assertEquals('user+6@email.com', $output->getEmail());
     }
 }
