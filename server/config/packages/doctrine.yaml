@@ -3,6 +3,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             difficulty: App\Adventure\Doctrine\Type\DifficultyType
+            type: App\Adventure\Doctrine\Type\QuestTypeType
 
     orm:
         auto_generate_proxy_classes: true

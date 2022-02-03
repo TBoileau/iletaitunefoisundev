@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Controller\FinishQuestController;
 use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Doctrine\Type\DifficultyType;
+use App\Adventure\Doctrine\Type\QuestTypeType;
 use App\Content\Entity\Course;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -62,6 +63,9 @@ class Quest implements Stringable
 
     #[Column(type: DifficultyType::NAME, length: 1)]
     private Difficulty $difficulty;
+
+    #[Column(name: 'quest_type', type: QuestTypeType::NAME, length: 1)]
+    private Type $type;
 
     /**
      * @var Collection<int, Quest>
@@ -138,6 +142,16 @@ class Quest implements Stringable
     public function setCourse(Course $course): void
     {
         $this->course = $course;
+    }
+
+    public function getType(): Type
+    {
+        return $this->type;
+    }
+
+    public function setType(Type $type): void
+    {
+        $this->type = $type;
     }
 
     public function __toString(): string
