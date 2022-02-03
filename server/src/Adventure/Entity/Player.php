@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Doctrine\Repository\PlayerRepository;
+use App\Adventure\UseCase\CreatePlayer\CreatePlayerInput;
 use App\Security\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -14,16 +16,34 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    collectionOperations: [
+        'post' => [
+            'messenger' => 'input',
+            'input' => CreatePlayerInput::class,
+            'status' => Response::HTTP_CREATED,
+        ],
+    ],
+    itemOperations: [
+        'get',
+    ],
+    normalizationContext: ['groups' => ['read']],
+    routePrefix: '/adventure'
+)]
 #[Entity(repositoryClass: PlayerRepository::class)]
 class Player implements Stringable
 {
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('read')]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
+    #[Groups('read')]
     private string $name = '';
 
     #[OneToOne(mappedBy: 'player', targetEntity: User::class)]

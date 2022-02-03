@@ -17,7 +17,7 @@ final class PlayerFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var array<array-key, User> $users */
-        $users = $manager->getRepository(User::class)->findAll();
+        $users = $manager->getRepository(User::class)->findBy([], [], 5, 0);
 
         foreach ($users as $i => $user) {
             $player = new Player();

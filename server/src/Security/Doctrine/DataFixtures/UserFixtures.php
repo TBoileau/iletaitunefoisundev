@@ -17,7 +17,7 @@ final class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 5; ++$i) {
+        for ($i = 1; $i <= 6; ++$i) {
             $manager->persist($this->createUser($i));
         }
         $manager->flush();
