@@ -7,6 +7,7 @@ namespace App\Adventure\Doctrine\DataFixtures;
 use App\Adventure\Entity\Difficulty;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
+use App\Adventure\Entity\Type;
 use App\Content\Doctrine\DataFixtures\CourseFixtures;
 use App\Content\Entity\Course;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -37,6 +38,10 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                     1, 2 => Difficulty::Easy,
                     3, 4 => Difficulty::Normal,
                     default => Difficulty::Hard,
+                });
+                $quest->setType(match ($i % 2) {
+                    0 => Type::Main,
+                    default => Type::Side,
                 });
                 if (null !== $relative) {
                     $quest->getRelatives()->add($relative);

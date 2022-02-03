@@ -14,6 +14,9 @@ use Symfony\Component\Security\Core\Security;
 
 final class CreatePlayerTest extends TestCase
 {
+    /**
+     * @test
+     */
     public function shouldCreatePlayer(): void
     {
         $createPlayer = new CreatePlayerInput();
@@ -33,6 +36,8 @@ final class CreatePlayerTest extends TestCase
 
         $handler = new CreatePlayerHandler($playerGateway, $security);
 
-        $handler($createPlayer);
+        $player = $handler($createPlayer);
+
+        self::assertEquals('Joueur 0', $player->getName());
     }
 }
