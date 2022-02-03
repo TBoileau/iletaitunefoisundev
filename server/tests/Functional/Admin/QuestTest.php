@@ -10,6 +10,7 @@ use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Entity\Difficulty;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
+use App\Adventure\Entity\Type;
 use App\Content\Entity\Course;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -87,6 +88,7 @@ final class QuestTest extends WebTestCase
             'Quest[region]' => $region->getId(),
             'Quest[course]' => $course->getId(),
             'Quest[difficulty]' => Difficulty::Easy->value,
+            'Quest[type]' => Type::Main->value,
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -101,6 +103,7 @@ final class QuestTest extends WebTestCase
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
+        self::assertEquals(Type::Main, $quest->getType());
     }
 
     /**
@@ -179,6 +182,7 @@ final class QuestTest extends WebTestCase
             'Quest[region]' => $region->getId(),
             'Quest[course]' => $course->getId(),
             'Quest[difficulty]' => Difficulty::Easy->value,
+            'Quest[type]' => Type::Main->value,
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -193,5 +197,6 @@ final class QuestTest extends WebTestCase
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
+        self::assertEquals(Type::Main, $quest->getType());
     }
 }
