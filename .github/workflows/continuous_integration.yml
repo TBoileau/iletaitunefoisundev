@@ -2,78 +2,30 @@ name: Continuous Integration
 on: [push]
 jobs:
   code-quality:
+    runs-on: ubuntu-latest
     name: Code quality
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      fail-fast: false
-      matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: ['8.1']
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, ctype, iconv, intl
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+      - uses: actions/checkout@v2
+      - name: Up needed docker
+        run: docker-compose up -d apache
       - name: Install dependencies
-        run: make -C server composer-install
-      - name: Run analyse
-        run: make q
-
+        run: make composer-install
+      - name: Code quality
+        run: make analyse
   tests:
     name: Tests
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      fail-fast: false
-      matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: ['8.1']
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: 'Password123!'
-        ports:
-          - 3306:3306
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, ctype, iconv, intl
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Install dependencies
-        run: make -C server composer-install
-      - name: Install application
-        run: |
-          cd server
-          php bin/console app:install --env=test --db-driver=mysql --db-name=iletaitunefoisundev --db-user=root --db-password=Password123!
+      - uses: actions/checkout@v2
+      - name: Up needed docker
+        run: make install
+      - name: Initialize test environment
+        run: make prepare env=test
       - name: Run unit tests
-        run: make -C server unit-tests
+        run: make unit-tests
       - name: Run component tests
-        run: make -C server component-tests
+        run: make component-tests
       - name: Run integration tests
-        run: make -C server integration-tests
+        run: make integration-tests
       - name: Run functional tests
-        run: make -C server functional-tests
+        run: make functional-tests

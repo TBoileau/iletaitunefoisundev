@@ -13,9 +13,6 @@
             "src/Entity/.gitignore"
         ]
     },
-    "bmitch/churn-php": {
-        "version": "1.5.1"
-    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
