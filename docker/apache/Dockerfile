@@ -21,6 +21,7 @@ RUN docker-php-ext-configure \
             pdo pdo_mysql pdo_pgsql opcache intl zip calendar dom mbstring gd xsl
 
 RUN pecl install apcu && docker-php-ext-enable apcu
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 RUN a2enmod rewrite
 
