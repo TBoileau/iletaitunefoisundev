@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Doctrine\Repository\PlayerRepository;
 use App\Adventure\UseCase\CreatePlayer\CreatePlayerInput;
@@ -21,15 +22,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
+        'get',
         'post' => [
             'messenger' => 'input',
             'input' => CreatePlayerInput::class,
             'status' => Response::HTTP_CREATED,
         ],
     ],
-    itemOperations: [
-        'get',
-    ],
+    itemOperations: ['get'],
     normalizationContext: ['groups' => ['read']],
     routePrefix: '/adventure'
 )]
@@ -52,6 +52,8 @@ class Player implements Stringable
 
     #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'], fetch: 'EAGER')]
     #[JoinColumn(nullable: false)]
+    #[Groups('read')]
+    #[ApiProperty(readableLink: false)]
     private Journey $journey;
 
     public function getId(): ?int

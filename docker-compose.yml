@@ -26,6 +26,7 @@ services:
       - "9000:80"
     volumes:
       - ./docker/apache/vhosts:/etc/apache2/sites-enabled
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
       - ./server:/var/www/html
     restart: always
     networks:
