@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
+        'get',
         'post' => [
             'messenger' => 'input',
             'input' => CreatePlayerInput::class,

@@ -78,7 +78,7 @@ mapping-valid:
 
 tests:
 	@echo "\nRunning tests...\e[0m"
-	@$(EXEC_PHP) -d memory-limit=-1 bin/phpunit
+	@$(EXEC_PHP) -d memory-limit=4G bin/phpunit
 
 unit-tests:
 	@echo "\nRunning unit tests...\e[0m"

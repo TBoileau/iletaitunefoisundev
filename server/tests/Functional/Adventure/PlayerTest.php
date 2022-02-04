@@ -32,6 +32,21 @@ final class PlayerTest extends ApiTestCase
     /**
      * @test
      */
+    public function shouldReturnPlayers(): void
+    {
+        $client = self::createAuthenticatedClient('user+1@email.com');
+        $response = $client->request(
+            Request::METHOD_GET,
+            '/api/adventure/players?page=1',
+        );
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
+        self::assertMatchesResourceCollectionJsonSchema(Player::class);
+        self::assertCount(5, $response->toArray()['hydra:member']);
+    }
+
+    /**
+     * @test
+     */
     public function shouldCreatePlayer(): void
     {
         $client = self::createAuthenticatedClient('user+6@email.com');
