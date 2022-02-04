@@ -54,7 +54,7 @@ analyse: composer-valid container-linter mapping-valid phpcpd phpstan
 
 phpstan:
 	@echo "\nRunning phpstan...\e[0m"
-	$(EXEC_PHP) -d memory-limit=-1 vendor/bin/phpstan analyse --configuration=phpstan.neon
+	$(EXEC_PHP) -d memory-limit=4G vendor/bin/phpstan analyse --configuration=phpstan.neon
 
 php-cs-fixer:
 	@echo "\nRunning php-cs-fixer...\e[0m"
