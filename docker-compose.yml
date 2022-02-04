@@ -1,0 +1,83 @@
+version: '3.7'
+services:
+  neo4j:
+    container_name: neo4j
+    image: neo4j:3.5
+    restart: unless-stopped
+    volumes:
+      - neo4j-conf:/conf
+      - neo4j-data:/data
+      - neo4j-import:/import
+      - neo4j-logs:/logs
+      - neo4j-plugins:/plugins
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+    networks:
+      - dev
+  apache:
+    container_name: apache
+    build: docker/apache
+    ports:
+      - "9000:80"
+    volumes:
+      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
+      - ./server:/var/www/html
+    restart: always
+    networks:
+      - dev
+  mailer:
+    image: schickling/mailcatcher
+    container_name: mailer
+    ports:
+      - "1080:1080"
+    networks:
+      - dev
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - queue-data:/var/lib/rabbitmq/
+      - queue-log:/var/log/rabbitmq
+    networks:
+      - dev
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6380:6379"
+    networks:
+      - dev
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - dev
+
+volumes:
+  db-data:
+  queue-data:
+  queue-log:
+  elasticsearch:
+  neo4j-conf:
+  neo4j-data:
+  neo4j-import:
+  neo4j-logs:
+  neo4j-plugins:
+
+networks:
+  dev:
+    driver: bridge
