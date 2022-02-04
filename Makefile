@@ -1,7 +1,7 @@
 DOCKER_COMPOSE = docker-compose
 EXEC_APACHE = $(DOCKER_COMPOSE) exec -T apache
 EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T apache composer
-EXEC_PHP = $(DOCKER_COMPOSE) exec -T apache php -d memory-limit=4G
+EXEC_PHP = $(DOCKER_COMPOSE) exec -T apache php
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T apache php bin/console
 
 install: build up composer-install
