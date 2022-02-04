@@ -1,8 +1,8 @@
 DOCKER_COMPOSE = docker-compose
-EXEC_APACHE = $(DOCKER_COMPOSE) exec apache
-EXEC_COMPOSER = $(DOCKER_COMPOSE) exec apache composer
-EXEC_PHP = $(DOCKER_COMPOSE) exec apache php
-EXEC_SYMFONY = $(DOCKER_COMPOSE) exec apache php bin/console
+EXEC_APACHE = $(DOCKER_COMPOSE) exec -T apache
+EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T apache composer
+EXEC_PHP = $(DOCKER_COMPOSE) exec -T apache php
+EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T apache php bin/console
 
 install: build up composer-install
 
