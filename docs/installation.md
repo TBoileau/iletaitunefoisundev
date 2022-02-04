@@ -9,37 +9,25 @@ git clone git@github.com:incentive-factory/iletaitunefoisundev.git
 cd iletaitunefoisundev
 ```
 
+## Pré-requis
+* Docker
+* Docker-composer
 
-## Paramétrage de l'environnement
-L'installation consiste à paramétrer notre environnement de développement.
+## Installation
+L'installation consiste préparer et lancer les containers Docker :
 ```
-make i env=test|dev|prod
-```
-
-1. Sélectionnez le driver de votre base de données
-```
-Please select your the database driver (defaults to mysql)
-  [mysql     ] MySQL
-  [sqlite    ] SQLite
-  [postgresql] PostgreSQL
-  [oci8      ] Oracle
-> 
+make install
 ```
 
-2. Si vous utilisez le driver `sqlite`, saisissez le chemin du fichier SQLite
+## Remise à zéro
+Vous souhaitez recharger les containers docker, c'est simple :
 ```
-Please provide the relative path of SQLite file : |
-``` 
-
-3. Sinon, saisissez les codes d'accès ainsi que le nom de la base de données 
-```
-Please provide the database user name (default to root) : |
-Please provide the database user password (default to password) : |
-Please provide the database name (default to iletaitunefoisundev) : |
+make reset
 ```
 
-## Remise à zéro de la base de données et chargement des fixtures
+## Initialiser les environnements de `dev` et de `test`:
+```
+make initialize
+```
 
-```
-make p env=test|dev
-```
+Et voilà il ne vous reste plus qu'à développer !
