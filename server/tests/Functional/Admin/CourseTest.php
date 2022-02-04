@@ -77,6 +77,7 @@ final class CourseTest extends WebTestCase
             'Course[title]' => 'Course 126',
             'Course[slug]' => 'course-126',
             'Course[description]' => 'Description',
+            'Course[content]' => 'Content',
             'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
         ]);
 
@@ -91,6 +92,7 @@ final class CourseTest extends WebTestCase
         self::assertSame('course-126', $course->getSlug());
         self::assertSame('Course 126', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
+        self::assertSame('Content', $course->getContent());
         self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
     }
 
@@ -166,6 +168,7 @@ final class CourseTest extends WebTestCase
             'Course[title]' => 'Course 0',
             'Course[slug]' => 'course-0',
             'Course[description]' => 'Description',
+            'Course[content]' => 'Content',
             'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
         ]);
 
@@ -180,6 +183,7 @@ final class CourseTest extends WebTestCase
         self::assertSame('course-0', $course->getSlug());
         self::assertSame('Course 0', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
+        self::assertSame('Content', $course->getContent());
         self::assertSame('https://www.youtube.com/watch?v=-S94RNjjb4I', $course->getYoutubeUrl());
     }
 }
