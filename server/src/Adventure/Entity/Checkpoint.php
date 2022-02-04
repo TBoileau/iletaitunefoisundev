@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Doctrine\Repository\CheckpointRepository;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
@@ -14,13 +16,21 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Stringable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    collectionOperations: [],
+    itemOperations: ['get'],
+    normalizationContext: ['groups' => ['read']],
+    routePrefix: '/adventure',
+)]
 #[Entity(repositoryClass: CheckpointRepository::class)]
 class Checkpoint implements Stringable
 {
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('read')]
     private ?int $id = null;
 
     #[ManyToOne(targetEntity: Journey::class, inversedBy: 'checkpoints')]
@@ -29,9 +39,12 @@ class Checkpoint implements Stringable
 
     #[ManyToOne(targetEntity: Quest::class)]
     #[JoinColumn(nullable: false)]
+    #[Groups('read')]
+    #[ApiProperty(readableLink: false)]
     private Quest $quest;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Groups('read')]
     private DateTimeImmutable $passedAt;
 
     public function getId(): ?int

@@ -20,7 +20,7 @@ final class PlayerTest extends ApiTestCase
      */
     public function shouldReturnPlayer(): void
     {
-        $client = self::createAuthenticatedClient('user+1@email.com');
+        $client = self::createAuthenticatedClient();
         $client->request(
             Request::METHOD_GET,
             '/api/adventure/players/2',
@@ -34,7 +34,7 @@ final class PlayerTest extends ApiTestCase
      */
     public function shouldReturnPlayers(): void
     {
-        $client = self::createAuthenticatedClient('user+1@email.com');
+        $client = self::createAuthenticatedClient();
         $response = $client->request(
             Request::METHOD_GET,
             '/api/adventure/players?page=1',

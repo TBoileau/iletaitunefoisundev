@@ -22,6 +22,8 @@ RUN docker-php-ext-configure \
 
 RUN pecl install apcu && docker-php-ext-enable apcu
 
+RUN a2enmod rewrite
+
 RUN npm install --global yarn
 
 RUN git config --global user.email "t-boileau@email.com" \

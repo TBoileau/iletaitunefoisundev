@@ -1,7 +1,7 @@
 DOCKER_COMPOSE = docker-compose
 EXEC_APACHE = $(DOCKER_COMPOSE) exec -T apache
 EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T apache composer
-EXEC_PHP = $(DOCKER_COMPOSE) exec -T apache php
+EXEC_PHP = $(DOCKER_COMPOSE) exec -T apache php -d memory-limit=4G
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T apache php bin/console
 
 install: build up composer-install
@@ -54,7 +54,7 @@ analyse: composer-valid container-linter mapping-valid phpcpd phpstan
 
 phpstan:
 	@echo "\nRunning phpstan...\e[0m"
-	$(EXEC_PHP) -d memory-limit=4G vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=4G
+	$(EXEC_PHP) vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=4G
 
 php-cs-fixer:
 	@echo "\nRunning php-cs-fixer...\e[0m"
@@ -78,7 +78,7 @@ mapping-valid:
 
 tests:
 	@echo "\nRunning tests...\e[0m"
-	@$(EXEC_PHP) -d memory-limit=4G bin/phpunit
+	@$(EXEC_PHP) bin/phpunit
 
 unit-tests:
 	@echo "\nRunning unit tests...\e[0m"
