@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -52,6 +53,9 @@ class Region implements Stringable
     #[ApiSubresource(maxDepth: 1)]
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
     private Collection $quests;
+
+    #[OneToOne(targetEntity: Quest::class)]
+    private ?Quest $start = null;
 
     public function __construct()
     {
@@ -94,5 +98,15 @@ class Region implements Stringable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getStart(): ?Quest
+    {
+        return $this->start;
+    }
+
+    public function setStart(?Quest $start): void
+    {
+        $this->start = $start;
     }
 }

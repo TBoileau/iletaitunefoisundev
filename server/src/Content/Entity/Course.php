@@ -25,6 +25,10 @@ class Course extends Node
     #[Groups('read')]
     private string $description = '';
 
+    #[Column(type: Types::TEXT)]
+    #[Groups('read')]
+    private string $content = '';
+
     public function getYoutubeUrl(): string
     {
         return $this->youtubeUrl;
@@ -43,5 +47,15 @@ class Course extends Node
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
     }
 }

@@ -52,9 +52,11 @@ final class CourseCrudController extends AbstractCrudController
         yield SlugField::new('slug', 'Slug')
             ->setFormTypeOption('empty_data', '')
             ->setTargetFieldName('title');
+        yield YoutubeField::new('youtubeUrl', 'Vidéo Youtube')
+            ->setFormTypeOption('empty_data', '');
         yield TextEditorField::new('description', 'Description')
             ->setFormTypeOption('empty_data', '');
-        yield YoutubeField::new('youtubeUrl', 'Vidéo Youtube')
+        yield TextEditorField::new('content', 'Content')
             ->setFormTypeOption('empty_data', '');
     }
 }

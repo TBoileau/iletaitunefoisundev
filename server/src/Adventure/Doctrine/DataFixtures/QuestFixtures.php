@@ -49,6 +49,11 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 }
                 $manager->persist($quest);
                 $relative = $quest;
+
+                if (1 === $i) {
+                    $region->setStart($quest);
+                }
+
                 ++$courseIndex;
             }
         }
