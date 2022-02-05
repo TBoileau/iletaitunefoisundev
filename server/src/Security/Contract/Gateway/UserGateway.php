@@ -14,6 +14,8 @@ interface UserGateway
 {
     public function register(User $user): void;
 
+    public function update(User $user): void;
+
     public function isUniqueEmail(string $email): bool;
 
     public function createQueryBuilderUsersWhoHaveNotCreatedTheirPlayer(): QueryBuilder;
