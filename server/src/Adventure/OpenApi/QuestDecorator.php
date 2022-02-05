@@ -23,15 +23,25 @@ final class QuestDecorator implements OpenApiFactoryInterface
 
         $paths = $openApi->getPaths();
 
+        $this->addQuestPath($paths, 'start', 'Start a quest.');
+        $this->addQuestPath($paths, 'finish', 'Finish a quest.');
+
+        return $openApi->withPaths($paths);
+    }
+
+    private function addQuestPath(Model\Paths $paths, string $action, string $description): void
+    {
+        $iri = sprintf('/api/adventure/quests/{id}/%s', $action);
+
         /** @var Model\PathItem $pathItem */
-        $pathItem = $paths->getPath('/api/adventure/quests/{id}/finish');
+        $pathItem = $paths->getPath($iri);
 
         /** @var Model\Operation $post */
         $post = $pathItem->getPost();
 
-        $post = $post->withSummary('Finish a Quest.');
+        $post = $post->withSummary($description);
 
-        $post = $post->withDescription('Finish a Quest by saving a new checkpoint.');
+        $post = $post->withDescription($description);
 
         /** @var Model\RequestBody $requestBody */
         $requestBody = $post->getRequestBody();
@@ -59,16 +69,12 @@ final class QuestDecorator implements OpenApiFactoryInterface
         $responses = $post->getResponses();
 
         $responses['204'] = new Model\Response(
-            description: 'Quest finished and checkpoint saved.',
+            description: 'No content',
             content: null
         );
 
         $post = $post->withResponses($responses);
 
-        $pathItem = $pathItem->withPost($post);
-
-        $paths->addPath('/api/adventure/quests/{id}/finish', $pathItem);
-
-        return $openApi->withPaths($paths);
+        $paths->addPath($iri, $pathItem->withPost($post));
     }
 }
