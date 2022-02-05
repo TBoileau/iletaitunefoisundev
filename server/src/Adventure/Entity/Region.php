@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
@@ -17,6 +18,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -49,6 +51,11 @@ class Region implements Stringable
     #[ApiSubresource(maxDepth: 1)]
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
     private Collection $quests;
+
+    #[OneToOne(targetEntity: Quest::class)]
+    #[Groups('adventure')]
+    #[ApiProperty(readableLink: false)]
+    private ?Quest $firstQuest = null;
 
     public function __construct()
     {
@@ -86,6 +93,16 @@ class Region implements Stringable
     public function getQuests(): Collection
     {
         return $this->quests;
+    }
+
+    public function getFirstQuest(): ?Quest
+    {
+        return $this->firstQuest;
+    }
+
+    public function setFirstQuest(?Quest $firstQuest): void
+    {
+        $this->firstQuest = $firstQuest;
     }
 
     public function __toString(): string
