@@ -31,6 +31,7 @@ final class AdventureDecorator implements OpenApiFactoryInterface
             if (
                 '/api/adventure/regions/{id}' === $iri
                 || '/api/adventure/worlds/{id}' === $iri
+                || '/api/adventure/checkpoints/{id}' === $iri
             ) {
                 continue;
             }
