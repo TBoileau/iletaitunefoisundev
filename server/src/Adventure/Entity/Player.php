@@ -23,7 +23,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
-        'get',
+        'get' => [
+            'normalization_context' => ['groups' => ['collection']],
+        ],
         'me' => [
             'controller' => MyPlayerController::class,
             'path' => '/players/me',
@@ -46,11 +48,11 @@ class Player implements Stringable
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
-    #[Groups('read')]
+    #[Groups(['read', 'collection'])]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups(['read', 'collection'])]
     private string $name = '';
 
     #[OneToOne(mappedBy: 'player', targetEntity: User::class)]
