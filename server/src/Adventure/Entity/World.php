@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Adventure\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\WorldRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,27 +21,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: ['get'],
     itemOperations: ['get'],
     attributes: ['pagination_enabled' => false],
-    normalizationContext: ['groups' => ['read']],
+    normalizationContext: ['groups' => ['adventure']],
     routePrefix: '/adventure',
 )]
 #[Entity(repositoryClass: WorldRepository::class)]
 class World implements Stringable
 {
-    #[Groups('read')]
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('adventure')]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups('adventure')]
     private string $name;
 
     /**
      * @var Collection<int, Continent>
      */
-    #[ApiSubresource(maxDepth: 1)]
     #[OneToMany(mappedBy: 'world', targetEntity: Continent::class)]
+    #[Groups('adventure')]
     private Collection $continents;
 
     public function __construct()

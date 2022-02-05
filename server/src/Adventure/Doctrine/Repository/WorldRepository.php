@@ -21,4 +21,15 @@ final class WorldRepository extends ServiceEntityRepository implements WorldGate
     {
         parent::__construct($registry, World::class);
     }
+
+    public function getWorlds(): array
+    {
+        return $this->createQueryBuilder('w')
+            ->addSelect('c')
+            ->addSelect('r')
+            ->join('w.continents', 'c')
+            ->join('c.regions', 'r')
+            ->getQuery()
+            ->getResult();
+    }
 }

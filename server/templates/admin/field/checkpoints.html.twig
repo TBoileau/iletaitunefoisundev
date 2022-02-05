@@ -15,7 +15,7 @@
                 <tr>
                     <td>
                         {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\CheckpointCrudController').setAction('detail').setEntityId(checkpoint.id) %}
-                        <a href="{{ url }}">{{ checkpoint.passedAt|date('d/m/Y H:i:s') }}</a>
+                        <a href="{{ url }}">{{ checkpoint.finishedAt|date('d/m/Y H:i:s') }}</a>
                     </td>
                     <td>
                         {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\QuestCrudController').setAction('detail').setEntityId(checkpoint.quest.id) %}

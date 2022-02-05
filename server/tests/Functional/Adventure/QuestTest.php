@@ -24,7 +24,7 @@ final class QuestTest extends ApiTestCase
     /**
      * @test
      */
-    public function shouldFinishQuest(): void
+    public function shouldStartQuest(): void
     {
         $client = self::createAuthenticatedClient();
         $this->init($client);
@@ -49,7 +49,7 @@ final class QuestTest extends ApiTestCase
 
         $client->request(
             Request::METHOD_POST,
-            sprintf('/api/adventure/quests/%s/finish', $quest->getId()),
+            sprintf('/api/adventure/quests/%s/start', $quest->getId()),
             ['json' => []]
         );
 
@@ -59,7 +59,7 @@ final class QuestTest extends ApiTestCase
     /**
      * @test
      */
-    public function finishQuestShouldRaiseAnException(): void
+    public function startQuestShouldRaiseAnException(): void
     {
         $client = self::createAuthenticatedClient();
         $this->init($client);
@@ -71,10 +71,96 @@ final class QuestTest extends ApiTestCase
         $checkpoint = $player->getJourney()->getCheckpoints()->first();
         $client->request(
             Request::METHOD_POST,
+            sprintf('/api/adventure/quests/%s/start', $checkpoint->getQuest()->getId()),
+            ['json' => []]
+        );
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldFinishQuest(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+1@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()
+            ->getCheckpoints()
+            ->filter(static fn (Checkpoint $checkpoint): bool => null === $checkpoint->getFinishedAt())
+            ->first();
+        $quest = $checkpoint->getQuest();
+
+        $client->request(
+            Request::METHOD_POST,
+            sprintf('/api/adventure/quests/%s/finish', $quest->getId()),
+            ['json' => []]
+        );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @test
+     */
+    public function finishQuestThatHasBeenAlreadyFinishedShouldRaiseAnException(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+2@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()
+            ->getCheckpoints()
+            ->filter(static fn (Checkpoint $checkpoint): bool => null !== $checkpoint->getFinishedAt())
+            ->first();
+        $client->request(
+            Request::METHOD_POST,
             sprintf('/api/adventure/quests/%s/finish', $checkpoint->getQuest()->getId()),
             ['json' => []]
         );
-        self::assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
+    }
+
+    /**
+     * @test
+     */
+    public function finishQuestThatIsNotStartedShouldRaiseAnException(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+1@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()->getCheckpoints()->first();
+        $playerQuest = $checkpoint->getQuest();
+
+        /** @var QuestRepository<Quest> $questRepository */
+        $questRepository = $this->getRepository(Quest::class);
+
+        /** @var Quest $quest */
+        $quest = $questRepository->createQueryBuilder('q')
+            ->where('q != :quest')
+            ->setParameter('quest', $playerQuest)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $client->request(
+            Request::METHOD_POST,
+            sprintf('/api/adventure/quests/%s/finish', $quest->getId()),
+            ['json' => []]
+        );
+        self::assertResponseStatusCodeSame(Response::HTTP_FORBIDDEN);
     }
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Adventure\Gateway;
 
 use App\Adventure\Entity\Checkpoint;
-use App\Adventure\Entity\Journey;
+use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 
 /**
@@ -15,5 +15,9 @@ interface CheckpointGateway
 {
     public function save(Checkpoint $checkpoint): void;
 
-    public function hasAlreadySavedCheckpoint(Journey $journey, Quest $quest): bool;
+    public function hasStartedQuest(Player $player, Quest $quest): bool;
+
+    public function hasFinishedQuest(Player $player, Quest $quest): bool;
+
+    public function getCheckpointByPlayerAndQuest(Player $player, Quest $quest): ?Checkpoint;
 }

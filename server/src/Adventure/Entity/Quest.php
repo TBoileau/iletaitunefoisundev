@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Controller\FinishQuestController;
+use App\Adventure\Controller\StartQuestController;
 use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Doctrine\Type\DifficultyType;
 use App\Adventure\Doctrine\Type\QuestTypeType;
@@ -37,8 +38,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'status' => Response::HTTP_NO_CONTENT,
             'method' => Request::METHOD_POST,
             'path' => '/quests/{id}/finish',
+            'security' => 'is_granted("ROLE_PLAYER") and is_granted("finish", object)',
+        ],
+        'start' => [
+            'controller' => StartQuestController::class,
+            'status' => Response::HTTP_NO_CONTENT,
+            'method' => Request::METHOD_POST,
+            'path' => '/quests/{id}/start',
+            'security' => 'is_granted("ROLE_PLAYER") and is_granted("start", object)',
         ],
     ],
+    attributes: ['pagination_enabled' => false],
     normalizationContext: ['groups' => ['read']],
     routePrefix: '/adventure',
 )]
@@ -70,15 +80,18 @@ class Quest implements Stringable
     /**
      * @var Collection<int, Quest>
      */
-    #[ApiSubresource(maxDepth: 1)]
     #[ManyToMany(targetEntity: Quest::class)]
     #[JoinTable(name: 'quest_relatives')]
+    #[ApiSubresource(maxDepth: 1)]
     private Collection $relatives;
 
     #[ManyToOne(targetEntity: Course::class)]
     #[JoinColumn(nullable: false)]
     #[Groups('read')]
     private Course $course;
+
+    #[Column(type: Types::BOOLEAN)]
+    private bool $start = false;
 
     public function __construct()
     {
@@ -126,6 +139,12 @@ class Quest implements Stringable
         return $this->difficulty->name;
     }
 
+    #[Groups('read')]
+    public function getTypeName(): string
+    {
+        return $this->type->name;
+    }
+
     /**
      * @return Collection<int, Quest>
      */
@@ -152,6 +171,16 @@ class Quest implements Stringable
     public function setType(Type $type): void
     {
         $this->type = $type;
+    }
+
+    public function isStart(): bool
+    {
+        return $this->start;
+    }
+
+    public function setStart(bool $start): void
+    {
+        $this->start = $start;
     }
 
     public function __toString(): string

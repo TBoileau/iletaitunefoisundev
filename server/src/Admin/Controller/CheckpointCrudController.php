@@ -27,7 +27,7 @@ final class CheckpointCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(DateTimeFilter::new('passedAt', 'Date de passage'))
+            ->add(DateTimeFilter::new('finishedAt', 'Date de passage'))
             ->add(EntityFilter::new('journey', 'Journal de bord'))
             ->add(EntityFilter::new('quest', 'Quête'));
     }
@@ -37,7 +37,7 @@ final class CheckpointCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Checkpoint')
             ->setEntityLabelInPlural('Checkpoints')
-            ->setDefaultSort(['passedAt' => 'DESC']);
+            ->setDefaultSort(['startedAt' => 'DESC', 'finishedAt' => 'DESC']);
     }
 
     public function configureActions(Actions $actions): Actions
@@ -56,11 +56,14 @@ final class CheckpointCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield DateTimeField::new('passedAt', 'Passé le');
-        yield AssociationField::new('journey', 'Journal de bord')
-            ->setCrudController(JourneyCrudController::class);
         yield AssociationField::new('quest', 'Quête')
             ->setCrudController(QuestCrudController::class);
         yield DifficultyField::new('quest.difficulty', 'Difficulté');
+        yield DateTimeField::new('startedAt', 'Commencée le');
+        yield DateTimeField::new('finishedAt', 'Terminée le');
+        yield AssociationField::new('journey.player', 'Joueur')
+            ->setCrudController(PlayerCrudController::class);
+        yield AssociationField::new('journey', 'Journal de bord')
+            ->setCrudController(JourneyCrudController::class);
     }
 }

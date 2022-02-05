@@ -32,6 +32,20 @@ final class PlayerTest extends ApiTestCase
     /**
      * @test
      */
+    public function shouldReturnMyPlayer(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $client->request(
+            Request::METHOD_GET,
+            '/api/adventure/players/me',
+        );
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
+        self::assertMatchesResourceItemJsonSchema(Player::class);
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnPlayers(): void
     {
         $client = self::createAuthenticatedClient();

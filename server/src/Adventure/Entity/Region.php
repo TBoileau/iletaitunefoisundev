@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
@@ -18,7 +17,6 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -31,20 +29,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Entity(repositoryClass: RegionRepository::class)]
 class Region implements Stringable
 {
-    #[Groups('read')]
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('adventure')]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups('adventure')]
     private string $name;
 
     #[ManyToOne(targetEntity: Continent::class, inversedBy: 'regions')]
     #[JoinColumn(nullable: false)]
-    #[Groups('read')]
-    #[ApiProperty(readableLink: false)]
     private Continent $continent;
 
     /**
@@ -53,9 +49,6 @@ class Region implements Stringable
     #[ApiSubresource(maxDepth: 1)]
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
     private Collection $quests;
-
-    #[OneToOne(targetEntity: Quest::class)]
-    private ?Quest $start = null;
 
     public function __construct()
     {
@@ -98,15 +91,5 @@ class Region implements Stringable
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    public function getStart(): ?Quest
-    {
-        return $this->start;
-    }
-
-    public function setStart(?Quest $start): void
-    {
-        $this->start = $start;
     }
 }

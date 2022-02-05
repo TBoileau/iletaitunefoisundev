@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Adventure\Doctrine\Repository;
 
 use App\Adventure\Entity\Checkpoint;
-use App\Adventure\Entity\Journey;
+use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Gateway\CheckpointGateway;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,12 +27,38 @@ final class CheckpointRepository extends ServiceEntityRepository implements Chec
 
     public function save(Checkpoint $checkpoint): void
     {
-        $this->_em->persist($checkpoint);
+        if (UnitOfWork::STATE_NEW === $this->_em->getUnitOfWork()->getEntityState($checkpoint)) {
+            $this->_em->persist($checkpoint);
+        }
         $this->_em->flush();
     }
 
-    public function hasAlreadySavedCheckpoint(Journey $journey, Quest $quest): bool
+    public function hasStartedQuest(Player $player, Quest $quest): bool
     {
-        return $this->count(['journey' => $journey, 'quest' => $quest]) > 0;
+        return 1 === $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)')
+                ->where('c.journey = :journey')
+                ->andWhere('c.quest = :quest')
+                ->andWhere('c.finishedAt IS NULL')
+                ->setParameters(['journey' => $player->getJourney(), 'quest' => $quest])
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
+
+    public function hasFinishedQuest(Player $player, Quest $quest): bool
+    {
+        return 1 === $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->where('c.journey = :journey')
+            ->andWhere('c.quest = :quest')
+            ->andWhere('c.finishedAt IS NOT NULL')
+            ->setParameters(['journey' => $player->getJourney(), 'quest' => $quest])
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getCheckpointByPlayerAndQuest(Player $player, Quest $quest): ?Checkpoint
+    {
+        return $this->findOneBy(['journey' => $player->getJourney(), 'quest' => $quest]);
     }
 }

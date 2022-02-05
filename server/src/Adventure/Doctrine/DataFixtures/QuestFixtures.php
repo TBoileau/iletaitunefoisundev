@@ -39,6 +39,9 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                     3, 4 => Difficulty::Normal,
                     default => Difficulty::Hard,
                 });
+                if (1 === $i) {
+                    $quest->setStart(true);
+                }
                 $quest->setType(match ($i % 2) {
                     0 => Type::Main,
                     default => Type::Side,
@@ -49,10 +52,6 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 }
                 $manager->persist($quest);
                 $relative = $quest;
-
-                if (1 === $i) {
-                    $region->setStart($quest);
-                }
 
                 ++$courseIndex;
             }

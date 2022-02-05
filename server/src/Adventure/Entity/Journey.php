@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\JourneyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,13 +18,6 @@ use Doctrine\ORM\Mapping\OrderBy;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(
-    collectionOperations: [],
-    itemOperations: ['get'],
-    attributes: ['pagination_enabled' => false],
-    normalizationContext: ['groups' => ['read']],
-    routePrefix: '/adventure',
-)]
 #[Entity(repositoryClass: JourneyRepository::class)]
 class Journey implements Stringable
 {
@@ -43,8 +34,8 @@ class Journey implements Stringable
      * @var Collection<int, Checkpoint>
      */
     #[OneToMany(mappedBy: 'journey', targetEntity: Checkpoint::class)]
-    #[OrderBy(['passedAt' => 'DESC'])]
-    #[ApiSubresource(maxDepth: 1)]
+    #[OrderBy(['finishedAt' => 'DESC'])]
+    #[Groups('read')]
     private Collection $checkpoints;
 
     public function __construct()

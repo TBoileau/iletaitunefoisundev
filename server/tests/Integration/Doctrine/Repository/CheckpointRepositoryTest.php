@@ -50,7 +50,8 @@ final class CheckpointRepositoryTest extends KernelTestCase
 
         $checkpoint = new Checkpoint();
         $checkpoint->setJourney($journey);
-        $checkpoint->setPassedAt(new DateTimeImmutable());
+        $checkpoint->setStartedAt(new DateTimeImmutable());
+        $checkpoint->setFinishedAt(new DateTimeImmutable());
         $checkpoint->setQuest($quest);
 
         $checkpointRepository->save($checkpoint);

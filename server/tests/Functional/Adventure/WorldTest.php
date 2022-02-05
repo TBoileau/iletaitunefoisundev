@@ -18,20 +18,6 @@ final class WorldTest extends ApiTestCase
     /**
      * @test
      */
-    public function getItemShouldReturnWorld(): void
-    {
-        $client = self::createAuthenticatedClient();
-        $this->init($client);
-        /** @var World $world */
-        $world = $this->findOneBy(World::class, [[]]);
-        $client->request(Request::METHOD_GET, sprintf('/api/adventure/worlds/%s', $world->getId()));
-        self::assertResponseIsSuccessful();
-        self::assertMatchesResourceItemJsonSchema(World::class);
-    }
-
-    /**
-     * @test
-     */
     public function getCollectionShouldReturnWorlds(): void
     {
         $client = self::createAuthenticatedClient();

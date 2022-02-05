@@ -87,6 +87,7 @@ final class QuestTest extends WebTestCase
             'Quest[name]' => 'Quest 6',
             'Quest[region]' => $region->getId(),
             'Quest[course]' => $course->getId(),
+            'Quest[start]' => true,
             'Quest[difficulty]' => Difficulty::Easy->value,
             'Quest[type]' => Type::Main->value,
         ]);
@@ -104,6 +105,7 @@ final class QuestTest extends WebTestCase
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
         self::assertEquals(Type::Main, $quest->getType());
+        self::assertTrue($quest->isStart());
     }
 
     /**
@@ -183,6 +185,7 @@ final class QuestTest extends WebTestCase
             'Quest[course]' => $course->getId(),
             'Quest[difficulty]' => Difficulty::Easy->value,
             'Quest[type]' => Type::Main->value,
+            'Quest[start]' => false,
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -198,5 +201,6 @@ final class QuestTest extends WebTestCase
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
         self::assertEquals(Type::Main, $quest->getType());
+        self::assertFalse($quest->isStart());
     }
 }

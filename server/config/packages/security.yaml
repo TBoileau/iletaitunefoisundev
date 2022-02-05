@@ -52,9 +52,8 @@ security:
         - { path: ^/api/security/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/token-refresh, roles: PUBLIC_ACCESS }
-        - { path: ^/api/doc, roles: PUBLIC_ACCESS }
-        - { path: ^/api/adventure/players, roles: ROLE_USER, methods: [POST] }
-        - { path: ^/api/adventure, roles: ROLE_PLAYER }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: ROLE_USER }
 
 when@test:
     security:
