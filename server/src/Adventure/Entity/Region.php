@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
@@ -52,6 +53,8 @@ class Region implements Stringable
     private Collection $quests;
 
     #[OneToOne(targetEntity: Quest::class)]
+    #[Groups('adventure')]
+    #[ApiProperty(readableLink: false)]
     private ?Quest $firstQuest = null;
 
     public function __construct()
