@@ -166,6 +166,7 @@ final class RegionTest extends WebTestCase
         $client->submitForm('Sauvegarder les modifications', [
             'Region[name]' => 'Region 0',
             'Region[continent]' => $continent->getId(),
+            'Region[firstQuest]' => 2,
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -179,5 +180,7 @@ final class RegionTest extends WebTestCase
         self::assertSame('Region 0', $region->getName());
         self::assertEquals($continent->getId(), $region->getContinent()->getId());
         self::assertCount(5, $region->getQuests());
+        self::assertNotNull($region->getFirstQuest());
+        self::assertEquals(2, $region->getFirstQuest()->getId());
     }
 }
