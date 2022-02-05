@@ -106,6 +106,10 @@ fixtures:
 	@echo "\nLoad fixtures...\e[0m"
 	$(EXEC_SYMFONY) doctrine:fixtures:load -n --env=$(env)
 
+cc:
+	@echo "\nCache clear...\e[0m"
+	$(EXEC_SYMFONY) cache:clear --env=$(env)
+
 fix: php-cs-fixer
 
 prepare: database fixtures

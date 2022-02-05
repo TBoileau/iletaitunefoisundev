@@ -48,8 +48,6 @@ final class RegionCrudController extends AbstractCrudController
         yield TextField::new('name', 'Nom');
         yield AssociationField::new('continent', 'Continent')
             ->setCrudController(ContinentCrudController::class);
-        yield AssociationField::new('start', 'Quête de démarrage')
-            ->setCrudController(QuestCrudController::class);
         yield AssociationField::new('quests', 'Quêtes')
             ->setTemplatePath('admin/field/quests.html.twig')
             ->hideOnForm();

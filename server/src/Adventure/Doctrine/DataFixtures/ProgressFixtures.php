@@ -30,19 +30,23 @@ final class ProgressFixtures extends Fixture implements DependentFixtureInterfac
             /** @var Continent $continent */
             $continent = $world->getContinents()->get($index);
 
-            $passedAt = new DateTimeImmutable('2022-01-01 00:00:00');
+            $finishedAt = new DateTimeImmutable('2022-01-01 00:00:00');
 
             /** @var Region $region */
             foreach ($continent->getRegions()->slice(0, $index + 1) as $region) {
-                /** @var Quest $quest */
-                foreach ($region->getQuests()->slice(0, $index + 1) as $quest) {
+                /** @var array<array-key, Quest> $quests */
+                $quests = $region->getQuests()->slice(0, $index + 1);
+                foreach ($quests as $k => $quest) {
                     $checkpoint = new Checkpoint();
                     $checkpoint->setJourney($player->getJourney());
                     $checkpoint->setQuest($quest);
-                    $checkpoint->setPassedAt($passedAt);
+                    $checkpoint->setStartedAt($finishedAt->sub(new DateInterval('PT59M')));
+                    if ($k < count($quests) - 1) {
+                        $checkpoint->setFinishedAt($finishedAt);
+                    }
                     $manager->persist($checkpoint);
 
-                    $passedAt = $passedAt->add(new DateInterval('PT1H'));
+                    $finishedAt = $finishedAt->add(new DateInterval('PT1H'));
                 }
             }
             $manager->flush();

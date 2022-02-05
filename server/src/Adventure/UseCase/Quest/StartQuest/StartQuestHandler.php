@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Adventure\UseCase\SaveCheckpoint;
+namespace App\Adventure\UseCase\Quest\StartQuest;
 
 use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Gateway\CheckpointGateway;
 use DateTimeImmutable;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-final class SaveCheckpointHandler implements MessageHandlerInterface
+final class StartQuestHandler implements MessageHandlerInterface
 {
     /**
      * @param CheckpointGateway<Checkpoint> $checkpointGateway
@@ -18,12 +18,12 @@ final class SaveCheckpointHandler implements MessageHandlerInterface
     {
     }
 
-    public function __invoke(SaveCheckpointInput $saveCheckpoint): void
+    public function __invoke(StartQuestInput $startQuestInput): void
     {
         $checkpoint = new Checkpoint();
-        $checkpoint->setQuest($saveCheckpoint->quest);
-        $checkpoint->setJourney($saveCheckpoint->journey);
-        $checkpoint->setPassedAt(new DateTimeImmutable());
+        $checkpoint->setQuest($startQuestInput->quest);
+        $checkpoint->setJourney($startQuestInput->player->getJourney());
+        $checkpoint->setStartedAt(new DateTimeImmutable());
         $this->checkpointGateway->save($checkpoint);
     }
 }

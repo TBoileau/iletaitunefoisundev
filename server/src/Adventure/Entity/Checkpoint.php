@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     collectionOperations: [],
     itemOperations: ['get'],
     normalizationContext: ['groups' => ['read']],
-    routePrefix: '/adventure',
+    routePrefix: '/adventure'
 )]
 #[Entity(repositoryClass: CheckpointRepository::class)]
 class Checkpoint implements Stringable
@@ -45,7 +45,11 @@ class Checkpoint implements Stringable
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     #[Groups('read')]
-    private DateTimeImmutable $passedAt;
+    private DateTimeImmutable $startedAt;
+
+    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Groups('read')]
+    private ?DateTimeImmutable $finishedAt = null;
 
     public function getId(): ?int
     {
@@ -72,18 +76,32 @@ class Checkpoint implements Stringable
         $this->quest = $quest;
     }
 
-    public function getPassedAt(): DateTimeImmutable
+    public function getFinishedAt(): ?DateTimeImmutable
     {
-        return $this->passedAt;
+        return $this->finishedAt;
     }
 
-    public function setPassedAt(DateTimeImmutable $passedAt): void
+    public function setFinishedAt(?DateTimeImmutable $finishedAt): void
     {
-        $this->passedAt = $passedAt;
+        $this->finishedAt = $finishedAt;
+    }
+
+    public function getStartedAt(): DateTimeImmutable
+    {
+        return $this->startedAt;
+    }
+
+    public function setStartedAt(DateTimeImmutable $startedAt): void
+    {
+        $this->startedAt = $startedAt;
     }
 
     public function __toString(): string
     {
-        return sprintf('%s validée le %s', $this->quest, $this->passedAt->format('d/m/Y H:i:s'));
+        if (null !== $this->finishedAt) {
+            return sprintf('%s terminée le %s', $this->quest, $this->finishedAt->format('d/m/Y H:i:s'));
+        }
+
+        return sprintf('%s commencée le %s', $this->quest, $this->startedAt->format('d/m/Y H:i:s'));
     }
 }

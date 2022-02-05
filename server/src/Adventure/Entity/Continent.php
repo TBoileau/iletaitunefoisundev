@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\ContinentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,36 +18,28 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(
-    collectionOperations: [],
-    itemOperations: ['get'],
-    normalizationContext: ['groups' => ['read']],
-    routePrefix: '/adventure',
-)]
 #[Entity(repositoryClass: ContinentRepository::class)]
 class Continent implements Stringable
 {
-    #[Groups('read')]
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('adventure')]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups('adventure')]
     private string $name;
 
     #[ManyToOne(targetEntity: World::class, inversedBy: 'continents')]
     #[JoinColumn(nullable: false)]
-    #[Groups('read')]
-    #[ApiProperty(readableLink: false)]
     private World $world;
 
     /**
      * @var Collection<int, Region>
      */
-    #[ApiSubresource(maxDepth: 1)]
     #[OneToMany(mappedBy: 'continent', targetEntity: Region::class)]
+    #[Groups('adventure')]
     private Collection $regions;
 
     public function __construct()

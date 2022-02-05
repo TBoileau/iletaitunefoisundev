@@ -22,10 +22,22 @@ services:
         tags:
             - controller.service_arguments
 
+    App\Security\OpenApi\UserDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']
+        decoration_priority: 3
+
     App\Adventure\OpenApi\QuestDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
+        decoration_priority: 2
+
+    App\Adventure\OpenApi\AdventureDecorator:
+        decorates: 'api_platform.openapi.factory'
+        arguments: ['@.inner']
+        decoration_priority: 1
 
     App\Security\OpenApi\LoginDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
+        decoration_priority: 0

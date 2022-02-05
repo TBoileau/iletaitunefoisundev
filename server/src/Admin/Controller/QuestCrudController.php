@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
@@ -54,6 +55,7 @@ final class QuestCrudController extends AbstractCrudController
         yield TextField::new('name', 'Nom');
         yield DifficultyField::new('difficulty', 'Difficulté');
         yield TypeField::new('type', 'Type');
+        yield BooleanField::new('start', 'Quête de lancement');
         yield AssociationField::new('course', 'Cours')
             ->setCrudController(CourseCrudController::class);
         yield AssociationField::new('region', 'Région')

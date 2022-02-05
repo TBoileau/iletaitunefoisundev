@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Adventure\Controller\MyPlayerController;
 use App\Adventure\Doctrine\Repository\PlayerRepository;
 use App\Adventure\UseCase\CreatePlayer\CreatePlayerInput;
 use App\Security\Entity\User;
@@ -17,12 +17,19 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     collectionOperations: [
         'get',
+        'me' => [
+            'controller' => MyPlayerController::class,
+            'path' => '/players/me',
+            'method' => Request::METHOD_GET,
+            'pagination_enabled' => false,
+        ],
         'post' => [
             'messenger' => 'input',
             'input' => CreatePlayerInput::class,
@@ -53,7 +60,6 @@ class Player implements Stringable
     #[OneToOne(inversedBy: 'player', targetEntity: Journey::class, cascade: ['persist'], fetch: 'EAGER')]
     #[JoinColumn(nullable: false)]
     #[Groups('read')]
-    #[ApiProperty(readableLink: false)]
     private Journey $journey;
 
     public function getId(): ?int

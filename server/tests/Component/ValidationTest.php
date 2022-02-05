@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Tests\Component;
 
-use App\Adventure\UseCase\SaveCheckpoint\SaveCheckpointInput;
 use App\Security\UseCase\Register\RegisterInput;
 use App\Security\Validator\UniqueEmail;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -67,17 +65,6 @@ final class ValidationTest extends KernelTestCase
                 'plainPassword' => [
                     NotBlank::class,
                     Regex::class,
-                ],
-            ],
-        ];
-        yield 'save checkpoint' => [
-            'class' => SaveCheckpointInput::class,
-            'constraints' => [
-                'quest' => [
-                    NotNull::class,
-                ],
-                'journey' => [
-                    NotNull::class,
                 ],
             ],
         ];
