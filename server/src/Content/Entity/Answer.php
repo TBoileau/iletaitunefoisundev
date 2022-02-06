@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Content\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Content\Doctrine\Repository\AnswerRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -14,12 +15,20 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    collectionOperations: [],
+    itemOperations: ['get'],
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+    routePrefix: '/content',
+)]
 #[Entity(repositoryClass: AnswerRepository::class)]
 class Answer
 {
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups('read')]
     private ?int $id = null;
 
     #[ManyToOne(targetEntity: Question::class, inversedBy: 'answers')]
