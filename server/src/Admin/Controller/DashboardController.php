@@ -13,6 +13,8 @@ use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
 use App\Adventure\Entity\World;
 use App\Content\Entity\Course;
+use App\Content\Entity\Question;
+use App\Content\Entity\Quiz;
 use App\Security\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -47,6 +49,8 @@ final class DashboardController extends AbstractDashboardController
         ]);
         yield MenuItem::subMenu('Contenu', 'fa fa-folder-open')->setSubItems([
             MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Course::class),
+            MenuItem::linkToCrud('Quiz', 'fa fa-list-ol', Quiz::class),
+            MenuItem::linkToCrud('Questions', 'fa fa-question-circle', Question::class),
         ]);
         yield MenuItem::subMenu('Aventure', 'fa fa-road')->setSubItems([
             MenuItem::linkToCrud('Mondes', 'fa fa-map', World::class),

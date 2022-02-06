@@ -113,3 +113,11 @@ cc:
 fix: php-cs-fixer
 
 prepare: database fixtures
+
+prepare-test:
+	make database env=test
+	make fixtures env=test
+
+prepare-dev:
+	make database env=dev
+	make fixtures env=dev

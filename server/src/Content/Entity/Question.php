@@ -15,9 +15,10 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Stringable;
 
 #[Entity(repositoryClass: QuestionRepository::class)]
-class Question
+class Question implements Stringable
 {
     #[Id]
     #[Column(type: Types::INTEGER)]
@@ -105,5 +106,10 @@ class Question
         }
 
         $this->answers->removeElement($answer);
+    }
+
+    public function __toString(): string
+    {
+        return $this->label;
     }
 }
