@@ -83,7 +83,7 @@ Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes 
 6. Ouvrez une nouvelle `pull request` avec un titre et une description précises.
 
 ## Versionnement
-Respecter `Semantic Versionning 2` :
+Respecter `Semantic Versioning 2` :
 > Given a version number MAJOR.MINOR.PATCH, increment the:
 >
 > MAJOR version when you make incompatible API changes,
