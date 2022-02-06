@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\UseCase\Register;
 
+use App\Security\Entity\User;
 use App\Security\Validator\UniqueEmail;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -16,7 +17,7 @@ final class RegisterInput
     #[UniqueEmail]
     public string $email = '';
 
-    #[Regex(pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/')]
+    #[Regex(pattern: User::PASSWORD_PATTERN)]
     #[NotBlank]
     public string $plainPassword = '';
 }

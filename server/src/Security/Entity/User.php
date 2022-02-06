@@ -44,6 +44,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Entity(repositoryClass: UserRepository::class)]
 class User extends AbstractUser
 {
+    public const PASSWORD_PATTERN = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+
     #[OneToOne(inversedBy: 'user', targetEntity: Player::class, fetch: 'EAGER')]
     private ?Player $player = null;
 
