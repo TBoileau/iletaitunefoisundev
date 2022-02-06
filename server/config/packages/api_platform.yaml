@@ -3,6 +3,7 @@ api_platform:
         paths:
             - '%kernel.project_dir%/src/Security/Entity'
             - '%kernel.project_dir%/src/Adventure/Entity'
+            - '%kernel.project_dir%/src/Content/Entity'
     formats:
         json:     ['application/json']
         jsonld:   ['application/ld+json']
