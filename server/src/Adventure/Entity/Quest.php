@@ -80,6 +80,7 @@ class Quest implements Stringable
 
     #[ManyToOne(targetEntity: Quiz::class)]
     #[Groups('read')]
+    #[ApiProperty(readableLink: false)]
     private ?Quiz $quiz = null;
 
     public function getId(): ?int
