@@ -56,6 +56,8 @@ final class QuestCrudController extends AbstractCrudController
         yield TypeField::new('type', 'Type');
         yield AssociationField::new('course', 'Cours')
             ->setCrudController(CourseCrudController::class);
+        yield AssociationField::new('quiz', 'Quiz')
+            ->setCrudController(QuizCrudController::class);
         yield AssociationField::new('region', 'Région')
             ->setCrudController(RegionCrudController::class);
     }

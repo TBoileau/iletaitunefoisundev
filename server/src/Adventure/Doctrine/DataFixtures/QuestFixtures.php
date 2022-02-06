@@ -9,7 +9,9 @@ use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
 use App\Adventure\Entity\Type;
 use App\Content\Doctrine\DataFixtures\CourseFixtures;
+use App\Content\Doctrine\DataFixtures\QuizFixtures;
 use App\Content\Entity\Course;
+use App\Content\Entity\Quiz;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -24,14 +26,18 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
         /** @var array<array-key, Course> $courses */
         $courses = $manager->getRepository(Course::class)->findAll();
 
-        $courseIndex = 0;
+        /** @var array<array-key, Quiz> $quizzes */
+        $quizzes = $manager->getRepository(Quiz::class)->findAll();
+
+        $nodeIndex = 0;
 
         foreach ($regions as $region) {
             for ($i = 1; $i <= 5; ++$i) {
                 $quest = new Quest();
                 $quest->setName(sprintf('Quest %d', $i));
                 $quest->setRegion($region);
-                $quest->setCourse($courses[$courseIndex]);
+                $quest->setCourse($courses[$nodeIndex]);
+                $quest->setQuiz($quizzes[$nodeIndex]);
                 $quest->setDifficulty(match ($i) {
                     1, 2 => Difficulty::Easy,
                     3, 4 => Difficulty::Normal,
@@ -46,7 +52,7 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                     $region->setFirstQuest($quest);
                 }
 
-                ++$courseIndex;
+                ++$nodeIndex;
             }
         }
 
@@ -58,6 +64,6 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
      */
     public function getDependencies(): array
     {
-        return [RegionFixtures::class, CourseFixtures::class];
+        return [RegionFixtures::class, CourseFixtures::class, QuizFixtures::class];
     }
 }
