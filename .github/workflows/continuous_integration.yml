@@ -21,6 +21,8 @@ jobs:
         run: make install
       - name: Initialize test environment
         run: make prepare env=test
+      - name: Create key pair
+        run: make generate-keypair env=test
       - name: Run unit tests
         run: make unit-tests
       - name: Run component tests

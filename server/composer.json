@@ -2,7 +2,7 @@
     "name": "incentive-factory/incentive-factory",
     "description": "",
     "type": "project",
-    "license": "proprietary",
+    "license": "GPL-3.0-or-later",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -51,7 +51,11 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
     },
     "autoload": {
         "psr-4": {
