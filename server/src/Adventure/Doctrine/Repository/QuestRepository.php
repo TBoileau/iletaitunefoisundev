@@ -40,11 +40,7 @@ final class QuestRepository extends ServiceEntityRepository implements QuestGate
         return $this->createQueryBuilder('q')
             ->addSelect('c')
             ->addSelect('i')
-            ->addSelect('u')
-            ->addSelect('a')
             ->join('q.course', 'c')
-            ->leftJoin('q.quiz', 'i')
-            ->leftJoin('i.questions', 'u')
-            ->leftJoin('u.answers', 'a');
+            ->leftJoin('q.quiz', 'i');
     }
 }
