@@ -2,7 +2,7 @@
     "name": "incentive-factory/incentive-factory",
     "description": "",
     "type": "project",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
