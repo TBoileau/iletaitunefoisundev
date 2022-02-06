@@ -52,6 +52,7 @@ security:
         - { path: ^/api/security/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/register, roles: PUBLIC_ACCESS }
         - { path: ^/api/security/token-refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/api/security/forgotten-password/request, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: ROLE_USER }
 

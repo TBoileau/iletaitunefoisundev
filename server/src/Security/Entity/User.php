@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Entity\Player;
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\UseCase\Register\RegisterInput;
+use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -24,6 +25,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'status' => Response::HTTP_CREATED,
             'method' => Request::METHOD_POST,
             'path' => '/register',
+        ],
+        'requestForgottenPassword' => [
+            'messenger' => 'input',
+            'input' => RequestForgottenPasswordInput::class,
+            'output' => false,
+            'status' => Response::HTTP_ACCEPTED,
+            'method' => Request::METHOD_POST,
+            'path' => '/forgotten-password/request',
         ],
     ],
     itemOperations: [

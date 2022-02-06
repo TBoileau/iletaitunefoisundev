@@ -12,3 +12,4 @@ framework:
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
+            'App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput': async
