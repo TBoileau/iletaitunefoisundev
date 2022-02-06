@@ -2,9 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Content\Entity;
+namespace App\Content\Entity\Quiz;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
+use App\Content\Controller\SubmitResponseController;
 use App\Content\Doctrine\Repository\ResponseRepository;
+use App\Content\Entity\Answer;
+use App\Content\Entity\Question;
+use App\Content\UseCase\SubmitResponse\SubmitResponseInput;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -18,6 +25,21 @@ use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    collectionOperations: [],
+    itemOperations: [
+        'get',
+        'put' => [
+            'messenger' => 'input',
+            'controller' => SubmitResponseController::class,
+            'output' => Session::class,
+            'input' => SubmitResponseInput::class,
+        ],
+    ],
+    denormalizationContext: ['groups' => ['write']],
+    normalizationContext: ['groups' => ['read']],
+    routePrefix: '/content',
+)]
 #[Entity(repositoryClass: ResponseRepository::class)]
 class Response
 {
@@ -26,9 +48,9 @@ class Response
     #[GeneratedValue]
     private ?int $id = null;
 
-    #[ManyToOne(targetEntity: PlayerQuiz::class, inversedBy: 'responses')]
+    #[ManyToOne(targetEntity: Session::class, inversedBy: 'responses')]
     #[JoinColumn(nullable: false)]
-    private PlayerQuiz $playerQuiz;
+    private Session $session;
 
     #[ManyToOne(targetEntity: Question::class)]
     #[JoinColumn(nullable: false)]
@@ -40,12 +62,17 @@ class Response
      */
     #[ManyToMany(targetEntity: Answer::class)]
     #[JoinTable(name: 'response_answers')]
-    #[Groups('read')]
+    #[Groups(['read', 'write'])]
+    #[ApiProperty(writableLink: true)]
     private Collection $answers;
 
     #[Column(type: Types::BOOLEAN)]
     #[Groups('read')]
-    private bool $valid;
+    private bool $valid = false;
+
+    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Groups('read')]
+    private ?DateTimeImmutable $respondedAt = null;
 
     public function __construct()
     {
@@ -85,13 +112,23 @@ class Response
         $this->valid = $valid;
     }
 
-    public function getPlayerQuiz(): PlayerQuiz
+    public function getSession(): Session
     {
-        return $this->playerQuiz;
+        return $this->session;
     }
 
-    public function setPlayerQuiz(PlayerQuiz $playerQuiz): void
+    public function setSession(Session $session): void
     {
-        $this->playerQuiz = $playerQuiz;
+        $this->session = $session;
+    }
+
+    public function getRespondedAt(): ?DateTimeImmutable
+    {
+        return $this->respondedAt;
+    }
+
+    public function setRespondedAt(?DateTimeImmutable $respondedAt): void
+    {
+        $this->respondedAt = $respondedAt;
     }
 }
