@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Admin\Controller;
+
+use App\Content\Entity\Quiz;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+
+final class QuizCrudController extends AbstractCrudController
+{
+    public static function getEntityFqcn(): string
+    {
+        return Quiz::class;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters->add(TextFilter::new('title', 'Titre'));
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Quiz')
+            ->setEntityLabelInPlural('Quiz')
+            ->setDefaultSort(['title' => 'ASC']);
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
+    /**
+     * @return iterable<FieldInterface>
+     */
+    public function configureFields(string $pageName): iterable
+    {
+        yield TextField::new('title', 'Titre')
+            ->setFormTypeOption('empty_data', '');
+        yield SlugField::new('slug', 'Slug')
+            ->setFormTypeOption('empty_data', '')
+            ->setTargetFieldName('title');
+    }
+}

@@ -9,7 +9,6 @@ use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
-use App\Adventure\Entity\Region;
 use App\Security\Entity\User;
 use App\Tests\Functional\AuthenticatedClientTrait;
 use App\Tests\Functional\DatabaseAccessTrait;
@@ -175,23 +174,5 @@ final class QuestTest extends ApiTestCase
         $client->request(Request::METHOD_GET, sprintf('/api/adventure/quests/%s', $quest->getId()));
         self::assertResponseIsSuccessful();
         self::assertMatchesResourceItemJsonSchema(Quest::class);
-    }
-
-    /**
-     * @test
-     */
-    public function getSubresourceOfRegionShouldReturnQuests(): void
-    {
-        $client = self::createAuthenticatedClient();
-        $this->init($client);
-        /** @var Region $region */
-        $region = $this->findOneBy(Region::class, [[]]);
-        $response = $client->request(
-            Request::METHOD_GET,
-            sprintf('/api/adventure/regions/%s/quests', $region->getId())
-        );
-        self::assertResponseIsSuccessful();
-        self::assertCount(5, $response->toArray()['hydra:member']);
-        self::assertMatchesResourceCollectionJsonSchema(Quest::class);
     }
 }

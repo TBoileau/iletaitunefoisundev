@@ -12,6 +12,7 @@ use App\Adventure\Entity\Quest;
 use App\Adventure\Entity\Region;
 use App\Adventure\Entity\Type;
 use App\Content\Entity\Course;
+use App\Content\Entity\Quiz;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -83,10 +84,14 @@ final class QuestTest extends WebTestCase
         /** @var Course $course */
         $course = $entityManager->getRepository(Course::class)->findOneBy([]);
 
+        /** @var Quiz $quiz */
+        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy([]);
+
         $client->submitForm('Créer', [
             'Quest[name]' => 'Quest 6',
             'Quest[region]' => $region->getId(),
             'Quest[course]' => $course->getId(),
+            'Quest[quiz]' => $quiz->getId(),
             'Quest[difficulty]' => Difficulty::Easy->value,
             'Quest[type]' => Type::Main->value,
         ]);
@@ -103,6 +108,8 @@ final class QuestTest extends WebTestCase
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
+        self::assertNotNull($quest->getQuiz());
+        self::assertEquals($quiz->getId(), $quest->getQuiz()->getId());
         self::assertEquals(Type::Main, $quest->getType());
     }
 
@@ -177,10 +184,14 @@ final class QuestTest extends WebTestCase
         /** @var Course $course */
         $course = $entityManager->getRepository(Course::class)->findOneBy([]);
 
+        /** @var Quiz $quiz */
+        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy([]);
+
         $client->submitForm('Sauvegarder les modifications', [
             'Quest[name]' => 'Quest 0',
             'Quest[region]' => $region->getId(),
             'Quest[course]' => $course->getId(),
+            'Quest[quiz]' => $quiz->getId(),
             'Quest[difficulty]' => Difficulty::Easy->value,
             'Quest[type]' => Type::Main->value,
         ]);
@@ -196,6 +207,8 @@ final class QuestTest extends WebTestCase
         self::assertSame('Quest 0', $quest->getName());
         self::assertEquals($region->getId(), $quest->getRegion()->getId());
         self::assertEquals($course->getId(), $quest->getCourse()->getId());
+        self::assertNotNull($quest->getQuiz());
+        self::assertEquals($quiz->getId(), $quest->getQuiz()->getId());
         self::assertEquals(Difficulty::Easy, $quest->getDifficulty());
         self::assertEquals(Type::Main, $quest->getType());
     }

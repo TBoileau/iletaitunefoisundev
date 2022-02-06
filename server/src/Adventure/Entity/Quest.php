@@ -12,6 +12,7 @@ use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Doctrine\Type\DifficultyType;
 use App\Adventure\Doctrine\Type\QuestTypeType;
 use App\Content\Entity\Course;
+use App\Content\Entity\Quiz;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -76,6 +77,10 @@ class Quest implements Stringable
     #[JoinColumn(nullable: false)]
     #[Groups('read')]
     private Course $course;
+
+    #[ManyToOne(targetEntity: Quiz::class)]
+    #[Groups('read')]
+    private ?Quiz $quiz = null;
 
     public function getId(): ?int
     {
@@ -147,5 +152,15 @@ class Quest implements Stringable
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): void
+    {
+        $this->quiz = $quiz;
     }
 }

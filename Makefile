@@ -110,6 +110,20 @@ cc:
 	@echo "\nCache clear...\e[0m"
 	$(EXEC_SYMFONY) cache:clear --env=$(env)
 
+cc-test:
+	make cc env=test
+
+cc-dev:
+	make cc env=dev
+
 fix: php-cs-fixer
 
 prepare: database fixtures
+
+prepare-test:
+	make database env=test
+	make fixtures env=test
+
+prepare-dev:
+	make database env=dev
+	make fixtures env=dev
