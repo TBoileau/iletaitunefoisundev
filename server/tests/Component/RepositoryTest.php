@@ -25,11 +25,15 @@ use App\Content\Doctrine\Repository\CourseRepository;
 use App\Content\Doctrine\Repository\NodeRepository;
 use App\Content\Doctrine\Repository\QuestionRepository;
 use App\Content\Doctrine\Repository\QuizRepository;
+use App\Content\Doctrine\Repository\ResponseRepository;
+use App\Content\Doctrine\Repository\SessionRepository;
 use App\Content\Entity\Answer;
 use App\Content\Entity\Course;
 use App\Content\Entity\Node;
 use App\Content\Entity\Question;
 use App\Content\Entity\Quiz;
+use App\Content\Entity\Quiz\Response;
+use App\Content\Entity\Quiz\Session;
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -77,5 +81,7 @@ final class RepositoryTest extends KernelTestCase
         yield 'quiz entity' => [Quiz::class, QuizRepository::class]; /* @phpstan-ignore-line */
         yield 'question entity' => [Question::class, QuestionRepository::class]; /* @phpstan-ignore-line */
         yield 'answer entity' => [Answer::class, AnswerRepository::class]; /* @phpstan-ignore-line */
+        yield 'response entity' => [Response::class, ResponseRepository::class]; /* @phpstan-ignore-line */
+        yield 'player quiz entity' => [Session::class, SessionRepository::class]; /* @phpstan-ignore-line */
     }
 }
