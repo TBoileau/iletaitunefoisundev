@@ -7,10 +7,12 @@ namespace App\Tests\Unit\Security;
 use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
 use App\Security\Factory\UuidV6Factory;
+use App\Security\Mail\RequestForgottenPasswordMail;
 use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordHandler;
 use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Uid\Uuid;
 
 final class RequestForgottenPasswordTest extends TestCase
@@ -48,7 +50,15 @@ final class RequestForgottenPasswordTest extends TestCase
             ->method('create')
             ->willReturn($uuid);
 
-        $commandHandler = new RequestForgottenPasswordHandler($userGateway, $userLoader, $uuidFactory);
+        $user->setForgottenPasswordToken($uuid->toRfc4122());
+
+        $mailer = self::createMock(MailerInterface::class);
+        $mailer
+            ->expects(self::once())
+            ->method('send')
+            ->with(self::equalTo(new RequestForgottenPasswordMail($user)));
+
+        $commandHandler = new RequestForgottenPasswordHandler($userGateway, $userLoader, $uuidFactory, $mailer);
 
         $commandHandler($requestForgottenPasswordInput);
     }

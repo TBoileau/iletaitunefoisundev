@@ -20,22 +20,7 @@ class RequestForgottenPasswordTest extends ApiTestCase
         $response = $client->request(
             Request::METHOD_POST,
             '/api/security/forgotten-password/request',
-            ['json' => self::createData("user+1@email.com")]
-        );
-        self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
-        self::assertEquals('', $response->getContent());
-    }
-
-    /**
-     * @test
-     */
-    public function shouldSendAMailForAValidEmail(): void
-    {
-        $client = self::createClient();
-        $response = $client->request(
-            Request::METHOD_POST,
-            '/api/security/forgotten-password/request',
-            ['json' => self::createData("user+1@email.com")]
+            ['json' => self::createData('user+1@email.com')]
         );
         self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
         self::assertEquals('', $response->getContent());
@@ -50,7 +35,7 @@ class RequestForgottenPasswordTest extends ApiTestCase
         $client->request(
             Request::METHOD_POST,
             '/api/security/forgotten-password/request',
-            ['json' => self::createData("user+unknown@email.com")]
+            ['json' => self::createData('user+unknown@email.com')]
         );
         self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
     }
@@ -58,6 +43,7 @@ class RequestForgottenPasswordTest extends ApiTestCase
     /**
      * @test
      * @dataProvider provideInvalidData
+     *
      * @param array<array-key, array<string, string>> $data
      */
     public function shouldRejectForInvalidData(array $data): void
