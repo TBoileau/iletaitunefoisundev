@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Entity(repositoryClass: AnswerRepository::class)]
 class Answer
@@ -26,9 +27,11 @@ class Answer
     private Question $question;
 
     #[Column(type: Types::STRING)]
+    #[Groups('read')]
     private string $label = '';
 
     #[Column(type: Types::TEXT, nullable: true)]
+    #[Groups('read')]
     private ?string $content = null;
 
     #[Column(type: Types::BOOLEAN)]

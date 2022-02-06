@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Stringable;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Entity(repositoryClass: QuestionRepository::class)]
 class Question implements Stringable
@@ -26,9 +27,11 @@ class Question implements Stringable
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
+    #[Groups('read')]
     private string $label = '';
 
     #[Column(type: Types::TEXT, nullable: true)]
+    #[Groups('read')]
     private ?string $content = null;
 
     #[ManyToOne(targetEntity: Quiz::class, inversedBy: 'questions')]
@@ -39,6 +42,7 @@ class Question implements Stringable
      * @var Collection<int, Answer>
      */
     #[OneToMany(mappedBy: 'question', targetEntity: Answer::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Groups('read')]
     private Collection $answers;
 
     public function __construct()
