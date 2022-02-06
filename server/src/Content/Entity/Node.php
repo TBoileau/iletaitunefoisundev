@@ -21,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[DiscriminatorColumn(name: 'discr', type: Types::STRING)]
 #[DiscriminatorMap([
     'course' => Course::class,
+    'quiz' => Quiz::class,
 ])]
 abstract class Node implements Stringable
 {

@@ -22,8 +22,10 @@ use App\Adventure\Entity\Region;
 use App\Adventure\Entity\World;
 use App\Content\Doctrine\Repository\CourseRepository;
 use App\Content\Doctrine\Repository\NodeRepository;
+use App\Content\Doctrine\Repository\QuizRepository;
 use App\Content\Entity\Course;
 use App\Content\Entity\Node;
+use App\Content\Entity\Quiz;
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,5 +70,6 @@ final class RepositoryTest extends KernelTestCase
         yield 'player entity' => [Player::class, PlayerRepository::class]; /* @phpstan-ignore-line */
         yield 'journey entity' => [Journey::class, JourneyRepository::class]; /* @phpstan-ignore-line */
         yield 'checkpoint entity' => [Checkpoint::class, CheckpointRepository::class]; /* @phpstan-ignore-line */
+        yield 'quiz entity' => [Quiz::class, QuizRepository::class]; /* @phpstan-ignore-line */
     }
 }
