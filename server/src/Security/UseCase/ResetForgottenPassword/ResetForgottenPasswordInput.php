@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Security\UseCase\Register;
+namespace App\Security\UseCase\ResetForgottenPassword;
 
 use App\Security\Entity\User;
-use App\Security\Validator\UniqueEmail;
-use Symfony\Component\Validator\Constraints\Email;
+use App\Security\Validator\ExistingUserForToken;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
-final class RegisterInput
+final class ResetForgottenPasswordInput
 {
+    #[ExistingUserForToken]
     #[NotBlank]
-    #[Email]
-    #[UniqueEmail]
-    public string $email = '';
+    public string $forgottenPasswordToken = '';
 
     #[Regex(pattern: User::PASSWORD_PATTERN)]
     #[NotBlank]

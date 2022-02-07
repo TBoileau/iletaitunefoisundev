@@ -141,6 +141,9 @@
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
     },
+    "egulias/email-validator": {
+        "version": "3.1.2"
+    },
     "fig/link-util": {
         "version": "1.2.0"
     },
@@ -480,6 +483,18 @@
     "symfony/intl": {
         "version": "v6.0.1"
     },
+    "symfony/mailer": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "bbfc7e27257d3a3f12a6fb0a42540a42d9623a37"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/messenger": {
         "version": "6.0",
         "recipe": {
@@ -491,6 +506,9 @@
         "files": [
             "config/packages/messenger.yaml"
         ]
+    },
+    "symfony/mime": {
+        "version": "v6.0.3"
     },
     "symfony/options-resolver": {
         "version": "v6.0.0"
@@ -517,6 +535,9 @@
         "version": "v1.23.1"
     },
     "symfony/polyfill-intl-icu": {
+        "version": "v1.24.0"
+    },
+    "symfony/polyfill-intl-idn": {
         "version": "v1.24.0"
     },
     "symfony/polyfill-intl-normalizer": {

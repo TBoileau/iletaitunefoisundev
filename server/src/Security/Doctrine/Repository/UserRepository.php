@@ -30,7 +30,23 @@ final class UserRepository extends ServiceEntityRepository implements UserLoader
         return $this->findOneBy(['email' => $identifier]);
     }
 
+    public function getUserByIdentifier(string $identifier): ?User
+    {
+        return $this->findOneBy(['email' => $identifier]);
+    }
+
+    public function getUserByForgottenPasswordToken(string $forgottenPasswordToken): ?User
+    {
+        return $this->findOneBy(['forgottenPasswordToken' => $forgottenPasswordToken]);
+    }
+
     public function register(User $user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    public function update(User $user): void
     {
         $this->_em->persist($user);
         $this->_em->flush();

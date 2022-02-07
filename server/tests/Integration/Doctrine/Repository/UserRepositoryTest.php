@@ -8,6 +8,7 @@ use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Uid\Uuid;
 
 final class UserRepositoryTest extends KernelTestCase
 {
@@ -62,6 +63,33 @@ final class UserRepositoryTest extends KernelTestCase
         $userRepository = self::getContainer()->get(UserRepository::class);
 
         self::assertSame($unique, $userRepository->isUniqueEmail($email));
+    }
+
+    /**
+     * @test
+     */
+    public function updateShouldUpdateUserInDB(): void
+    {
+        self::bootKernel();
+
+        /** @var UserRepository<User> $userRepository */
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        /** @var User $user */
+        $user = $userRepository->loadUserByIdentifier('user+1@email.com');
+
+        $newEmail = 'newEmail@email.com';
+        $forgottenPasswordToken = Uuid::v6();
+        $user->setEmail($newEmail);
+        $user->setForgottenPasswordToken($forgottenPasswordToken->toRfc4122());
+
+        $userRepository->update($user);
+
+        $updateUser = $userRepository->loadUserByIdentifier($newEmail);
+
+        self::assertNotNull($updateUser);
+        self::assertSame($newEmail, $updateUser->getEmail());
+        self::assertSame($forgottenPasswordToken->toRfc4122(), $updateUser->getForgottenPasswordToken());
     }
 
     /**
