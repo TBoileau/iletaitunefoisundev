@@ -41,5 +41,3 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
         decoration_priority: 0
-
-    Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface: '@App\Security\Doctrine\Repository\UserRepository'

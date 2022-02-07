@@ -8,7 +8,6 @@ use App\Security\Contract\Gateway\UserGateway;
 use App\Security\Entity\User;
 use App\Security\Factory\UuidV6FactoryInterface;
 use App\Security\Mail\RequestForgottenPasswordMail;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -19,7 +18,6 @@ final class RequestForgottenPasswordHandler implements MessageHandlerInterface
      */
     public function __construct(
         private UserGateway $userGateway,
-        private UserLoaderInterface $userLoader,
         private UuidV6FactoryInterface $uuidFactory,
         private MailerInterface $mailer
     ) {
@@ -28,7 +26,7 @@ final class RequestForgottenPasswordHandler implements MessageHandlerInterface
     public function __invoke(RequestForgottenPasswordInput $requestForgottenPasswordInput): void
     {
         /** @var ?User $user */
-        $user = $this->userLoader->loadUserByIdentifier($requestForgottenPasswordInput->email);
+        $user = $this->userGateway->getUserByIdentifier($requestForgottenPasswordInput->email);
         if (null === $user) {
             return;
         }

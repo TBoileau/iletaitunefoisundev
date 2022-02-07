@@ -19,4 +19,8 @@ interface UserGateway
     public function isUniqueEmail(string $email): bool;
 
     public function createQueryBuilderUsersWhoHaveNotCreatedTheirPlayer(): QueryBuilder;
+
+    public function getUserByIdentifier(string $identifier): ?User;
+
+    public function getUserByForgottenPasswordToken(string $forgottenPasswordToken): ?User;
 }

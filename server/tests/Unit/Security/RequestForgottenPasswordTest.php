@@ -29,19 +29,17 @@ final class RequestForgottenPasswordTest extends TestCase
         $user = new User();
         $user->setEmail($testEmail);
 
-        $userLoader = self::createMock(UserLoaderInterface::class);
-        $userLoader
-            ->expects(self::once())
-            ->method('loadUserByIdentifier')
-            ->with(self::equalTo($testEmail))
-            ->willReturn($user)
-        ;
-
         $userGateway = self::createMock(UserGateway::class);
         $userGateway
             ->expects(self::once())
             ->method('update')
             ->with(self::equalTo($user));
+
+        $userGateway
+            ->expects(self::once())
+            ->method('getUserByIdentifier')
+            ->with(self::equalTo($testEmail))
+            ->willReturn($user);
 
         $uuid = Uuid::v6();
         $uuidFactory = self::createMock(UuidV6Factory::class);
@@ -58,7 +56,7 @@ final class RequestForgottenPasswordTest extends TestCase
             ->method('send')
             ->with(self::equalTo(new RequestForgottenPasswordMail($user)));
 
-        $commandHandler = new RequestForgottenPasswordHandler($userGateway, $userLoader, $uuidFactory, $mailer);
+        $commandHandler = new RequestForgottenPasswordHandler($userGateway, $uuidFactory, $mailer);
 
         $commandHandler($requestForgottenPasswordInput);
     }
