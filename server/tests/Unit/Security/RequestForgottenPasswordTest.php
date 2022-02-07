@@ -11,7 +11,6 @@ use App\Security\Mail\RequestForgottenPasswordMail;
 use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordHandler;
 use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Uid\Uuid;
 

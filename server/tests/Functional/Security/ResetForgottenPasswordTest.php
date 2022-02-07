@@ -67,7 +67,6 @@ final class ResetForgottenPasswordTest extends ApiTestCase
             '/api/security/forgotten-password/reset',
             [
                 'json' => self::createData(
-                    'user+1@email.com',
                     'Password456!',
                     (new UuidV6Factory())->create()->toRfc4122()
                 ),
@@ -77,30 +76,6 @@ final class ResetForgottenPasswordTest extends ApiTestCase
             ]
         );
 
-        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    /**
-     * @test
-     */
-    public function shouldRejectForUnknownEmailWithIncorrectTokenForUser(): void
-    {
-        $response = $this->client->request(
-            Request::METHOD_POST,
-            '/api/security/forgotten-password/reset',
-            [
-                'json' => self::createData(
-                    'user+unknown@email.com',
-                    'Password456!',
-                    (new UuidV6Factory())->create()->toRfc4122()
-                ),
-                'headers' => [
-                    'accept' => ['application/json'],
-                ],
-            ]
-        );
-
-        self::assertJsonContains(['violations' => [['propertyPath' => 'email']]]);
         self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
@@ -112,6 +87,7 @@ final class ResetForgottenPasswordTest extends ApiTestCase
      */
     public function shouldRejectForInvalidData(array $data): void
     {
+        $this->updateUserForgottenPasswordTokenFromData($data);
         $this->client->request(
             Request::METHOD_POST,
             '/api/security/forgotten-password/reset',
@@ -131,8 +107,7 @@ final class ResetForgottenPasswordTest extends ApiTestCase
      */
     public function provideValidData(): Generator
     {
-        yield 'Valid Data : known email' => [self::createData(
-            'user+1@email.com',
+        yield 'Valid Data' => [self::createData(
             'Password456!',
             (new UuidV6Factory())->create()->toRfc4122()),
         ];
@@ -143,37 +118,18 @@ final class ResetForgottenPasswordTest extends ApiTestCase
      */
     public function provideInvalidData(): Generator
     {
-        $correctEmail = 'user+1@email.com';
         $correctPassword = 'Password456!';
         $correctForgottenPasswordToken = (new UuidV6Factory())->create()->toRfc4122();
 
-        yield 'invalid email' => [self::createData(
-            'notanemail',
-            $correctPassword,
-            $correctForgottenPasswordToken
-        )];
-        yield 'unknown email' => [self::createData(
-            'user+unknown@email.com',
-            $correctPassword,
-            $correctForgottenPasswordToken
-        )];
-        yield 'empty email' => [self::createData(
-            '',
-            $correctPassword,
-            $correctForgottenPasswordToken
-        )];
         yield 'blank Password' => [self::createData(
-            $correctEmail,
             '',
             $correctForgottenPasswordToken
         )];
         yield 'incorrect Password' => [self::createData(
-            $correctEmail,
             'notacorrectpassword',
             $correctForgottenPasswordToken
         )];
         yield 'blank token' => [self::createData(
-            $correctEmail,
             $correctPassword,
             ''
         )];
@@ -185,13 +141,11 @@ final class ResetForgottenPasswordTest extends ApiTestCase
      * @return array<string, string>
      */
     private static function createData(
-        string $email,
         string $password,
         string $forgottenPasswordToken,
         array $extra = []
     ): array {
         return $extra + [
-                'email' => $email,
                 'plainPassword' => $password,
                 'forgottenPasswordToken' => $forgottenPasswordToken,
             ];
@@ -204,12 +158,8 @@ final class ResetForgottenPasswordTest extends ApiTestCase
     {
         /** @var UserRepository<User> $userRepository */
         $userRepository = $this->entityManager->getRepository(User::class);
-        /** @var ?User $user */
-        $user = $userRepository->loadUserByIdentifier($data['email']);
-
-        if (null === $user) {
-            return;
-        }
+        /** @var User $user */
+        $user = $userRepository->loadUserByIdentifier('user+1@email.com');
 
         $user->setForgottenPasswordToken($data['forgottenPasswordToken']);
         $userRepository->update($user);

@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace App\Security\Validator;
 
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use App\Security\Contract\Gateway\UserGateway;
+use App\Security\Entity\User;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-final class ExistingUserForEmailValidator extends ConstraintValidator
+final class ExistingUserForTokenValidator extends ConstraintValidator
 {
-    public function __construct(private UserLoaderInterface $userLoader)
+    /**
+     * @param UserGateway<User> $userGateway
+     */
+    public function __construct(private UserGateway $userGateway)
     {
     }
 
     public function validate(mixed $value, Constraint $constraint): void
     {
-        if (!is_string($value) || '' === $value || !$constraint instanceof ExistingUserForEmail) {
+        if (!is_string($value) || '' === $value || !$constraint instanceof ExistingUserForToken) {
             return;
         }
 
-        if (null === $this->userLoader->loadUserByIdentifier($value)) {
+        if (null === $this->userGateway->getUserByForgottenPasswordToken($value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $value)
                 ->addViolation();

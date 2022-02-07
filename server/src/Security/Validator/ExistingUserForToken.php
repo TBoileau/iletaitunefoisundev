@@ -8,7 +8,7 @@ use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 #[Attribute]
-final class ExistingUserForEmail extends Constraint
+final class ExistingUserForToken extends Constraint
 {
-    public string $message = 'This email {{ value }} is not linked to any user.';
+    public string $message = 'This token {{ value }} is not linked to any user.';
 }

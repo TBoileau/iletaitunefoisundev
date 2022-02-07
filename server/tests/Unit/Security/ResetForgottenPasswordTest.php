@@ -9,7 +9,6 @@ use App\Security\Entity\User;
 use App\Security\UseCase\ResetForgottenPassword\ResetForgottenPasswordHandler;
 use App\Security\UseCase\ResetForgottenPassword\ResetForgottenPasswordInput;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class ResetForgottenPasswordTest extends TestCase
@@ -20,10 +19,9 @@ final class ResetForgottenPasswordTest extends TestCase
     public function shouldResetUserPassword(): void
     {
         $testEmail = 'user+1@email.com';
-        $forgottenPasswordToken = 'test-password-forgottent-token';
+        $forgottenPasswordToken = 'test-password-forgotten-token';
         $plainPassword = 'new-password-test';
         $resetForgottenPasswordInput = new ResetForgottenPasswordInput();
-        $resetForgottenPasswordInput->email = $testEmail;
         $resetForgottenPasswordInput->plainPassword = $plainPassword;
         $resetForgottenPasswordInput->forgottenPasswordToken = $forgottenPasswordToken;
 
@@ -31,19 +29,17 @@ final class ResetForgottenPasswordTest extends TestCase
         $user->setEmail($testEmail);
         $user->setForgottenPasswordToken($forgottenPasswordToken);
 
-        $userLoader = self::createMock(UserLoaderInterface::class);
-        $userLoader
-            ->expects(self::once())
-            ->method('loadUserByIdentifier')
-            ->with(self::equalTo($testEmail))
-            ->willReturn($user)
-        ;
-
         $userGateway = self::createMock(UserGateway::class);
         $userGateway
             ->expects(self::once())
             ->method('update')
             ->with(self::equalTo($user));
+
+        $userGateway
+            ->expects(self::once())
+            ->method('getUserByForgottenPasswordToken')
+            ->with(self::equalTo($forgottenPasswordToken))
+            ->willReturn($user);
 
         $userPasswordHasher = self::createMock(UserPasswordHasherInterface::class);
         $userPasswordHasher
@@ -51,7 +47,7 @@ final class ResetForgottenPasswordTest extends TestCase
             ->method('hashPassword')
             ->with($user, $plainPassword);
 
-        $commandHandler = new ResetForgottenPasswordHandler($userGateway, $userLoader, $userPasswordHasher);
+        $commandHandler = new ResetForgottenPasswordHandler($userGateway, $userPasswordHasher);
 
         $commandHandler($resetForgottenPasswordInput);
     }
