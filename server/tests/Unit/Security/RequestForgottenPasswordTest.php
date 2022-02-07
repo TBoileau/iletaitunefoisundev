@@ -20,7 +20,7 @@ final class RequestForgottenPasswordTest extends TestCase
     /**
      * @test
      */
-    public function shouldRegisterAndFindUser(): void
+    public function shouldDefineANewForgottenPasswordToken(): void
     {
         $testEmail = 'user+1@email.com';
         $requestForgottenPasswordInput = new RequestForgottenPasswordInput();
