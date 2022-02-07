@@ -9,6 +9,7 @@ use App\Adventure\Entity\Player;
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\UseCase\Register\RegisterInput;
 use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput;
+use App\Security\UseCase\ResetForgottenPassword\ResetForgottenPasswordInput;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -33,6 +34,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'status' => Response::HTTP_ACCEPTED,
             'method' => Request::METHOD_POST,
             'path' => '/forgotten-password/request',
+        ],
+        'resetForgottenPassword' => [
+            'messenger' => 'input',
+            'input' => ResetForgottenPasswordInput::class,
+            'output' => false,
+            'status' => Response::HTTP_ACCEPTED,
+            'method' => Request::METHOD_POST,
+            'path' => '/forgotten-password/reset',
         ],
     ],
     itemOperations: [

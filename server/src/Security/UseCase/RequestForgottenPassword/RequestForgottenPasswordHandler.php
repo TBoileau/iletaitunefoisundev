@@ -29,7 +29,7 @@ final class RequestForgottenPasswordHandler implements MessageHandlerInterface
     {
         /** @var ?User $user */
         $user = $this->userLoader->loadUserByIdentifier($requestForgottenPasswordInput->email);
-        if ($user === null) {
+        if (null === $user) {
             return;
         }
 

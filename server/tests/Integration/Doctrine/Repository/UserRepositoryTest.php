@@ -6,7 +6,6 @@ namespace App\Tests\Integration\Doctrine\Repository;
 
 use App\Security\Doctrine\Repository\UserRepository;
 use App\Security\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Uid\Uuid;
