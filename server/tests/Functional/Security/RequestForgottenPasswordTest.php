@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Security;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
+use App\Security\UseCase\RequestForgottenPassword\RequestForgottenPasswordInput;
 use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Transport\InMemoryTransport;
 
 final class RequestForgottenPasswordTest extends ApiTestCase
 {
@@ -24,6 +26,13 @@ final class RequestForgottenPasswordTest extends ApiTestCase
         );
         self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
         self::assertEquals('', $response->getContent());
+
+        /** @var InMemoryTransport $transport */
+        $transport = self::getContainer()->get('messenger.transport.async');
+        $transportMessages = $transport->get();
+        $this->assertCount(1, $transportMessages);
+
+        self::assertInstanceOf(RequestForgottenPasswordInput::class, $transportMessages[0]->getMessage());
     }
 
     /**
@@ -38,6 +47,13 @@ final class RequestForgottenPasswordTest extends ApiTestCase
             ['json' => self::createData('user+unknown@email.com')]
         );
         self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
+
+        /** @var InMemoryTransport $transport */
+        $transport = self::getContainer()->get('messenger.transport.async');
+        $transportMessages = $transport->get();
+        $this->assertCount(1, $transportMessages);
+
+        self::assertInstanceOf(RequestForgottenPasswordInput::class, $transportMessages[0]->getMessage());
     }
 
     /**
