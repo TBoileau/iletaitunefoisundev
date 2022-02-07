@@ -7,7 +7,7 @@ namespace App\Security\Factory;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Uid\UuidV6;
 
-class UuidV6Factory
+class UuidV6Factory implements UuidV6FactoryInterface
 {
     public function create(): UuidV6
     {

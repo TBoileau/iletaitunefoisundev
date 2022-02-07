@@ -9,7 +9,7 @@ use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RequestForgottenPasswordTest extends ApiTestCase
+final class RequestForgottenPasswordTest extends ApiTestCase
 {
     /**
      * @test
