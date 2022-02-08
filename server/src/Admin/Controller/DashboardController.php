@@ -51,6 +51,7 @@ final class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Cours', 'fa fa-chalkboard-teacher', Course::class),
             MenuItem::linkToCrud('Quiz', 'fa fa-list-ol', Quiz::class),
             MenuItem::linkToCrud('Questions', 'fa fa-question-circle', Question::class),
+            MenuItem::linkToCrud('Sessions', 'fa fa-person-booth', Quiz\Session::class),
         ]);
         yield MenuItem::subMenu('Aventure', 'fa fa-road')->setSubItems([
             MenuItem::linkToCrud('Mondes', 'fa fa-map', World::class),
