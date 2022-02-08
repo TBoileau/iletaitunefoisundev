@@ -34,9 +34,6 @@ abstract class Node implements Stringable
     #[Groups('read')]
     protected string $title = '';
 
-    #[Column(type: Types::STRING, unique: true)]
-    protected string $slug = '';
-
     public function getId(): ?int
     {
         return $this->id;
@@ -50,16 +47,6 @@ abstract class Node implements Stringable
     public function setTitle(string $title): void
     {
         $this->title = $title;
-    }
-
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
     }
 
     public function __toString(): string

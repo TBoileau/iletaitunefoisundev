@@ -31,7 +31,6 @@ final class QuizFixtures extends Fixture
     {
         $quiz = new Quiz();
         $quiz->setTitle(sprintf('Quiz %d', $index));
-        $quiz->setSlug(sprintf('quiz-%d', $index));
 
         return $quiz;
     }
