@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Controller;
 
+use App\Admin\EasyAdmin\Field\FormatField;
+use App\Admin\EasyAdmin\Filter\EnumFilter;
 use App\Admin\Form\AnswerType;
 use App\Content\Entity\Question;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -30,6 +32,7 @@ final class QuestionCrudController extends AbstractCrudController
     {
         return $filters
             ->add(EntityFilter::new('quiz', 'Quiz'))
+            ->add(EnumFilter::new('format', 'Format'))
             ->add(TextFilter::new('label', 'Intitulé'));
     }
 
@@ -55,6 +58,7 @@ final class QuestionCrudController extends AbstractCrudController
             ->setFormTypeOption('empty_data', '');
         yield TextEditorField::new('content', 'Contenu')
             ->setRequired(false);
+        yield FormatField::new('format', 'Format');
         yield AssociationField::new('quiz', 'Quiz')
             ->setCrudController(QuizCrudController::class);
         yield CollectionField::new('answers', 'Réponses')

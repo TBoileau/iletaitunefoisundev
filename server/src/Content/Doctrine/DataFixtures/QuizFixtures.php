@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\Doctrine\DataFixtures;
 
 use App\Content\Entity\Answer;
+use App\Content\Entity\Format;
 use App\Content\Entity\Question;
 use App\Content\Entity\Quiz;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -41,6 +42,7 @@ final class QuizFixtures extends Fixture
         $question->setLabel(sprintf('Question %d', $index));
         $question->setContent(sprintf('Content %d', $index));
         $question->setQuiz($quiz);
+        $question->setFormat(0 === $index % 2 ? Format::Multiple : Format::Unique);
 
         for ($i = 1; $i <= 3; ++$i) {
             $answer = new Answer();

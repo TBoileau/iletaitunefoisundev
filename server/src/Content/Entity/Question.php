@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Content\Entity;
 
 use App\Content\Doctrine\Repository\QuestionRepository;
+use App\Content\Doctrine\Type\FormatType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -37,6 +38,9 @@ class Question implements Stringable
     #[ManyToOne(targetEntity: Quiz::class, inversedBy: 'questions')]
     #[JoinColumn(nullable: false)]
     private Quiz $quiz;
+
+    #[Column(type: FormatType::NAME, length: 8)]
+    private Format $format;
 
     /**
      * @var Collection<int, Answer>
@@ -110,6 +114,16 @@ class Question implements Stringable
         }
 
         $this->answers->removeElement($answer);
+    }
+
+    public function getFormat(): Format
+    {
+        return $this->format;
+    }
+
+    public function setFormat(Format $format): void
+    {
+        $this->format = $format;
     }
 
     public function __toString(): string

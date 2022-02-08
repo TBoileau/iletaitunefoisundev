@@ -7,6 +7,7 @@ namespace App\Tests\Functional\Admin;
 use App\Admin\Controller\QuestionCrudController;
 use App\Admin\Entity\Administrator;
 use App\Content\Doctrine\Repository\QuestionRepository;
+use App\Content\Entity\Format;
 use App\Content\Entity\Question;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -93,6 +94,7 @@ final class QuestionTest extends WebTestCase
                     '_token' => $token,
                     'label' => 'Question 0',
                     'content' => 'Content 0',
+                    'format' => Format::Unique->value,
                     'quiz' => 126,
                     'answers' => [
                         [
@@ -126,6 +128,7 @@ final class QuestionTest extends WebTestCase
         self::assertSame('Content 0', $question->getContent());
         self::assertSame('Question 0', $question->getLabel());
         self::assertSame(126, $question->getQuiz()->getId());
+        self::assertSame(Format::Unique, $question->getFormat());
     }
 
     /**
@@ -214,6 +217,7 @@ final class QuestionTest extends WebTestCase
                     '_token' => $token,
                     'label' => 'Question 0',
                     'content' => 'Content 0',
+                    'format' => Format::Unique->value,
                     'quiz' => 126,
                     'answers' => [
                         [
@@ -241,6 +245,7 @@ final class QuestionTest extends WebTestCase
         self::assertNotNull($question);
         self::assertSame('Content 0', $question->getContent());
         self::assertSame('Question 0', $question->getLabel());
+        self::assertSame(Format::Unique, $question->getFormat());
         self::assertCount(2, $question->getAnswers());
     }
 }
