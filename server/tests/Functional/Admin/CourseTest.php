@@ -75,7 +75,6 @@ final class CourseTest extends WebTestCase
 
         $client->submitForm('Créer', [
             'Course[title]' => 'Course 126',
-            'Course[slug]' => 'course-126',
             'Course[description]' => 'Description',
             'Course[content]' => 'Content',
             'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
@@ -86,10 +85,9 @@ final class CourseTest extends WebTestCase
         /** @var CourseRepository<Course> $courseRepository */
         $courseRepository = $client->getContainer()->get(CourseRepository::class);
 
-        $course = $courseRepository->findOneBy(['slug' => 'course-126']);
+        $course = $courseRepository->findOneBy(['title' => 'Course 126']);
 
         self::assertNotNull($course);
-        self::assertSame('course-126', $course->getSlug());
         self::assertSame('Course 126', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
         self::assertSame('Content', $course->getContent());
@@ -115,7 +113,7 @@ final class CourseTest extends WebTestCase
         $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
 
         /** @var Course $course */
-        $course = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-1']);
+        $course = $entityManager->getRepository(Course::class)->findOneBy(['title' => 'Course 1']);
 
         $client->request(
             'GET',
@@ -143,10 +141,7 @@ final class CourseTest extends WebTestCase
         $admin = $entityManager->getRepository(Administrator::class)->findOneBy(['email' => 'admin+1@email.com']);
 
         /** @var Course $course */
-        $course = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-1']);
-
-        /** @var Course $sibling */
-        $sibling = $entityManager->getRepository(Course::class)->findOneBy(['slug' => 'course-4']);
+        $course = $entityManager->getRepository(Course::class)->findOneBy(['title' => 'Course 1']);
 
         $client->loginUser($admin, 'admin');
 
@@ -166,7 +161,6 @@ final class CourseTest extends WebTestCase
 
         $client->submitForm('Sauvegarder les modifications', [
             'Course[title]' => 'Course 0',
-            'Course[slug]' => 'course-0',
             'Course[description]' => 'Description',
             'Course[content]' => 'Content',
             'Course[youtubeUrl]' => 'https://www.youtube.com/watch?v=-S94RNjjb4I',
@@ -177,10 +171,9 @@ final class CourseTest extends WebTestCase
         /** @var CourseRepository<Course> $courseRepository */
         $courseRepository = $client->getContainer()->get(CourseRepository::class);
 
-        $course = $courseRepository->findOneBy(['slug' => 'course-0']);
+        $course = $courseRepository->findOneBy(['title' => 'Course 0']);
 
         self::assertNotNull($course);
-        self::assertSame('course-0', $course->getSlug());
         self::assertSame('Course 0', $course->getTitle());
         self::assertSame('Description', $course->getDescription());
         self::assertSame('Content', $course->getContent());

@@ -23,7 +23,6 @@ final class CourseFixtures extends Fixture
     {
         $course = new Course();
         $course->setTitle(sprintf('Course %d', $index));
-        $course->setSlug(sprintf('course-%d', $index));
         $course->setYoutubeUrl('https://www.youtube.com/watch?v=-S94RNjjb4I');
         $course->setDescription(sprintf('Description %s', $index));
         $course->setContent(sprintf('Content %s', $index));

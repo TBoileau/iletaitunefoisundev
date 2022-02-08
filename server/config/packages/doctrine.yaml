@@ -4,6 +4,7 @@ doctrine:
         types:
             difficulty: App\Adventure\Doctrine\Type\DifficultyType
             type: App\Adventure\Doctrine\Type\QuestTypeType
+            format: App\Content\Doctrine\Type\FormatType
 
     orm:
         auto_generate_proxy_classes: true

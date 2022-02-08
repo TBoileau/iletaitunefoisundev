@@ -75,7 +75,6 @@ final class QuizTest extends WebTestCase
 
         $client->submitForm('Créer', [
             'Quiz[title]' => 'Quiz 251',
-            'Quiz[slug]' => 'quiz-251',
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -83,10 +82,9 @@ final class QuizTest extends WebTestCase
         /** @var QuizRepository<Quiz> $quizRepository */
         $quizRepository = $client->getContainer()->get(QuizRepository::class);
 
-        $quiz = $quizRepository->findOneBy(['slug' => 'quiz-251']);
+        $quiz = $quizRepository->findOneBy(['title' => 'Quiz 251']);
 
         self::assertNotNull($quiz);
-        self::assertSame('quiz-251', $quiz->getSlug());
         self::assertSame('Quiz 251', $quiz->getTitle());
     }
 
@@ -109,7 +107,7 @@ final class QuizTest extends WebTestCase
         $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
 
         /** @var Quiz $quiz */
-        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy(['slug' => 'quiz-1']);
+        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy(['title' => 'Quiz 1']);
 
         $client->request(
             'GET',
@@ -137,10 +135,7 @@ final class QuizTest extends WebTestCase
         $admin = $entityManager->getRepository(Administrator::class)->findOneBy(['email' => 'admin+1@email.com']);
 
         /** @var Quiz $quiz */
-        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy(['slug' => 'quiz-1']);
-
-        /** @var Quiz $sibling */
-        $sibling = $entityManager->getRepository(Quiz::class)->findOneBy(['slug' => 'quiz-4']);
+        $quiz = $entityManager->getRepository(Quiz::class)->findOneBy(['title' => 'Quiz 1']);
 
         $client->loginUser($admin, 'admin');
 
@@ -160,7 +155,6 @@ final class QuizTest extends WebTestCase
 
         $client->submitForm('Sauvegarder les modifications', [
             'Quiz[title]' => 'Quiz 0',
-            'Quiz[slug]' => 'quiz-0',
         ]);
 
         self::assertResponseStatusCodeSame(Response::HTTP_FOUND);
@@ -168,10 +162,9 @@ final class QuizTest extends WebTestCase
         /** @var QuizRepository<Quiz> $quizRepository */
         $quizRepository = $client->getContainer()->get(QuizRepository::class);
 
-        $quiz = $quizRepository->findOneBy(['slug' => 'quiz-0']);
+        $quiz = $quizRepository->findOneBy(['title' => 'Quiz 0']);
 
         self::assertNotNull($quiz);
-        self::assertSame('quiz-0', $quiz->getSlug());
         self::assertSame('Quiz 0', $quiz->getTitle());
     }
 }

@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
@@ -49,9 +48,6 @@ final class CourseCrudController extends AbstractCrudController
     {
         yield TextField::new('title', 'Titre')
             ->setFormTypeOption('empty_data', '');
-        yield SlugField::new('slug', 'Slug')
-            ->setFormTypeOption('empty_data', '')
-            ->setTargetFieldName('title');
         yield YoutubeField::new('youtubeUrl', 'Vidéo Youtube')
             ->setFormTypeOption('empty_data', '');
         yield TextEditorField::new('description', 'Description')
