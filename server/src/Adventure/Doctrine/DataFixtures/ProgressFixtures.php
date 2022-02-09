@@ -37,10 +37,7 @@ final class ProgressFixtures extends Fixture implements DependentFixtureInterfac
                 /** @var array<array-key, Quest> $quests */
                 $quests = $region->getQuests()->slice(0, $index + 1);
                 foreach ($quests as $k => $quest) {
-                    $checkpoint = new Checkpoint();
-                    $checkpoint->setJourney($player->getJourney());
-                    $checkpoint->setQuest($quest);
-                    $checkpoint->setStartedAt($finishedAt->sub(new DateInterval('PT59M')));
+                    $checkpoint = $this->createCheckpoint($player, $quest, $finishedAt);
                     if ($k < count($quests) - 1) {
                         $checkpoint->setFinishedAt($finishedAt);
                     }
@@ -51,6 +48,16 @@ final class ProgressFixtures extends Fixture implements DependentFixtureInterfac
             }
             $manager->flush();
         }
+    }
+
+    private function createCheckpoint(Player $player, Quest $quest, DateTimeImmutable $finishedAt): Checkpoint
+    {
+        $checkpoint = new Checkpoint();
+        $checkpoint->setJourney($player->getJourney());
+        $checkpoint->setQuest($quest);
+        $checkpoint->setStartedAt($finishedAt->sub(new DateInterval('PT59M')));
+
+        return $checkpoint;
     }
 
     /**

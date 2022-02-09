@@ -101,14 +101,6 @@ class Session
         return $this->responses;
     }
 
-    /**
-     * @param Collection<int, Response> $responses
-     */
-    public function setResponses(Collection $responses): void
-    {
-        $this->responses = $responses;
-    }
-
     public function getStartedAt(): DateTimeImmutable
     {
         return $this->startedAt;

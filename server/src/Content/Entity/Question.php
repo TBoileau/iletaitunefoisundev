@@ -100,7 +100,7 @@ class Question implements Stringable
     public function addAnswer(Answer $answer): void
     {
         if ($this->answers->contains($answer)) {
-            return;
+            return; // @codeCoverageIgnore
         }
 
         $answer->setQuestion($this);
@@ -110,7 +110,7 @@ class Question implements Stringable
     public function removeAnswer(Answer $answer): void
     {
         if (!$this->answers->contains($answer)) {
-            return;
+            return; // @codeCoverageIgnore
         }
 
         $this->answers->removeElement($answer);
