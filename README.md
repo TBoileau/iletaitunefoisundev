@@ -1,5 +1,11 @@
 # Il était une fois un dev
 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/incentive-factory/iletaitunefoisundev/Continuous%20Integration/develop?style=for-the-badge)
+![Codecov branch](https://img.shields.io/codecov/c/github/incentive-factory/iletaitunefoisundev/develop?flag=tests&style=for-the-badge&token=4ebc5a81-ef7a-46ee-a101-0d28d1c63086)
+![GitHub](https://img.shields.io/github/license/incentive-factory/iletaitunefoisundev?style=for-the-badge)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/incentive-factory/iletaitunefoisundev?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues-raw/incentive-factory/iletaitunefoisundev?style=for-the-badge)
+
 ## Présentation
 **Il était une fois un dev** est une plateforme proposant une nouvelle expérience d'apprentissage. 
 
