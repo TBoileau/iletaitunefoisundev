@@ -19,6 +19,46 @@ final class RequestForgottenPasswordTest extends TestCase
     /**
      * @test
      */
+    public function shouldReturnNull(): void
+    {
+        $testEmail = 'user+1@email.com';
+        $requestForgottenPasswordInput = new RequestForgottenPasswordInput();
+        $requestForgottenPasswordInput->email = $testEmail;
+
+        $user = new User();
+        $user->setEmail($testEmail);
+
+        $userGateway = self::createMock(UserGateway::class);
+        $userGateway
+            ->expects(self::never())
+            ->method('update')
+            ->with(self::equalTo($user));
+
+        $userGateway
+            ->expects(self::once())
+            ->method('getUserByIdentifier')
+            ->with(self::equalTo($testEmail))
+            ->willReturn(null);
+
+        $uuid = Uuid::v6();
+        $uuidFactory = self::createMock(UuidV6Factory::class);
+        $uuidFactory
+            ->expects(self::never())
+            ->method('create');
+
+        $mailer = self::createMock(MailerInterface::class);
+        $mailer
+            ->expects(self::never())
+            ->method('send');
+
+        $commandHandler = new RequestForgottenPasswordHandler($userGateway, $uuidFactory, $mailer);
+
+        $commandHandler($requestForgottenPasswordInput);
+    }
+
+    /**
+     * @test
+     */
     public function shouldDefineANewForgottenPasswordToken(): void
     {
         $testEmail = 'user+1@email.com';

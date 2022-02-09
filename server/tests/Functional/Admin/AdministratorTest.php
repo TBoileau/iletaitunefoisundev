@@ -34,7 +34,7 @@ final class AdministratorTest extends WebTestCase
         /** @var AdminUrlGenerator $adminUrlGenerator */
         $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
 
-        $client->request(
+        $crawler = $client->request(
             'GET',
             $adminUrlGenerator
                 ->setController(AdministratorCrudController::class)

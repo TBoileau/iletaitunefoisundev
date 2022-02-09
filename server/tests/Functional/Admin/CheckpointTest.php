@@ -62,7 +62,26 @@ final class CheckpointTest extends WebTestCase
         $adminUrlGenerator = $client->getContainer()->get(AdminUrlGenerator::class);
 
         /** @var Checkpoint $checkpoint */
-        $checkpoint = $entityManager->getRepository(Checkpoint::class)->findOneBy([]);
+        $checkpoint = $entityManager->getRepository(Checkpoint::class)
+            ->createQueryBuilder('c')
+            ->where('c.finishedAt IS NOT NULL')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+
+        $client->request(
+            'GET',
+            $adminUrlGenerator
+                ->setController(CheckpointCrudController::class)
+                ->setAction(Action::DETAIL)
+                ->setEntityId($checkpoint->getId())
+                ->generateUrl()
+        );
+
+        self::assertResponseIsSuccessful();
+
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $entityManager->getRepository(Checkpoint::class)->findOneBy(['finishedAt' => null]);
 
         $client->request(
             'GET',

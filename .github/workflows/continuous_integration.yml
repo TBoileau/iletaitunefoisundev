@@ -24,10 +24,9 @@ jobs:
       - name: Create key pair
         run: make generate-keypair env=test
       - name: Run unit tests
-        run: make unit-tests
-      - name: Run component tests
-        run: make component-tests
-      - name: Run integration tests
-        run: make integration-tests
-      - name: Run functional tests
-        run: make functional-tests
+        run: make tests
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./server/var/coverage/clover.xml
+          flags: tests

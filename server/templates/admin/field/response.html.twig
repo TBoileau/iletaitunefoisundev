@@ -18,6 +18,10 @@
                         <a href="{{ url }}">{{ response.question.label }}</a>
                     </td>
                     <td>
+                        {% set url = ea_url().setDashboard('App\\Admin\\Controller\\DashboardController').setController('App\\Admin\\Controller\\QuestionCrudController').setAction('detail').setEntityId(response.question.id) %}
+                        <a href="{{ url }}">{{ response.question.label }}</a>
+                    </td>
+                    <td>
                         <ul class="list-group">
                             {% for answer in response.question.answers %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center {{ answer.good ? "bg-success" : "" }}">

@@ -15,6 +15,45 @@ final class UserRepositoryTest extends KernelTestCase
     /**
      * @test
      */
+    public function getUserByForgottenPasswordTokenShouldReturnUser(): void
+    {
+        self::bootKernel();
+
+        /** @var UserRepository<User> $userRepository */
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        /** @var User $user */
+        $user = $userRepository->getUserByIdentifier('user+1@email.com');
+
+        $forgottenPasswordToken = (string) Uuid::v6();
+
+        $user->setForgottenPasswordToken($forgottenPasswordToken);
+
+        $userRepository->update($user);
+
+        $user = $userRepository->getUserByForgottenPasswordToken($forgottenPasswordToken);
+
+        self::assertNotNull($user);
+    }
+
+    /**
+     * @test
+     */
+    public function getUserByIdentifierShouldReturnUser(): void
+    {
+        self::bootKernel();
+
+        /** @var UserRepository<User> $userRepository */
+        $userRepository = self::getContainer()->get(UserRepository::class);
+
+        $user = $userRepository->getUserByIdentifier('user+1@email.com');
+
+        self::assertNotNull($user);
+    }
+
+    /**
+     * @test
+     */
     public function loadUserByIdentifierShouldReturnUser(): void
     {
         self::bootKernel();
