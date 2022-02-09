@@ -38,7 +38,7 @@ Les sources du projets sont séparés par domaine pour séparer dans la mesure d
 L'application est une API qui sera consommé par le front sous Angular. Pour cela, nous utilisons API Platform pour faciliter la modélisation de l'API.
 
 Par défaut, APIP permet de mettre en place rapidement une API avec des endpoints classiques respectant le Niveau 2 de Richardson.
-Cependant, nous avons l'ambition d'aovi rune API orientée métier, pour la partie *lecture* des données, nous laisserons API Platform faire son travail.
+Cependant, nous avons l'ambition d'avoir une API orientée métier, pour la partie *lecture* des données, nous laisserons API Platform faire son travail.
 
 Par contre, pour la partie *traitement*, nous utiliserons le composant Messenger et notamment **CRS** pour à l'avenir gérer la manière dont seront traités certaines données.
 Dans ce cas là, nous n'utiliserons pas les endpoints classiques fournit par API Platform.
