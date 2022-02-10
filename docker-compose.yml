@@ -1,5 +1,27 @@
-version: '3.7'
+version: '3.9'
+
+
+volumes:
+  node_modules:
+  db-data:
+  neo4j-test-conf:
+  neo4j-test-data:
+  neo4j-test-import:
+  neo4j-test-logs:
+  neo4j-test-plugins:
+  neo4j-dev-conf:
+  neo4j-dev-data:
+  neo4j-dev-import:
+  neo4j-dev-logs:
+  neo4j-dev-plugins:
+
+networks:
+  dev:
+    driver: bridge
+
+
 services:
+
   neo4j-test:
     image: neo4j:3.5
     restart: unless-stopped
@@ -19,6 +41,7 @@ services:
       - NEO4J_AUTH=none
     networks:
       - dev
+
   neo4j-dev:
     image: neo4j:3.5
     restart: unless-stopped
@@ -38,17 +61,8 @@ services:
       - NEO4J_AUTH=none
     networks:
       - dev
-  apache:
-    build: docker/apache
-    ports:
-      - "9000:80"
-    volumes:
-      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
-      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
-      - ./server:/var/www/html
-    restart: always
-    networks:
-      - dev
+
+
   mailer:
     image: schickling/mailcatcher
     container_name: mailer
@@ -56,6 +70,7 @@ services:
       - "1080:1080"
     networks:
       - dev
+
   mysql:
     image: mysql:8
     environment:
@@ -67,19 +82,40 @@ services:
     networks:
       - dev
 
-volumes:
-  db-data:
-  neo4j-test-conf:
-  neo4j-test-data:
-  neo4j-test-import:
-  neo4j-test-logs:
-  neo4j-test-plugins:
-  neo4j-dev-conf:
-  neo4j-dev-data:
-  neo4j-dev-import:
-  neo4j-dev-logs:
-  neo4j-dev-plugins:
 
-networks:
-  dev:
-    driver: bridge
+  nginx:
+    build:
+      context: docker/nginx
+    restart: on-failure
+    volumes:
+      - ./server:/var/www/backend:cached
+      - ./docker/nginx/server.conf:/etc/nginx/conf.d/server.conf:cached
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - dev
+
+  backend:
+    build:
+      context: docker/php
+    restart: on-failure
+    volumes:
+      - ./server:/var/www/backend:cached
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini:ro
+    depends_on:
+      - mysql
+    networks:
+      - dev
+
+  frontend-hot:
+    build:
+      context: client
+      dockerfile: Dockerfile.hotreload
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./client:/var/www/frontend
+      - node_modules:/var/www/frontend/node_modules
+
