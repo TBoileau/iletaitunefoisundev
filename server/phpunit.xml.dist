@@ -10,7 +10,7 @@
         </include>
         <exclude>
             <file>src/Kernel.php</file>
-            <file>src/Core/Command/InstallCommand.php</file>
+            <directory>src/Shared/Command/</directory>
             <directory>src/Security/Doctrine/DataFixtures</directory>
             <directory>src/Security/OpenApi</directory>
             <directory>src/Adventure/OpenApi</directory>

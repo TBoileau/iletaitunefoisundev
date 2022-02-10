@@ -1,7 +1,44 @@
 version: '3.7'
 services:
+  neo4j-test:
+    image: neo4j:3.5
+    restart: unless-stopped
+    volumes:
+      - neo4j-test-conf:/conf
+      - neo4j-test-data:/data
+      - neo4j-test-import:/import
+      - neo4j-test-logs:/logs
+      - neo4j-test-plugins:/plugins
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_AUTH=none
+    networks:
+      - dev
+  neo4j-dev:
+    image: neo4j:3.5
+    restart: unless-stopped
+    volumes:
+      - neo4j-dev-conf:/conf
+      - neo4j-dev-data:/data
+      - neo4j-dev-import:/import
+      - neo4j-dev-logs:/logs
+      - neo4j-dev-plugins:/plugins
+    ports:
+      - "7475:7474"
+      - "7688:7687"
+    environment:
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms_memory_heap_max__size=1G
+      - NEO4J_AUTH=none
+    networks:
+      - dev
   apache:
-    container_name: apache
     build: docker/apache
     ports:
       - "9000:80"
@@ -21,7 +58,6 @@ services:
       - dev
   mysql:
     image: mysql:8
-    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
@@ -33,6 +69,16 @@ services:
 
 volumes:
   db-data:
+  neo4j-test-conf:
+  neo4j-test-data:
+  neo4j-test-import:
+  neo4j-test-logs:
+  neo4j-test-plugins:
+  neo4j-dev-conf:
+  neo4j-dev-data:
+  neo4j-dev-import:
+  neo4j-dev-logs:
+  neo4j-dev-plugins:
 
 networks:
   dev:

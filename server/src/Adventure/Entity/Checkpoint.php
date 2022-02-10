@@ -7,6 +7,7 @@ namespace App\Adventure\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Doctrine\Repository\CheckpointRepository;
+use App\Content\Entity\Quiz\Session;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -50,6 +52,11 @@ class Checkpoint implements Stringable
     #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups('read')]
     private ?DateTimeImmutable $finishedAt = null;
+
+    #[OneToOne(targetEntity: Session::class)]
+    #[Groups('read')]
+    #[ApiProperty(readableLink: false)]
+    private ?Session $session;
 
     public function getId(): ?int
     {
@@ -103,5 +110,15 @@ class Checkpoint implements Stringable
         }
 
         return sprintf('%s commencée le %s', $this->quest, $this->startedAt->format('d/m/Y H:i:s'));
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): void
+    {
+        $this->session = $session;
     }
 }

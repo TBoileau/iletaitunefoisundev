@@ -50,7 +50,7 @@ final class KernelSubscriberTest extends TestCase
         $event = new ExceptionEvent($kernel, $request, 1, $exception);
 
         $kernelSubscriber->onKernelException($event);
-        
+
         self::assertNotNull($event->getResponse());
         self::assertSame(Response::HTTP_BAD_REQUEST, $event->getResponse()->getStatusCode());
     }

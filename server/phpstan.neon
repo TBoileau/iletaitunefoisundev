@@ -17,6 +17,8 @@ parameters:
     doctrine:
         objectManagerLoader: build/doctrine.php
     level: 9
+    ignoreErrors:
+        - '#ResultFormat#'
     paths:
         - src
         - tests

@@ -8,6 +8,7 @@ use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\Gateway\CheckpointGateway;
+use App\Content\Entity\Quiz\Session;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\ManagerRegistry;
@@ -60,5 +61,44 @@ final class CheckpointRepository extends ServiceEntityRepository implements Chec
     public function getCheckpointByPlayerAndQuest(Player $player, Quest $quest): ?Checkpoint
     {
         return $this->findOneBy(['journey' => $player->getJourney(), 'quest' => $quest]);
+    }
+
+    public function attachSession(Session $session): void
+    {
+        /** @var ?Quest $quest */
+        $quest = $this->_em->createQueryBuilder()
+            ->select('q')
+            ->from(Quest::class, 'q')
+            ->where('q.quiz = :quiz')
+            ->setParameter('quiz', $session->getQuiz())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $quest) {
+            return; // @codeCoverageIgnore
+        }
+
+        /** @var ?Checkpoint $checkpoint */
+        $checkpoint = $this->createQueryBuilder('c')
+            ->join('c.journey', 'j')
+            ->where('c.quest = :quest')
+            ->andWhere('c.journey = :journey')
+            ->setParameters([
+                'quest' => $quest,
+                'journey' => $session->getPlayer()->getJourney(),
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $checkpoint) {
+            $checkpoint = new Checkpoint();
+            $checkpoint->setStartedAt($session->getStartedAt());
+            $checkpoint->setQuest($quest);
+            $checkpoint->setJourney($session->getPlayer()->getJourney());
+            $this->_em->persist($checkpoint);
+        }
+
+        $checkpoint->setSession($session);
+        $this->_em->flush();
     }
 }

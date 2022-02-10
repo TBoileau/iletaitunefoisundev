@@ -46,3 +46,8 @@ services:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']
         decoration_priority: 0
+
+    Laudis\Neo4j\Contracts\ClientInterface:
+        factory: [App\Shared\Neo4j\Neo4jClientFactory, 'create']
+        arguments: ['%env(NEO4J_URL)%']
+        public: true
