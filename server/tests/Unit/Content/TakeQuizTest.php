@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Content;
 
 use App\Adventure\Entity\Player;
+use App\Adventure\Gateway\CheckpointGateway;
 use App\Content\Entity\Answer;
 use App\Content\Entity\Format;
 use App\Content\Entity\Question;
@@ -111,6 +112,12 @@ final class TakeQuizTest extends TestCase
         $startQuizSession->player = $player;
         $startQuizSession->quiz = $quiz;
 
+        $checkpointGateway = self::createMock(CheckpointGateway::class);
+        $checkpointGateway
+            ->expects(self::once())
+            ->method('attachSession')
+            ->with(self::isInstanceOf(Quiz\Session::class));
+
         $sessionGateway = self::createMock(SessionGateway::class);
         $sessionGateway
             ->expects(self::once())
@@ -127,7 +134,7 @@ final class TakeQuizTest extends TestCase
             ->method('submit')
             ->with(self::isInstanceOf(Quiz\Response::class));
 
-        $startQuizHandler = new StartQuizSessionHandler($sessionGateway);
+        $startQuizHandler = new StartQuizSessionHandler($sessionGateway, $checkpointGateway);
 
         $session = $startQuizHandler($startQuizSession);
 

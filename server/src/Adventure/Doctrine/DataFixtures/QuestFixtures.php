@@ -37,7 +37,7 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
         $nodeIndex = 0;
 
         foreach ($regions as $region) {
-            /** @var array<int, array{id: ?int, type: Type, next: int, relativess: array<array-key, int>}> $quests */
+            /** @var array<int, array{id: ?int, type: Type, next: ?int, relatives: array<array-key, int>}> $quests */
             $quests = [
                 1 => [
                     'type' => Type::Main,
@@ -51,10 +51,12 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 ],
                 3 => [
                     'type' => Type::Main,
+                    'next' => null,
                     'relatives' => [4],
                 ],
                 4 => [
                     'type' => Type::Side,
+                    'next' => null,
                     'relatives' => [5],
                 ],
                 5 => [
@@ -86,7 +88,7 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
             }
 
             foreach ($quests as $quest) {
-                if (isset($quest['next'])) {
+                if (null !== $quest['next']) {
                     $this->neo4jClient->run(
                         'MATCH (q1:Quest), (q2:Quest) WHERE q1.id = $q1 AND q2.id = $q2 MERGE (q1)-[:NEXT]->(q2);',
                         ['q1' => $quest['id'], 'q2' => $quests[$quest['next']]['id']]

@@ -63,6 +63,8 @@ final class CheckpointCrudController extends AbstractCrudController
         yield DateTimeField::new('finishedAt', 'Terminée le');
         yield AssociationField::new('journey.player', 'Joueur')
             ->setCrudController(PlayerCrudController::class);
+        yield AssociationField::new('session', 'Session de Quiz')
+            ->setCrudController(SessionCrudController::class);
         yield AssociationField::new('journey', 'Journal de bord')
             ->setCrudController(JourneyCrudController::class);
     }

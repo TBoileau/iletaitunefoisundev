@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Content\UseCase\StartQuizSession;
 
+use App\Adventure\Entity\Checkpoint;
+use App\Adventure\Gateway\CheckpointGateway;
 use App\Content\Entity\Quiz\Response;
 use App\Content\Entity\Quiz\Session;
 use App\Content\Gateway\SessionGateway;
@@ -14,8 +16,9 @@ final class StartQuizSessionHandler implements MessageHandlerInterface
 {
     /**
      * @param SessionGateway<Session> $sessionGateway
+     * @param CheckpointGateway<Checkpoint> $checkpointGateway
      */
-    public function __construct(private SessionGateway $sessionGateway)
+    public function __construct(private SessionGateway $sessionGateway, private CheckpointGateway $checkpointGateway)
     {
     }
 
@@ -34,6 +37,8 @@ final class StartQuizSessionHandler implements MessageHandlerInterface
         }
 
         $this->sessionGateway->start($session);
+
+        $this->checkpointGateway->attachSession($session);
 
         return $session;
     }
