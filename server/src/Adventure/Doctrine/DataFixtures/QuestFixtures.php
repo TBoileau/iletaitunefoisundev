@@ -15,9 +15,14 @@ use App\Content\Entity\Quiz;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Laudis\Neo4j\Contracts\ClientInterface;
 
 final class QuestFixtures extends Fixture implements DependentFixtureInterface
 {
+    public function __construct(private ClientInterface $neo4jClient)
+    {
+    }
+
     public function load(ObjectManager $manager): void
     {
         /** @var array<array-key, Region> $regions */
@@ -32,7 +37,33 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
         $nodeIndex = 0;
 
         foreach ($regions as $region) {
-            for ($i = 1; $i <= 5; ++$i) {
+            /** @var array<int, array{id: ?int, type: Type, next: int, relativess: array<array-key, int>}> $quests */
+            $quests = [
+                1 => [
+                    'type' => Type::Main,
+                    'next' => 2,
+                    'relatives' => [4],
+                ],
+                2 => [
+                    'type' => Type::Main,
+                    'next' => 3,
+                    'relatives' => [5],
+                ],
+                3 => [
+                    'type' => Type::Main,
+                    'relatives' => [4],
+                ],
+                4 => [
+                    'type' => Type::Side,
+                    'relatives' => [5],
+                ],
+                5 => [
+                    'type' => Type::Side,
+                    'relatives' => [],
+                ],
+            ];
+
+            foreach ($quests as $i => &$questInfo) {
                 $quest = new Quest();
                 $quest->setName(sprintf('Quest %d', $i));
                 $quest->setRegion($region);
@@ -43,20 +74,33 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                     3, 4 => Difficulty::Normal,
                     default => Difficulty::Hard,
                 });
-                $quest->setType(match ($i % 2) {
-                    0 => Type::Main,
-                    default => Type::Side,
-                });
+                $quest->setType($questInfo['type']);
                 $manager->persist($quest);
                 if (1 === $i) {
                     $region->setFirstQuest($quest);
                 }
-
+                $manager->flush();
+                $questInfo['id'] = $quest->getId();
+                $this->neo4jClient->run('CREATE(q:Quest {id: $id});', ['id' => $quest->getId()]);
                 ++$nodeIndex;
             }
-        }
 
-        $manager->flush();
+            foreach ($quests as $quest) {
+                if (isset($quest['next'])) {
+                    $this->neo4jClient->run(
+                        'MATCH (q1:Quest), (q2:Quest) WHERE q1.id = $q1 AND q2.id = $q2 MERGE (q1)-[:NEXT]->(q2);',
+                        ['q1' => $quest['id'], 'q2' => $quests[$quest['next']]['id']]
+                    );
+                }
+
+                foreach ($quest['relatives'] as $relative) {
+                    $this->neo4jClient->run(
+                        'MATCH (q1:Quest), (q2:Quest) WHERE q1.id = $q1 AND q2.id = $q2 MERGE (q1)-[:RELATIVE]->(q2);',
+                        ['q1' => $quest['id'], 'q2' => $quests[$relative]['id']]
+                    );
+                }
+            }
+        }
     }
 
     /**

@@ -98,9 +98,22 @@ functional-tests:
 
 database:
 	echo "\nSetup database...\e[0m"
+	make graph env=$(env)
 	$(EXEC_SYMFONY) doctrine:database:drop --if-exists --force --env=$(env)
 	$(EXEC_SYMFONY) doctrine:database:create --env=$(env)
 	$(EXEC_SYMFONY) doctrine:schema:update --force --env=$(env)
+
+graph:
+	echo "\nSetup graph database...\e[0m"
+	$(EXEC_SYMFONY) app:neo4j:delete-nodes --env=$(env)
+
+graph-dev:
+	echo "\nSetup graph database for dev env...\e[0m"
+	make graph env=dev
+
+graph-test:
+	echo "\nSetup graph database for test env...\e[0m"
+	make graph env=test
 
 fixtures:
 	@echo "\nLoad fixtures...\e[0m"
