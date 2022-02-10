@@ -26,21 +26,21 @@
 ## Backend
 
 ### Domaine
-Les sources du projets sont séparés par domaine pour séparer dans la mesure du possible les différentes modules.
+Les sources du projets sont séparées par domaine pour séparer dans la mesure du possible les différentes modules.
 
 * Admin : Contient les classes nécessaires à la gestion du Back-office avec Easy Admin.
-* Adventure : Vous y trouverez toutes les fonctionnalités lié à l'aventure (quête, maps, joueur, ...)
+* Adventure : Vous y trouverez toutes les fonctionnalités liées à l'aventure (quête, maps, joueur, ...)
 * Content : Contient l'ensemble des classes pour modéliser le contenu du site, comme les cours/quiz/exercices...
-* Security : Retrouvez l'ensemble des classes et fonctionnalités liés à la sécurité, comme l'entité User et l'inscription.
-* Shared : Contient les classes qui n'appartiennent à aucun domaine ou qui permet d'implémenter un comportement globale à l'application.
+* Security : Retrouvez l'ensemble des classes et fonctionnalités liées à la sécurité, comme l'entité User et l'inscription.
+* Shared : Contient les classes qui n'appartiennent à aucun domaine ou qui permettent d'implémenter un comportement globale à l'application.
 
 ### API
-L'application est une API qui sera consommé par le front sous Angular. Pour cela, nous utilisons API Platform pour faciliter la modélisation de l'API.
+L'application est une API qui sera consommée par le front sous Angular. Pour cela, nous utilisons API Platform pour faciliter la modélisation de l'API.
 
 Par défaut, APIP permet de mettre en place rapidement une API avec des endpoints classiques respectant le Niveau 2 de Richardson.
 Cependant, nous avons l'ambition d'avoir une API orientée métier, pour la partie *lecture* des données, nous laisserons API Platform faire son travail.
 
-Par contre, pour la partie *traitement*, nous utiliserons le composant Messenger et notamment **CRS** pour à l'avenir gérer la manière dont seront traités certaines données.
-Dans ce cas là, nous n'utiliserons pas les endpoints classiques fournit par API Platform.
+Par contre, pour la partie *traitement*, nous utiliserons le composant Messenger et notamment **CRS** pour à l'avenir gérer la manière dont seront traitées certaines données.
+Dans ce cas là, nous n'utiliserons pas les endpoints classiques fournis par API Platform.
 Exemple : L'inscription
 Nous n'utilisons pas l'endpoint `/api/users` en méthode `POST`, mais plutôt `/api/security/users/register`. C'est bien plus parlant.
