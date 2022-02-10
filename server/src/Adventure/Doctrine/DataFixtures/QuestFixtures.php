@@ -61,6 +61,7 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 ],
                 5 => [
                     'type' => Type::Side,
+                    'next' => null,
                     'relatives' => [],
                 ],
             ];
