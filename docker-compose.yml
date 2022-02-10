@@ -65,7 +65,6 @@ services:
 
   mailer:
     image: schickling/mailcatcher
-    container_name: mailer
     ports:
       - "1080:1080"
     networks:
