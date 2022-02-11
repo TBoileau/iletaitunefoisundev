@@ -27,7 +27,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 
 CMD ["php-fpm", "-F"]
 
-COPY . /var/www/backend
-WORKDIR /var/www/backend
+COPY . /var/www/server
+WORKDIR /var/www/server
 
 EXPOSE 9000
