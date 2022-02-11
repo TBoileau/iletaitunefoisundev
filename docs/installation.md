@@ -30,4 +30,9 @@ make reset
 make initialize
 ```
 
+## Lancement du serveur du client (angular)
+```
+make client
+```
+
 Et voilà il ne vous reste plus qu'à développer !

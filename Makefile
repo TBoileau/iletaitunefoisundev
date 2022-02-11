@@ -1,16 +1,17 @@
 DOCKER_COMPOSE = docker-compose
-EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T backend php bin/console
-EXEC_ANGULAR = $(DOCKER_COMPOSE) exec -T frontend-hot ng
-EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T backend composer
-EXEC_PHP = $(DOCKER_COMPOSE) exec -T backend php
+EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T php php bin/console
+EXEC_ANGULAR = $(DOCKER_COMPOSE) exec -T node ng
+EXEC_NPM = $(DOCKER_COMPOSE) exec -T node npm
+EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T php composer
+EXEC_PHP = $(DOCKER_COMPOSE) exec -T php php
 
 ## Protect targets
-.PHONY: help routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
+.PHONY: help client routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
 
 help:
 	 @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[33m %s\n\033[0m", $$1, $$2}'
 
-install: build up composer-install
+install: build up composer-install npm-install
 
 reset: down install
 
@@ -60,6 +61,10 @@ initialize: ## Initialize specify environment
 	make generate-keypair env=test
 	make prepare env=test
 
+client: ## Start client server
+	@echo -e "\e[32mStart client server...\e[0m"
+	$(EXEC_NPM) start
+
 generate-keypair: ## Create secure keypair
 	@echo -e "\e[32mGenerate keypair...\e[0m"
 	@$(EXEC_SYMFONY) lexik:jwt:generate-keypair --overwrite -n --env=$(env)
@@ -67,6 +72,10 @@ generate-keypair: ## Create secure keypair
 composer-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
 	@echo -e "\e[32mInstall dependencies...\e[0m"
 	$(EXEC_COMPOSER) install
+
+npm-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
+	@echo -e "\e[32mInstall dependencies...\e[0m"
+	$(EXEC_NPM) install
 
 composer-update: ## Resolve all dependencies of the project and write the exact versions into composer.lock
 	@echo -e "\e[32mUpdate dependencies...\e[0m"
