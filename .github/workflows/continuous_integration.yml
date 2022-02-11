@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Up needed docker
-        run: docker-compose up -d backend
+        run: docker-compose up -d php
       - name: Install dependencies
         run: make composer-install
       - name: Code quality
