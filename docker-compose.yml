@@ -110,6 +110,7 @@ services:
   node:
     build: docker/node
     restart: on-failure
+    command: npm start
     ports:
       - "4200:4200"
     volumes:

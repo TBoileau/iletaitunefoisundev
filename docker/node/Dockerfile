@@ -6,5 +6,3 @@ RUN npm install -g @angular/cli@latest
 WORKDIR /var/www/client
 
 EXPOSE 4200
-
-ENTRYPOINT ["tail", "-f", "/dev/null"]

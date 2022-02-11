@@ -6,7 +6,7 @@ EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T php composer
 EXEC_PHP = $(DOCKER_COMPOSE) exec -T php php
 
 ## Protect targets
-.PHONY: help client routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
+.PHONY: help routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
 
 help:
 	 @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[33m %s\n\033[0m", $$1, $$2}'
@@ -60,10 +60,6 @@ initialize: ## Initialize specify environment
 	@echo -e "\e[32mInitialize test environment...\e[0m"
 	make generate-keypair env=test
 	make prepare env=test
-
-client: ## Start client server
-	@echo -e "\e[32mStart client server...\e[0m"
-	$(EXEC_NPM) start
 
 generate-keypair: ## Create secure keypair
 	@echo -e "\e[32mGenerate keypair...\e[0m"
@@ -170,10 +166,6 @@ prepare-dev: ## Create the database and the fake data necessary for the developm
 	@echo -e "\e[32mPrepare dev is started...\e[0m"
 	make database env=dev
 	make fixtures env=dev
-
-angular: ## Launch angular with livereload (Only for dev)
-	@echo -e "\e[32mStart front client...\e[0m"
-	@$(DOCKER_COMPOSE) up -d --remove-orphans frontend_hot
 
 graph: ## Setup graph database
 	@echo -e "\e[32mSetup graph database...\e[0m"
