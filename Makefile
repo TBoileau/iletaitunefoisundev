@@ -1,17 +1,16 @@
 DOCKER_COMPOSE = docker-compose
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T php php bin/console
-EXEC_ANGULAR = $(DOCKER_COMPOSE) exec -T node ng
-EXEC_NPM = $(DOCKER_COMPOSE) exec -T node npm
 EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T php composer
 EXEC_PHP = $(DOCKER_COMPOSE) exec -T php php
+CURRENT_PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ## Protect targets
-.PHONY: help client routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
+.PHONY: help routes start stop down build up initialize php-cs-fixer phpcpd phpstan tests database fix fixtures cc prepare
 
 help:
 	 @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[33m %s\n\033[0m", $$1, $$2}'
 
-install: build up composer-install npm-install
+install: build up composer-install
 
 reset: down install
 
@@ -37,6 +36,7 @@ build: ## Build all dockers images in local ways
 
 up: ## Builds, (re)creates, starts, and attaches to containers for a service
 	@echo -e "\e[32mUp environment...\e[0m"
+	test -d $(CURRENT_PROJECT_DIR)client/node_modules || mkdir $(CURRENT_PROJECT_DIR)client/node_modules
 	@$(DOCKER_COMPOSE) up -d --remove-orphans
 
 down: ## Stops containers and removes containers, networks, volumes, and images created by up.
@@ -61,9 +61,6 @@ initialize: ## Initialize specify environment
 	make generate-keypair env=test
 	make prepare env=test
 
-client: ## Start client server
-	@echo -e "\e[32mStart client server...\e[0m"
-	$(EXEC_NPM) start
 
 generate-keypair: ## Create secure keypair
 	@echo -e "\e[32mGenerate keypair...\e[0m"
@@ -72,10 +69,6 @@ generate-keypair: ## Create secure keypair
 composer-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
 	@echo -e "\e[32mInstall dependencies...\e[0m"
 	$(EXEC_COMPOSER) install
-
-npm-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
-	@echo -e "\e[32mInstall dependencies...\e[0m"
-	$(EXEC_NPM) install
 
 composer-update: ## Resolve all dependencies of the project and write the exact versions into composer.lock
 	@echo -e "\e[32mUpdate dependencies...\e[0m"
@@ -170,10 +163,6 @@ prepare-dev: ## Create the database and the fake data necessary for the developm
 	@echo -e "\e[32mPrepare dev is started...\e[0m"
 	make database env=dev
 	make fixtures env=dev
-
-angular: ## Launch angular with livereload (Only for dev)
-	@echo -e "\e[32mStart front client...\e[0m"
-	@$(DOCKER_COMPOSE) up -d --remove-orphans frontend_hot
 
 graph: ## Setup graph database
 	@echo -e "\e[32mSetup graph database...\e[0m"

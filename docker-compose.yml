@@ -13,6 +13,12 @@ volumes:
   neo4j-dev-import:
   neo4j-dev-logs:
   neo4j-dev-plugins:
+  node_modules:
+      driver: local
+      driver_opts:
+        type: none
+        o: bind
+        device: ./client/node_modules
 
 networks:
   dev:
@@ -108,13 +114,14 @@ services:
       - dev
 
   node:
-    build: docker/node
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
     restart: on-failure
     ports:
       - "4200:4200"
     volumes:
       - ./client:/var/www/client
-    depends_on:
-      - nginx
+      - node_modules:/var/www/client/node_modules
     networks:
       - dev
