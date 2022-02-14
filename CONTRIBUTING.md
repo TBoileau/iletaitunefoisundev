@@ -3,9 +3,9 @@
 Veuillez prendre un moment pour prendre connaissance de ce document afin de suivre facilement le processus de contribution.
 
 ## Issues
-[Issues](https://github.com/incentive-factory/iletaitunefoisundev/issues) est le canal idéal pour les rapports de bug, les nouvelles fonctionnalités ou pour soumètre une `pull requests`, cependant veuillez a bien respecter les restrictions suivantes :
+[Issues](https://github.com/incentive-factory/iletaitunefoisundev/issues) est le canal idéal pour les rapports de bug, les nouvelles fonctionnalités ou pour soumettre une `pull requests`, cependant veillez à bien respecter les restrictions suivantes :
 * N'utiliser par ce canal pour vos demandes d'aide personnelles (utilisez [Stack Overflow](http://stackoverflow.com/)).
-* Il est interdit d'insulter ou d'offenser d'une quelconque manière en commentaire d'un `issue`. Respectez les opinions des autres, et rester concentré sur la discussion principale.
+* Il est interdit d'insulter ou d'offenser d'une quelconque manière en commentaire d'un `issue`. Respectez les opinions des autres et rester concentré sur la discussion principale.
 * Quand vous rédigez une issue, sélectionnez le label `En attente`. Un maintainer s'occupera de valider l'issue afin de commencer à la traiter.
 * Chaque issue est symbolisée par les labels suivants :
    * Priorité
@@ -27,7 +27,7 @@ C'est à vous de présenter des arguments solides pour convaincre les développe
 ## Pull request
 De bonnes `pull requests` sont d'une grande aide. Elles doivent rester dans le cadre du projet et ne doit pas contenir de `commits` non lié au projet.
 
-Veuillez demander avant de poster votre `pull request`, autrement vous risquez de passer gaspiller du temps de travail car l'équipe projet ne souhaite pas intégrer votre travail.
+Veuillez demander avant de poster votre `pull request`, autrement vous risquez de passer gaspiller du temps de travail, car l'équipe projet ne souhaite pas intégrer votre travail.
 
 Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes pratiques :
 1. Clonez le repository :
@@ -45,7 +45,7 @@ Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes 
         git checkout production
         git checkout -b hotfix/<feature-name>
         ```
-   *Vous pouvez aussi utiliser [git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.fr_FR.html) pour simplifiez la gestion de vos branches :*
+   *Vous pouvez aussi utiliser [git-flow](https://danielkummer.github.io/git-flow-cheatsheet/index.fr_FR.html) pour simplifier la gestion de vos branches :*
     * Pour une nouvelle fonctionnalité ou modification :
         ```
         git flow feature start <feature-name>
@@ -65,22 +65,22 @@ Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes 
    L'en-tête est obligatoire.
 
    Types :
-    * **build**: Changements qui ont un effet sur le système (installation de nouvelles dépendances, composer, npm, environnements, ...)
-    * **ci**: Configuration de l'intégration continue
-    * **cd**: Configuration du déploiement continu
-    * **docs**: Modifications de la documentation
-    * **feat**: Nouvelle fonctionnalité
-    * **fix**: Correction (`hotfix`)
-    * **perf**: Modification du code qui optimise les performances
-    * **refactor**: Toute modification du code dans le cadre d'un refactoring
-    * **style**: Corrections propres au coding style (PSR-12)
-    * **test**: Ajout d'un nouveau test ou correction d'un test existant
+    * **build** : Changements qui ont un effet sur le système (installation de nouvelles dépendances, composer, npm, environnements, ...)
+    * **ci** : Configuration de l'intégration continue
+    * **cd** : Configuration du déploiement continu
+    * **docs** : Modifications de la documentation
+    * **feat** : Nouvelle fonctionnalité
+    * **fix** : Correction (`hotfix`)
+    * **perf** : Modification du code qui optimise les performances
+    * **refactor** : Toute modification du code dans le cadre d'un refactoring
+    * **style** : Corrections propres au coding style (PSR-12)
+    * **test** : Ajout d'un nouveau test ou correction d'un test existant
 
 5. Poussez votre branche sur votre `repository` :
     ```
     git push origin <branch-name> 
     ```
-6. Ouvrez une nouvelle `pull request` avec un titre et une description précises.
+6. Ouvrez une nouvelle `pull request` avec un titre et une description précise.
 
 ## Versionnement
 Respecter `Semantic Versioning 2` :

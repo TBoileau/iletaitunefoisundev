@@ -23,7 +23,7 @@ Pour cela, il existe plusieurs formats de contenu :
 
 Pour mettre en forme ce concept, nous nous appuierons sur la **gamification** afin de donner un côté un peu plus vidéoludique à votre apprentissage.
 
-**Attention, il est inutile de récupérer le projet et de le lancer en local. Le projet n'a pas pour vocation d'être utilisé de cette manière. Le première version sera, je l'espère très rapidement en ligne.**
+**Attention, il est inutile de récupérer le projet et de le lancer en local. Le projet n'a pas pour vocation d'être utilisé de cette manière. La première version sera, je l'espère très rapidement en ligne.**
 
 ## Documentation
 La documentation est disponible [ici](https://incentive-factory.github.io/iletaitunefoisundev/).
