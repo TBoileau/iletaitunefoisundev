@@ -1,9 +1,9 @@
 import {TestBed} from '@angular/core/testing';
-import {RegisterService} from './register.service';
-import {REGISTER, Register} from "./register";
 import {HttpClient} from "@angular/common/http";
-import {Registration} from "./registration";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {REGISTER, Register} from "../../../app/security/register/register";
+import {RegisterService} from "../../../app/security/register/register.service";
+import {Registration} from "../../../app/security/register/registration";
 
 describe('Register', () => {
   let register: Register;

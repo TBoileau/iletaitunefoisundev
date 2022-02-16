@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RegisterComponent } from './register/register.component';
 import {RouterModule} from "@angular/router";
 import {ReactiveFormsModule} from "@angular/forms";
-import {REGISTER} from "./register/register";
-import {RegisterService} from "./register/register.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {ApiInterceptor} from "./http/api_interceptor.service";
+import {RegisterComponent} from "./security/register/register.component";
+import {ApiInterceptor} from "./shared/http/api_interceptor.service";
+import {RegisterService} from "./security/register/register.service";
+import {REGISTER} from "./security/register/register";
 
 @NgModule({
   declarations: [
@@ -17,9 +16,6 @@ import {ApiInterceptor} from "./http/api_interceptor.service";
     RegisterComponent
   ],
   imports: [
-    RouterModule.forRoot([
-      { path: 'register', component: RegisterComponent }
-    ]),
     HttpClientModule,
     ReactiveFormsModule,
     BrowserModule,

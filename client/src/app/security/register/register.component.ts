@@ -3,7 +3,7 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
 import {Registration} from "./registration";
 import {REGISTER, Register} from "./register";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Violation} from "../validator/violation";
+import {Violation} from "../../shared/validator/violation";
 
 @Component({
   selector: 'app-register',

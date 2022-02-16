@@ -1,14 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RegisterComponent } from './register.component';
-import {Register, REGISTER} from "./register";
-import {RegisterService} from "./register.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
-import {Registration} from "./registration";
-import {Observable, of} from "rxjs";
-import {User} from "../models/user";
+import {of} from "rxjs";
+import {RegisterComponent} from "../../../app/security/register/register.component";
+import {REGISTER, Register} from "../../../app/security/register/register";
+import {RegisterService} from "../../../app/security/register/register.service";
+import {Registration} from "../../../app/security/register/registration";
+import {User} from "../../../app/security/models/user";
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
