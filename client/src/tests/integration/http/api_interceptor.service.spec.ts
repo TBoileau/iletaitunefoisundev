@@ -1,14 +1,8 @@
 import {inject, TestBed} from '@angular/core/testing';
-import {HTTP_INTERCEPTORS, HttpClient, HttpEvent, HttpHandler, HttpRequest, HttpResponse} from "@angular/common/http";
-import {Observable, of} from "rxjs";
+import {HTTP_INTERCEPTORS, HttpClient} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {ApiInterceptor} from "../../../app/shared/http/api_interceptor.service";
 
-class FakeHandler extends HttpHandler {
-  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    return of(new HttpResponse())
-  }
-}
 describe('ApiInterceptor', () => {
   let httpMock: HttpTestingController;
 

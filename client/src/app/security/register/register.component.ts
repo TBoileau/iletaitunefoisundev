@@ -1,9 +1,8 @@
 import {Component, Inject} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Registration} from "./registration";
-import {REGISTER, Register} from "./register";
+import {Validators} from "@angular/forms";
+import {Register, REGISTER, RegisterInput} from "./register.service";
+import {ControlsOf, FormControl, FormGroup} from "@ngneat/reactive-forms";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Violation} from "../../shared/validator/violation";
 
 @Component({
   selector: 'app-register',
@@ -11,17 +10,12 @@ import {Violation} from "../../shared/validator/violation";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  registration = <Registration>{
-    email: '',
-    plainPassword: ''
-  }
-
-  registerForm = new FormGroup({
-    email: new FormControl(this.registration.email, [
+  registerForm = new FormGroup<ControlsOf<RegisterInput>>({
+    email: new FormControl('', [
       Validators.required,
       Validators.email
     ]),
-    plainPassword: new FormControl(this.registration.plainPassword, [
+    plainPassword: new FormControl('', [
       Validators.required,
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
     ])
@@ -30,29 +24,13 @@ export class RegisterComponent {
   constructor(@Inject(REGISTER) private register: Register) {
   }
 
-  get controls(): { [key: string]: AbstractControl } {
-    return this.registerForm.controls;
-  }
-
   onSubmit() {
-    this.registration = <Registration>this.registerForm.value;
-
-    this.register.execute(this.registration).subscribe({
-      next: user => {
-        console.log('REGISTER', user)
+    this.register.execute(this.registerForm.value).subscribe({
+      next: registerOutput => {
+        console.log('REGISTER', registerOutput)
       },
       error: (err: HttpErrorResponse) => {
-        if (err.status === 422) {
-          err.error.violations.forEach((violation: Violation) => {
-            this.registerForm.get(violation.propertyPath)?.setErrors({
-              custom: violation.message
-            });
-          });
-        } else {
-          this.registerForm.setErrors({
-            custom: err.error.detail
-          });
-        }
+        this.registerForm.mergeErrors({violations: err.error.violations});
       }
     });
 

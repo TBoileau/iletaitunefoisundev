@@ -3,10 +3,15 @@ import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {ReactiveFormsModule} from "@angular/forms";
 import {of} from "rxjs";
 import {RegisterComponent} from "../../../app/security/register/register.component";
-import {REGISTER, Register} from "../../../app/security/register/register";
-import {RegisterService} from "../../../app/security/register/register.service";
-import {Registration} from "../../../app/security/register/registration";
-import {User} from "../../../app/security/models/user";
+import {
+  REGISTER,
+  Register,
+  RegisterInput,
+  RegisterOutput,
+  RegisterService
+} from "../../../app/security/register/register.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {Violation} from "../../../app/shared/validator/violation";
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -39,17 +44,17 @@ describe('RegisterComponent', () => {
   });
 
   it('should submit data', () => {
-    const registration = <Registration>{
+    const registerInput = <RegisterInput>{
       email: 'user@email.com',
       plainPassword: 'Password123!',
     };
-    component.registerForm.setValue(registration);
-    spyOn(register, 'execute').withArgs(registration).and.returnValue(of(<User>{
+    component.registerForm.setValue(registerInput);
+    spyOn(register, 'execute').withArgs(registerInput).and.returnValue(of(<RegisterOutput>{
       id: 1,
       email: 'user@email.com',
       forgottenPasswordToken: null
     }));
     component.onSubmit();
-    expect(register.execute).toHaveBeenCalledWith(registration);
+    expect(register.execute).toHaveBeenCalledWith(registerInput);
   });
 });

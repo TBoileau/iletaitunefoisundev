@@ -1,9 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClient} from "@angular/common/http";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {REGISTER, Register} from "../../../app/security/register/register";
-import {RegisterService} from "../../../app/security/register/register.service";
-import {Registration} from "../../../app/security/register/registration";
+import {REGISTER, Register, RegisterService, RegisterInput} from "../../../app/security/register/register.service";
 
 describe('Register', () => {
   let register: Register;
@@ -27,13 +25,13 @@ describe('Register', () => {
   });
 
   it('should be registered', () => {
-    const registration = <Registration>{
+    const registerInput = <RegisterInput>{
       email: 'user@email.com',
       plainPassword: 'Password123!',
     };
-    spyOn(http, 'post').withArgs('/api/security/register', registration)
-    register.execute(registration);
-    expect(http.post).toHaveBeenCalledWith('/api/security/register', registration);
+    spyOn(http, 'post').withArgs('/api/security/register', registerInput)
+    register.execute(registerInput);
+    expect(http.post).toHaveBeenCalledWith('/api/security/register', registerInput);
     expect(http.post).toHaveBeenCalledTimes(1);
   });
 });

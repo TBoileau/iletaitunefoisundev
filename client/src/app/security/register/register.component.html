@@ -1,36 +1,26 @@
-<form [formGroup]="registerForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
-  <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)">
-    <div *ngIf="registerForm.hasError('custom')">
-      {{ registerForm.errors?.['custom'] }}
-    </div>
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+  <div *ngIf="registerForm.hasErrorAndDirty('violations')">
+    <ul>
+      <li *ngFor="let violation of registerForm.getError('violations')">{{ violation.message }}</li>
+    </ul>
   </div>
-  <input type="email" formControlName="email">
-  <div *ngIf="controls['email'].invalid && (controls['email'].dirty || controls['email'].touched)">
-    <div *ngIf="controls['email'].hasError('custom')">
-      {{ controls['email'].errors?.['custom'] }}
-    </div>
-    <div *ngIf="controls['email'].hasError('required')">
-      Ce champ est obligatoire
-    </div>
-    <div *ngIf="controls['email'].hasError('email')">
-      L'adresse email n'est pas valide.
-    </div>
+  <input formControlName="email" type="email">
+  <div *ngIf="registerForm.get('email').hasErrorAndDirty('required')">
+    Ce champ est obligatoire
   </div>
-  <input type="password" formControlName="plainPassword">
-  <div *ngIf="controls['plainPassword'].invalid && (controls['plainPassword'].dirty || controls['plainPassword'].touched)">
-    <div *ngIf="controls['plainPassword'].hasError('custom')">
-      {{ controls['plainPassword'].errors?.['custom'] }}
-    </div>
-    <div *ngIf="controls['plainPassword'].hasError('required')">
-      Ce champ est obligatoire
-    </div>
-    <div *ngIf="controls['plainPassword'].hasError('pattern')">
-      Le mot de passe doit respecter les contraintes suivantes :<br/>
-      - 8 caractères minimum <br/>
-      - Au moins 1 majuscule <br/>
-      - Au moins 1 minuscule <br/>
-      - Au moins 1 caractère spécial <br/>
-    </div>
+  <div *ngIf="registerForm.get('email').hasErrorAndDirty('email')">
+    L'adresse email n'est pas valide.
   </div>
-  <button type="submit" [disabled]="registerForm.invalid">Submit</button>
+  <input formControlName="plainPassword" type="password">
+  <div *ngIf="registerForm.get('plainPassword').hasErrorAndDirty('required')">
+    Ce champ est obligatoire
+  </div>
+  <div *ngIf="registerForm.get('plainPassword').hasErrorAndDirty('pattern')">
+    Le mot de passe doit respecter les contraintes suivantes :<br/>
+    - 8 caractères minimum <br/>
+    - Au moins 1 majuscule <br/>
+    - Au moins 1 minuscule <br/>
+    - Au moins 1 caractère spécial <br/>
+  </div>
+  <button [disabled]="registerForm.invalid" type="submit">Submit</button>
 </form>
