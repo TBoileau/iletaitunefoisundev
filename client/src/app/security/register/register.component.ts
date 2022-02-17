@@ -3,6 +3,7 @@ import {Validators} from "@angular/forms";
 import {Register, REGISTER, RegisterInput} from "./register.service";
 import {ControlsOf, FormControl, FormGroup} from "@ngneat/reactive-forms";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -21,13 +22,13 @@ export class RegisterComponent {
     ])
   })
 
-  constructor(@Inject(REGISTER) private register: Register) {
+  constructor(@Inject(REGISTER) private register: Register, private router: Router) {
   }
 
   onSubmit() {
     this.register.execute(this.registerForm.value).subscribe({
-      next: registerOutput => {
-        console.log('REGISTER', registerOutput)
+      next: () => {
+        this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {
         this.registerForm.mergeErrors({violations: err.error.violations});
