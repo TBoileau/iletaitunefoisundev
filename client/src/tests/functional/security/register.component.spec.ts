@@ -48,36 +48,39 @@ describe('RegisterComponent', () => {
   });
 
   it('should submit data', () => {
-    const registerInput = <RegisterInput>{
+    const registerInput: RegisterInput = {
       email: 'user@email.com',
       plainPassword: 'Password123!',
     };
     component.registerForm.setValue(registerInput);
-    spyOn(register, 'execute').withArgs(registerInput).and.returnValue(of(<RegisterOutput>{
+    const registerOutput: RegisterOutput = {
       id: 1,
       email: 'user@email.com',
       forgottenPasswordToken: null
-    }));
+    }
+    spyOn(register, 'execute').withArgs(registerInput).and.returnValue(of(registerOutput));
     component.onSubmit();
     expect(register.execute).toHaveBeenCalledWith(registerInput);
   });
 
   it('should submit data raise an unprocessable entity error', () => {
-    const registerInput = <RegisterInput>{
+    const registerInput: RegisterInput = {
       email: 'user@email.com',
       plainPassword: 'Password123!',
     };
     component.registerForm.setValue(registerInput);
     spyOn(component.registerForm, 'mergeErrors');
-    spyOn(register, 'execute').withArgs(registerInput).and.returnValue(throwError(() => new HttpErrorResponse({
-      error: {
+    spyOn(register, 'execute')
+      .withArgs(registerInput)
+      .and.returnValue(throwError(() => new HttpErrorResponse({
         error: {
-          violations: [
-            {propertyPath: 'email', message: ''}
-          ]
+          error: {
+            violations: [
+              {propertyPath: 'email', message: ''}
+            ]
+          }
         }
-      }
-    })));
+      })));
     component.onSubmit();
     expect(register.execute).toHaveBeenCalledWith(registerInput);
     expect(component.registerForm.mergeErrors).toHaveBeenCalled();

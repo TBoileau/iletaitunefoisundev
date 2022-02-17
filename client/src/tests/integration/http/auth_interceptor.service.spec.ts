@@ -33,10 +33,11 @@ describe('AuthInterceptor', () => {
 
 
   it('should add bearer token to Authorization header', inject([HttpClient], (http: HttpClient) => {
-    spyOn(session, 'getToken').and.returnValue(<Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refresh_token'
-    });
+    };
+    spyOn(session, 'getToken').and.returnValue(token);
     spyOn(session, 'authenticated').and.returnValue(true);
     http.get('/api').subscribe();
     const request = httpMock.expectOne('/api');
@@ -44,15 +45,13 @@ describe('AuthInterceptor', () => {
   }));
 
   it('should add bearer token after refresh to Authorization header', inject([HttpClient], (http: HttpClient) => {
-    spyOn(session, 'getToken').and.returnValue(<Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refresh_token'
-    });
+    };
+    spyOn(session, 'getToken').and.returnValue(token);
     spyOn(session, 'authenticated').and.returnValue(true);
-    spyOn(authenticator, 'refresh').and.returnValue(of(<Token>{
-      token: 'token',
-      refreshToken: 'refresh_token'
-    }));
+    spyOn(authenticator, 'refresh').and.returnValue(of(token));
     http.get('/api').subscribe();
     const request = httpMock.expectOne('/api');
     request.flush("", {status: 401, statusText: "JWT expired"});
@@ -60,10 +59,11 @@ describe('AuthInterceptor', () => {
   }));
 
   it('should clear session if refresh token has expired', inject([HttpClient], (http: HttpClient) => {
-    spyOn(session, 'getToken').and.returnValue(<Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refresh_token'
-    });
+    };
+    spyOn(session, 'getToken').and.returnValue(token);
     spyOn(session, 'clear');
     spyOn(session, 'authenticated').and.returnValue(true);
     spyOn(authenticator, 'refresh').and.returnValue(throwError(() => of(new HttpErrorResponse({}))));

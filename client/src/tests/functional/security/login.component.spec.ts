@@ -52,12 +52,12 @@ describe('LoginComponent', () => {
   });
 
   it('should authenticate', () => {
-    const credentials = <Credentials>{
+    const credentials: Credentials = {
       email: 'user@email.com',
       password: 'Password123!',
     };
     component.loginForm.setValue(credentials);
-    const token = <Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refreshToken'
     }
@@ -68,17 +68,19 @@ describe('LoginComponent', () => {
   });
 
   it('should raise an error', () => {
-    const credentials = <Credentials>{
+    const credentials: Credentials = {
       email: 'user@email.com',
       password: 'Password123!',
     };
     component.loginForm.setValue(credentials);
     spyOn(component.loginForm, 'mergeErrors');
-    spyOn(http, 'post').withArgs('/api/security/login', credentials).and.returnValue(throwError(() => new HttpErrorResponse({
-      error: {
-        message: 'Invalid credentials'
-      }
-    })));
+    spyOn(http, 'post')
+      .withArgs('/api/security/login', credentials)
+      .and.returnValue(throwError(() => new HttpErrorResponse({
+        error: {
+          message: 'Invalid credentials'
+        }
+      })));
     component.onSubmit();
     expect(component.loginForm.mergeErrors).toHaveBeenCalled();
   });

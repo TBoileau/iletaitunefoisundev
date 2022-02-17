@@ -44,11 +44,11 @@ describe('Authenticator', () => {
   });
 
   it('should authenticate and create session', () => {
-    const token = <Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refresh_token'
     };
-    const credentials = <Credentials>{
+    const credentials: Credentials = {
       email: 'email@email.com',
       password: 'password'
     };
@@ -62,19 +62,21 @@ describe('Authenticator', () => {
   it('should raise en error when authenticate', () => {
     const onFailure = jasmine.createSpy();
     spyOn(http, 'post').and.returnValue(throwError(() => new HttpErrorResponse({})));
-    authenticator.authenticate(<Credentials>{
+    const credentials: Credentials = {
       email: 'email@email.com',
       password: 'password'
-    }, onFailure);
+    };
+    authenticator.authenticate(credentials, onFailure);
     expect(onFailure).toHaveBeenCalled();
   });
 
   it('should refresh token', () => {
-    spyOn(session, 'getToken').and.returnValue(<Token>{
+    const token: Token = {
       token: 'token',
       refreshToken: 'refresh_token'
-    });
-    const newToken = <Token>{
+    };
+    spyOn(session, 'getToken').and.returnValue(token);
+    const newToken: Token = {
       token: 'new_token',
       refreshToken: 'new_refresh_token'
     };

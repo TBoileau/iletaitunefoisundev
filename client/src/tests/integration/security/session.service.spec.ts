@@ -21,13 +21,13 @@ describe('SecuritySession', () => {
 
   it('should set token', () => {
     spyOn(localStorage, 'setItem');
-    const token = <Token>{token: 'token', refreshToken: 'refresh_token'};
+    const token: Token = {token: 'token', refreshToken: 'refresh_token'};
     session.setToken(token);
     expect(localStorage.setItem).toHaveBeenCalledWith('token', JSON.stringify(token));
   });
 
   it('should get token', () => {
-    const token = <Token>{token: 'token', refreshToken: 'refresh_token'};
+    const token: Token = {token: 'token', refreshToken: 'refresh_token'};
     spyOn(localStorage, 'getItem').withArgs('token').and.returnValue(JSON.stringify(token));
     expect(session.getToken()).toEqual(token);
     expect(localStorage.getItem).toHaveBeenCalledTimes(1);
@@ -46,7 +46,7 @@ describe('SecuritySession', () => {
   });
 
   it('authenticated should true', () => {
-    const token = <Token>{token: 'token', refreshToken: 'refresh_token'};
+    const token: Token = {token: 'token', refreshToken: 'refresh_token'};
     spyOn(localStorage, 'getItem').withArgs('token').and.returnValue(JSON.stringify(token));
     expect(session.authenticated()).toBeTrue();
     expect(localStorage.getItem).toHaveBeenCalledTimes(1);

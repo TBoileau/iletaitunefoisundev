@@ -25,7 +25,7 @@ describe('Register', () => {
   });
 
   it('should be registered', () => {
-    const registerInput = <RegisterInput>{
+    const registerInput: RegisterInput = {
       email: 'user@email.com',
       plainPassword: 'Password123!',
     };
