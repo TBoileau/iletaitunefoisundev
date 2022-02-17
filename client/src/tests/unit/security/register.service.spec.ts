@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClient} from "@angular/common/http";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {REGISTER, Register, RegisterService, RegisterInput} from "../../../app/security/register/register.service";
+import {REGISTER, Register, RegisterInput, RegisterService} from "../../../app/security/register/register.service";
 
 describe('Register', () => {
   let register: Register;
@@ -13,7 +13,7 @@ describe('Register', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: REGISTER, useClass: RegisterService }
+        {provide: REGISTER, useClass: RegisterService}
       ]
     });
     register = TestBed.inject(REGISTER);
