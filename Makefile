@@ -2,6 +2,7 @@ DOCKER_COMPOSE = docker-compose
 EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T php php bin/console
 EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T php composer
 EXEC_PHP = $(DOCKER_COMPOSE) exec -T php php
+EXEC_NG = $(DOCKER_COMPOSE) exec -T node ng
 CURRENT_PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ## Protect targets
@@ -14,7 +15,7 @@ install: build up composer-install
 
 reset: down install
 
-analyse: composer-valid container-linter mapping-valid phpcpd phpstan
+analyse: composer-valid container-linter mapping-valid phpcpd phpstan ng-lint
 
 prepare: database fixtures
 
@@ -61,7 +62,6 @@ initialize: ## Initialize specify environment
 	make generate-keypair env=test
 	make prepare env=test
 
-
 generate-keypair: ## Create secure keypair
 	@echo -e "\e[32mGenerate keypair...\e[0m"
 	@$(EXEC_SYMFONY) lexik:jwt:generate-keypair --overwrite -n --env=$(env)
@@ -90,7 +90,6 @@ phpcpd: ## Detects code duplicates
 	@echo -e "\e[32mRunning phpcpd...\e[0m"
 	@$(EXEC_PHP) vendor/bin/phpcpd src --exclude src/Admin/Controller
 
-
 container-linter: ## Guarantees that the arguments injected in the services correspond to the type declarations.
 	@echo -e "\e[32mRunning container linter...\e[0m"
 	@$(EXEC_SYMFONY) lint:container
@@ -105,8 +104,8 @@ mapping-valid:
 
 tests:  ## Run all tests
 	@echo -e "\e[32mRunning tests...\e[0m"
-	@echo -e "\e[1;93mReminder :To test is to doubt :)\e[0m"
 	@$(EXEC_PHP) bin/phpunit
+	@$(EXEC_NG) test --watch=false
 
 unit-tests: ## Run all unit tests
 	@echo -e "\e[32mRunning unit tests...\e[0m"
@@ -149,6 +148,10 @@ cc-test: ## Clear the cache for the test environment
 cc-dev: ## Clear the cache for the dev environment
 	@echo -e "\e[32mCache dev clear...\e[0m"
 	make cc env=dev
+
+ng-lint: ## Lint angular
+	@echo -e "\e[32mLint angular...\e[0m"
+	$(EXEC_NG) lint
 
 fix: php-cs-fixer
 

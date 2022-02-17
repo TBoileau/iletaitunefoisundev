@@ -1,19 +1,8 @@
 name: Continuous Integration
 on: [push]
 jobs:
-  code-quality:
-    runs-on: ubuntu-latest
-    name: Code quality
-    steps:
-      - uses: actions/checkout@v2
-      - name: Up needed docker
-        run: docker-compose up -d php
-      - name: Install dependencies
-        run: make composer-install
-      - name: Code quality
-        run: make analyse
-  tests:
-    name: Tests
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +12,9 @@ jobs:
         run: make prepare env=test
       - name: Create key pair
         run: make generate-keypair env=test
-      - name: Run unit tests
+      - name: Code quality
+        run: make analyse
+      - name: Run tests
         run: make tests
       - uses: codecov/codecov-action@v2
         with:
