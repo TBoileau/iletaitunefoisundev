@@ -1,5 +1,5 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {Inject, Injectable} from "@angular/core";
 import {Session, SESSION, Token} from "../security/session.service";
 import {Authenticator, AUTHENTICATOR} from "../security/authenticator.service";
@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
       if (!authReq.url.includes('/api/security/login') && error.status === 401) {
         return this.handleJwtExpired(authReq, next);
       }
-      return error;
+      return of(error);
     }));
   }
 
@@ -52,7 +52,7 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError(error => {
             this.isRefreshing = false;
             this.session.clear();
-            return error;
+            return of(error);
           })
         );
       }
