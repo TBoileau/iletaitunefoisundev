@@ -9,13 +9,11 @@ import {RefreshAuthenticatorInterface} from "./authenticator.service";
   providedIn: 'root'
 })
 export class RefreshAuthenticatorService implements RefreshAuthenticatorInterface {
-  public authentication: Observable<HttpEvent<any>> = new Observable<HttpEvent<any>>();
-
   constructor(private http: HttpClient, @Inject(SESSION) private session: Session) {
   }
 
-  authenticate<RefreshToken>(refreshToken: RefreshToken): void {
-    this.authentication = this.http.post<Token>('/api/security/token-refresh', refreshToken)
+  authenticate<RefreshToken>(refreshToken: RefreshToken): Observable<Token> {
+    return this.http.post<Token>('/api/security/token-refresh', refreshToken)
       .pipe(
         tap((token: Token): void => {
           this.session.setToken(token);

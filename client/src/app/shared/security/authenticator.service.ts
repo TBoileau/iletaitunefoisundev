@@ -1,8 +1,9 @@
 import {Token} from "./session.service";
-import {Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {HttpEvent} from "@angular/common/http";
 
 export interface RefreshAuthenticatorInterface extends Authenticator {
-  authenticate<RefreshToken>(refreshToken: RefreshToken): void;
+  authenticate<RefreshToken>(refreshToken: RefreshToken): Observable<Token>;
 }
 
 export interface FormLoginAuthenticatorInterface extends Authenticator {

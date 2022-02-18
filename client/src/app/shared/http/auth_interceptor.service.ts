@@ -1,8 +1,8 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {EMPTY, Observable, of} from "rxjs";
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {Inject, Injectable} from "@angular/core";
 import {Session, SESSION, Token} from "../security/session.service";
-import {catchError, switchMap} from "rxjs/operators";
+import {catchError, filter, switchMap, take} from "rxjs/operators";
 import {RefreshAuthenticatorService} from "../security/refresh_authenticator.service";
 import {RefreshToken} from "../security/authenticator.service";
 import {Router} from "@angular/router";
@@ -12,6 +12,8 @@ import {Router} from "@angular/router";
 })
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
+
+  private tokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(
     private router: Router,
@@ -43,22 +45,30 @@ export class AuthInterceptor implements HttpInterceptor {
       if (error.status === 401) {
         if (!this.isRefreshing) {
           this.isRefreshing = true;
+          this.tokenSubject.next(null);
           if (this.authenticator.supports()) {
             // @ts-ignore
             const refreshToken: RefreshToken = {refreshToken: this.session.getToken().refreshToken};
-            this.authenticator.authenticate(refreshToken);
-            return this.authenticator.authentication.pipe(
+            return this.authenticator.authenticate(refreshToken).pipe(
               switchMap((token: any) => {
                 this.isRefreshing = false;
+                this.tokenSubject.next(token);
                 return next.handle(AuthInterceptor.addTokenHeader(req, token));
+              }),
+              catchError(() => {
+                this.isRefreshing = false;
+                this.router.navigate(['/login'])
+                return EMPTY;
               })
             );
           }
+
+          return this.tokenSubject.pipe(
+            filter(token => token !== null),
+            take(1),
+            switchMap(token => next.handle(AuthInterceptor.addTokenHeader(req, token)))
+          );
         }
-
-        this.router.navigate(['/login'])
-
-        return EMPTY;
       }
 
       return of(error);
