@@ -9,8 +9,8 @@ export class RegisterService implements Register {
   constructor(private http: HttpClient) {
   }
 
-  execute(registration: RegisterInput): Observable<RegisterOutput> {
-    return this.http.post<RegisterOutput>('/api/security/register', registration);
+  execute(registerInput: RegisterInput): Observable<RegisterOutput> {
+    return this.http.post<RegisterOutput>('/api/security/register', registerInput);
   }
 }
 

@@ -3,6 +3,7 @@ EXEC_SYMFONY = $(DOCKER_COMPOSE) exec -T php php bin/console
 EXEC_COMPOSER = $(DOCKER_COMPOSE) exec -T php composer
 EXEC_PHP = $(DOCKER_COMPOSE) exec -T php php
 EXEC_NG = $(DOCKER_COMPOSE) exec -T node ng
+EXEC_NPM = $(DOCKER_COMPOSE) exec -T node npm
 CURRENT_PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ## Protect targets
@@ -11,7 +12,7 @@ CURRENT_PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 help:
 	 @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[33m %s\n\033[0m", $$1, $$2}'
 
-install: build up composer-install
+install: build up composer-install npm-install
 
 reset: down install
 
@@ -65,6 +66,10 @@ initialize: ## Initialize specify environment
 generate-keypair: ## Create secure keypair
 	@echo -e "\e[32mGenerate keypair...\e[0m"
 	@$(EXEC_SYMFONY) lexik:jwt:generate-keypair --overwrite -n --env=$(env)
+
+npm-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
+	@echo -e "\e[32mInstall dependencies...\e[0m"
+	$(EXEC_NPM) install
 
 composer-install: ## Command reads the composer.json file to resolves the dependencies, and installs them.
 	@echo -e "\e[32mInstall dependencies...\e[0m"
@@ -135,6 +140,7 @@ database: ## Create database for project
 
 fixtures: ## Creates the false data necessary for development
 	@echo -e "\e[32mLoad fixtures...\e[0m"
+	make graph env=$(env)
 	$(EXEC_SYMFONY) doctrine:fixtures:load -n --env=$(env)
 
 cc: ## Clear the cache of the specify env
