@@ -5,20 +5,18 @@ import {of, throwError} from "rxjs";
 import {LoginComponent} from "../../../app/security/login/login.component";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
-import {
-  AUTHENTICATOR,
-  Authenticator,
-  AuthenticatorService,
-  Credentials
-} from "../../../app/shared/security/authenticator.service";
+import {Authenticator, Credentials} from "../../../app/shared/security/authenticator.service";
 import {SESSION, SessionService, Token} from "../../../app/shared/security/session.service";
 import {STORAGE_MANAGER, StorageManagerService} from "../../../app/shared/storage/storage_manager.service";
+import {Router} from "@angular/router";
+import {LoginAuthenticatorService} from "../../../app/shared/security/login_authenticator.service";
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authenticator: Authenticator;
+  let authenticator: LoginAuthenticatorService;
   let http: HttpClient;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,7 +28,7 @@ describe('LoginComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        {provide: AUTHENTICATOR, useClass: AuthenticatorService},
+        {provide: LoginAuthenticatorService},
         {provide: SESSION, useClass: SessionService},
         {provide: STORAGE_MANAGER, useClass: StorageManagerService},
       ],
@@ -43,8 +41,9 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    authenticator = TestBed.inject(AUTHENTICATOR);
+    authenticator = TestBed.inject(LoginAuthenticatorService);
     http = TestBed.inject(HttpClient);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -62,9 +61,9 @@ describe('LoginComponent', () => {
       refreshToken: 'refreshToken'
     }
     spyOn(http, 'post').withArgs('/api/security/login', credentials).and.returnValue(of(token));
-    spyOn(authenticator, 'onAuthenticationSuccess');
+    spyOn(router, 'navigate');
     component.onSubmit();
-    expect(authenticator.onAuthenticationSuccess).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 
   it('should raise an error', () => {

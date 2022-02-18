@@ -1,18 +1,23 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {BehaviorSubject, Observable, of} from "rxjs";
+import {EMPTY, Observable, of} from "rxjs";
 import {Inject, Injectable} from "@angular/core";
 import {Session, SESSION, Token} from "../security/session.service";
-import {Authenticator, AUTHENTICATOR} from "../security/authenticator.service";
-import {catchError, filter, switchMap, take} from "rxjs/operators";
+import {catchError, switchMap} from "rxjs/operators";
+import {RefreshAuthenticatorService} from "../security/refresh_authenticator.service";
+import {RefreshToken} from "../security/authenticator.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
-  private tokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-  constructor(@Inject(SESSION) private session: Session, @Inject(AUTHENTICATOR) private authenticator: Authenticator) {
+  constructor(
+    private router: Router,
+    @Inject(SESSION) private session: Session,
+    private authenticator: RefreshAuthenticatorService
+  ) {
   }
 
   private static addTokenHeader(req: HttpRequest<any>, token: Token): HttpRequest<any> {
@@ -24,6 +29,10 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.includes('/api/security/login')) {
+      return next.handle(req);
+    }
+
     let authReq = req;
     if (this.session.authenticated()) {
       // @ts-ignore
@@ -31,36 +40,28 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(authReq).pipe(catchError(error => {
-      if (!authReq.url.includes('/api/security/login') && error.status === 401) {
-        return this.handleJwtExpired(authReq, next);
+      if (error.status === 401) {
+        if (!this.isRefreshing) {
+          this.isRefreshing = true;
+          if (this.authenticator.supports()) {
+            // @ts-ignore
+            const refreshToken: RefreshToken = {refreshToken: this.session.getToken().refreshToken};
+            this.authenticator.authenticate(refreshToken);
+            return this.authenticator.authentication.pipe(
+              switchMap((token: any) => {
+                this.isRefreshing = false;
+                return next.handle(AuthInterceptor.addTokenHeader(req, token));
+              })
+            );
+          }
+        }
+
+        this.router.navigate(['/login'])
+
+        return EMPTY;
       }
+
       return of(error);
     }));
-  }
-
-  private handleJwtExpired(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.tokenSubject.next(null);
-      if (this.session.getToken()) {
-        return this.authenticator.refresh().pipe(
-          switchMap((token: Token) => {
-            this.isRefreshing = false;
-            this.tokenSubject.next(token);
-            return next.handle(AuthInterceptor.addTokenHeader(req, token));
-          }),
-          catchError(error => {
-            this.isRefreshing = false;
-            this.session.clear();
-            return of(error);
-          })
-        );
-      }
-    }
-    return this.tokenSubject.pipe(
-      filter(token => token !== null),
-      take(1),
-      switchMap((token: Token) => next.handle(AuthInterceptor.addTokenHeader(req, token)))
-    );
   }
 }

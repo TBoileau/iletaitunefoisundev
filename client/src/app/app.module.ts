@@ -11,8 +11,9 @@ import {REGISTER, RegisterService} from "./security/register/register.service";
 import {SESSION, SessionService} from "./shared/security/session.service";
 import {STORAGE_MANAGER, StorageManagerService} from "./shared/storage/storage_manager.service";
 import {TestComponent} from "./security/test/test.component";
-import {AUTHENTICATOR, AuthenticatorService} from "./shared/security/authenticator.service";
 import {AuthInterceptor} from "./shared/http/auth_interceptor.service";
+import {LoginAuthenticatorService} from "./shared/security/login_authenticator.service";
+import {RefreshAuthenticatorService} from "./shared/security/refresh_authenticator.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {AuthInterceptor} from "./shared/http/auth_interceptor.service";
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: REGISTER, useClass: RegisterService},
     {provide: STORAGE_MANAGER, useClass: StorageManagerService},
-    {provide: AUTHENTICATOR, useClass: AuthenticatorService},
+    {provide: LoginAuthenticatorService},
+    {provide: RefreshAuthenticatorService},
     {provide: SESSION, useClass: SessionService},
   ],
   bootstrap: [AppComponent]
