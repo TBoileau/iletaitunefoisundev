@@ -140,6 +140,7 @@ database: ## Create database for project
 
 fixtures: ## Creates the false data necessary for development
 	@echo -e "\e[32mLoad fixtures...\e[0m"
+	make graph env=$(env)
 	$(EXEC_SYMFONY) doctrine:fixtures:load -n --env=$(env)
 
 cc: ## Clear the cache of the specify env

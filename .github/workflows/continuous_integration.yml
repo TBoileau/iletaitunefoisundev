@@ -1,4 +1,4 @@
-name: Fast Continuous Integration
+name: Continuous Integration
 on: [push]
 
 jobs:
@@ -193,7 +193,6 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-
       - name: Install Composer dependencies
         run: composer install --prefer-dist
 
@@ -213,11 +212,10 @@ jobs:
           DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony
           NEO4J_URL : bolt://localhost:${{ job.services.neo4j.ports['7687'] }}
 
-
       - name: Create key pair
         run: bin/console lexik:jwt:generate-keypair --overwrite -n --env=test
 
-      - name: Run unit tests
+      - name: Run tests
         run: php bin/phpunit
         env:
           DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony
