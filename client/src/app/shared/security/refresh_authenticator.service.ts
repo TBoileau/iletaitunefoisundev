@@ -1,8 +1,8 @@
 import {Inject, Injectable} from "@angular/core";
 import {Session, SESSION, Token} from "./session.service";
-import {HttpClient, HttpEvent} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpEvent} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
-import {Observable} from "rxjs";
+import {Observable, ObservableInput, of} from "rxjs";
 import {RefreshAuthenticatorInterface} from "./authenticator.service";
 
 @Injectable({
@@ -20,8 +20,9 @@ export class RefreshAuthenticatorService implements RefreshAuthenticatorInterfac
         tap((token: Token): void => {
           this.session.setToken(token);
         }),
-        catchError(() => {
+        catchError((error: HttpErrorResponse): ObservableInput<any> => {
           this.session.clear();
+          return of(error);
         })
       );
   }
