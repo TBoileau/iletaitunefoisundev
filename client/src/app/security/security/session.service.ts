@@ -1,10 +1,11 @@
-import {Inject, Injectable, InjectionToken} from "@angular/core";
-import {STORAGE_MANAGER, StorageManager} from "../storage/storage_manager.service";
+import {Inject, Injectable} from "@angular/core";
+import {SessionInterface, Token} from "../contracts/session";
+import {STORAGE_MANAGER, StorageManager} from "../../shared/storage/storage-manager.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class SessionService implements Session {
+export class Session implements SessionInterface {
   constructor(@Inject(STORAGE_MANAGER) private storageManager: StorageManager) {
   }
 
@@ -29,20 +30,3 @@ export class SessionService implements Session {
     this.storageManager.set('token', JSON.stringify(token));
   }
 }
-
-export interface Session {
-  setToken(token: Token): void;
-
-  authenticated(): boolean;
-
-  clear(): void;
-
-  getToken(): Token | null;
-}
-
-export interface Token {
-  token: string;
-  refreshToken: string;
-}
-
-export const SESSION = new InjectionToken<Session>('Session');
