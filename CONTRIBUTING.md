@@ -11,6 +11,7 @@ Veuillez prendre un moment pour prendre connaissance de ce document afin de suiv
    * Priorité
    * Complexité
    * Types
+
 ## Rapport de bug
 Un bug est une erreur concrète, causée par le code présent dans ce `repository`.
 
@@ -30,10 +31,7 @@ De bonnes `pull requests` sont d'une grande aide. Elles doivent rester dans le c
 Veuillez demander avant de poster votre `pull request`, autrement vous risquez de passer gaspiller du temps de travail, car l'équipe projet ne souhaite pas intégrer votre travail.
 
 Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes pratiques :
-1. Clonez le repository :
-    ```
-    git clone https://github.com/incentive-factory/iletaitunefoisundev
-    ```
+1. Forkez le repository sur votre compte
 2. Créez une nouvelle branche qui contiendra votre fonctionnalité, modification ou correction :
     * Pour une nouvelle fonctionnalité ou modification :
         ```
@@ -76,6 +74,17 @@ Suivez ce processus afin de proposer une `pull request` qui respecte les bonnes 
     * **style** : Corrections propres au coding style (PSR-12)
     * **test** : Ajout d'un nouveau test ou correction d'un test existant
 
+   Exemple :
+   ```
+   feat (security): registration
+   
+   * Implement UserController
+   * Create register.html.twig
+   * Add `register` method to UserRepository
+   ```
+4. Tests et analyses du code :
+   Avant de **push** sur Github, pensez à éxecuter une analyse statique des fichiers ainsi que l'ensemble des tests.
+   
 5. Poussez votre branche sur votre `repository` :
     ```
     git push origin <branch-name> 

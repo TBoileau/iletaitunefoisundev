@@ -15,3 +15,7 @@ Afin de vérifier en partie la qualité du code et de la configuration de Symfon
 Lancer l'analyse avec la commande `make analyse`.
 
 A été mis en place pour réparer des erreurs de style, l'utilisation de PHP CS Fixer, que vous pouvez exécuter avec la commande suivante : `make fix`.
+
+## Analyse du front-end
+
+Il suffit d'utiliser l'outil proposé par Angular : `ng lint`.
