@@ -4,14 +4,14 @@
       <li *ngFor="let violation of registerForm.getError('violations')">{{ violation.message }}</li>
     </ul>
   </div>
-  <input formControlName="email" type="email">
+  <input class="input-email" formControlName="email" type="email">
   <div *ngIf="registerForm.get('email').hasErrorAndDirty('required')">
     Ce champ est obligatoire
   </div>
   <div *ngIf="registerForm.get('email').hasErrorAndDirty('email')">
     L'adresse email n'est pas valide.
   </div>
-  <input formControlName="plainPassword" type="password">
+  <input class="input-plainPassword" formControlName="plainPassword" type="password">
   <div *ngIf="registerForm.get('plainPassword').hasErrorAndDirty('required')">
     Ce champ est obligatoire
   </div>
@@ -22,5 +22,5 @@
     - Au moins 1 minuscule <br/>
     - Au moins 1 caractère spécial <br/>
   </div>
-  <button [disabled]="registerForm.invalid" type="submit">Submit</button>
+  <button [disabled]="registerForm.invalid" class="form-submit" type="submit">Submit</button>
 </form>
