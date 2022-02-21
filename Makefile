@@ -110,6 +110,9 @@ mapping-valid:
 tests:  ## Run all tests
 	@echo -e "\e[32mRunning tests...\e[0m"
 	@$(EXEC_PHP) bin/phpunit
+	make ng-tests
+
+ng-tests:
 	@$(EXEC_NG) test --watch=false
 
 unit-tests: ## Run all unit tests
