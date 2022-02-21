@@ -17,3 +17,10 @@
 * Tests fonctionnels : `make functional-tests`
 
 Vous pouvez aussi lancer tous les tests avec la commande `make tests`. 
+
+## Front-end
+
+Le client sous Angular fait aussi l'objet de tests :
+```
+ng test --code-coverage
+```
