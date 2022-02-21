@@ -3,7 +3,7 @@ import {Injectable, InjectionToken} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class StorageManagerService implements StorageManager {
+export class StorageManager implements StorageManagerInterface {
   clear(): void {
     localStorage.clear();
   }
@@ -21,7 +21,7 @@ export class StorageManagerService implements StorageManager {
   }
 }
 
-export interface StorageManager {
+export interface StorageManagerInterface {
   clear(): void;
 
   set(name: string, value: string): void;
@@ -31,4 +31,9 @@ export interface StorageManager {
   remove(name: string): void;
 }
 
-export const STORAGE_MANAGER = new InjectionToken<StorageManager>('StorageManager');
+export const STORAGE_MANAGER = new InjectionToken<StorageManagerInterface>('StorageManagerInterface');
+
+export const STORAGE_MANAGER_PROVIDER = {
+  provide: STORAGE_MANAGER,
+  useClass: StorageManager
+};
