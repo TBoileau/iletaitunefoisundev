@@ -5,12 +5,14 @@ import {AppComponent} from "./app/app.component";
 import {SecurityModule} from "../security/security.module";
 import {API_INTERCEPTOR_PROVIDER} from "./http/interfaceptors/api.interceptor";
 import {AUTH_INTERCEPTOR_PROVIDER} from "../security/http/interceptors/auth.interceptor";
+import {AdventureModule} from "../adventure/adventure.module";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    AdventureModule,
     SecurityModule,
     BrowserModule,
     CoreRoutingModule
