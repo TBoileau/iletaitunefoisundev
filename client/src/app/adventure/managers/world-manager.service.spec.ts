@@ -8,16 +8,8 @@ describe('WorldManager', () => {
   beforeEach(() => spectator = createHttp());
 
   it('should get worlds', () => {
-    spectator.service.getWorlds().subscribe(worlds => {
-      expect(worlds).toHaveLength(1);
-    });
+    spectator.service.getWorlds().subscribe();
     const request = spectator.expectOne('/api/adventure/worlds', HttpMethod.GET);
-    request.flush([
-      {
-        id: 1,
-        name: 'Monde',
-        continents: []
-      }
-    ]);
+    request.flush([]);
   });
 });
