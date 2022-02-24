@@ -1,0 +1,9 @@
+<a routerLink="/dashboard">Dashboard</a>
+<br/>
+<a routerLink="/">Home</a>
+
+<br/>
+<a (click)="logout()" *ngIf="session.authenticated()">Déconnexion</a>
+<a *ngIf="!session.authenticated()" routerLink="/login">Connexion</a>
+<a *ngIf="!session.authenticated()" routerLink="/register">Inscription</a>
+<router-outlet></router-outlet>

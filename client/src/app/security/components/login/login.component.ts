@@ -3,12 +3,12 @@ import {Validators} from "@angular/forms";
 import {ControlsOf, FormControl, FormGroup} from "@ngneat/reactive-forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ActivatedRoute, Route, Router} from "@angular/router";
-import {Credentials, Login, LOGIN_PROVIDER, LOGIN_TOKEN} from "../../contracts/login";
-import {Violation} from "../../../shared/validator/violation";
-import {VisitorGuard} from "../../guard/visitor.guard";
+import {Violation} from "../../../core/validator/violation";
+import {Credentials, LOGIN_PROVIDER, LOGIN_TOKEN, LoginInterface} from "../../../core/security/authenticator.service";
+import {VisitorGuard} from "../../../core/guard/visitor.guard";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-security-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [LOGIN_PROVIDER]
@@ -20,7 +20,7 @@ export class LoginComponent {
   });
 
   constructor(
-    @Inject(LOGIN_TOKEN) private login: Login,
+    @Inject(LOGIN_TOKEN) private login: LoginInterface,
     private route: ActivatedRoute,
     private router: Router
   ) {
