@@ -1,6 +1,6 @@
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
 import {Inject, Injectable} from "@angular/core";
-import {SESSION_TOKEN, SessionInterface} from "../contracts/session";
+import {SESSION_TOKEN, SessionInterface} from "../security/session.service";
 
 @Injectable({
   providedIn: 'root'

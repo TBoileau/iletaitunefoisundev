@@ -1,15 +1,13 @@
 import {createHttpFactory, HttpMethod, SpectatorHttp} from '@ngneat/spectator';
-import {Credentials} from "../contracts/login";
-import {AuthConsumer} from "./auth-consumer.service";
-import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface, Token} from "../contracts/session";
-import {STORAGE_MANAGER_PROVIDER} from "../../shared/storage/storage-manager.service";
+import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface, Token} from "./session.service";
+import {Authenticator, Credentials} from "./authenticator.service";
+import {STORAGE_MANAGER_PROVIDER} from "../storage/storage-manager.service";
 
-
-describe('Auth consumer', () => {
-  let spectator: SpectatorHttp<AuthConsumer>;
+describe('Authenticator', () => {
+  let spectator: SpectatorHttp<Authenticator>;
   let session: SessionInterface;
   const createHttp = createHttpFactory({
-    service: AuthConsumer,
+    service: Authenticator,
     providers: [SESSION_PROVIDER, STORAGE_MANAGER_PROVIDER]
   });
 
@@ -31,7 +29,7 @@ describe('Auth consumer', () => {
       refreshToken: 'refreshToken',
     };
     request.flush(token);
-    expect(session.setToken).toHaveBeenCalledWith(token)
+    expect(session.setToken).toHaveBeenCalledWith(token);
   });
 
   it('should refresh token and return token', () => {
@@ -42,6 +40,6 @@ describe('Auth consumer', () => {
     spectator.service.refreshToken(token).subscribe();
     const request = spectator.expectOne('/api/security/token-refresh', HttpMethod.POST);
     request.flush(token);
-    expect(session.setToken).toHaveBeenCalledWith(token)
+    expect(session.setToken).toHaveBeenCalledWith(token);
   });
 });

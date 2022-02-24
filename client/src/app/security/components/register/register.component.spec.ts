@@ -6,21 +6,20 @@ import {of, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
 import {RegisterComponent} from "./register.component";
-import {STORAGE_MANAGER_PROVIDER} from "../../../shared/storage/storage-manager.service";
-import {Register, REGISTER_TOKEN, Registration, User} from "../../contracts/register";
-import {SESSION_PROVIDER} from "../../contracts/session";
-import {UserConsumer} from "../../consumers/user-consumer.service";
+import {Register, REGISTER_TOKEN, RegisterInterface, Registration, User} from "./register.service";
+import {SESSION_PROVIDER} from "../../../core/security/session.service";
+import {STORAGE_MANAGER_PROVIDER} from "../../../core/storage/storage-manager.service";
 
 describe('Login component', () => {
   let spectator: SpectatorRouting<RegisterComponent>;
-  let register: SpyObject<Register>
+  let register: SpyObject<RegisterInterface>
 
   const createComponent = createRoutingFactory({
     component: RegisterComponent,
-    componentMocks: [UserConsumer],
+    componentMocks: [Register],
     componentProviders: [
       SESSION_PROVIDER,
-      {provide: REGISTER_TOKEN, useExisting: UserConsumer},
+      {provide: REGISTER_TOKEN, useExisting: Register},
       STORAGE_MANAGER_PROVIDER
     ],
     imports: [HttpClientTestingModule, RouterTestingModule, ReactiveFormsModule]
@@ -28,7 +27,7 @@ describe('Login component', () => {
 
   beforeEach(() => {
     spectator = createComponent();
-    register = spectator.inject(UserConsumer, true);
+    register = spectator.inject(Register, true);
   });
 
   it('should submit form register and redirect to login', () => {

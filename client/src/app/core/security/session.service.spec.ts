@@ -1,7 +1,6 @@
 import {createServiceFactory, SpectatorService} from "@ngneat/spectator";
-import {Session} from "./session.service";
-import {Token} from "../contracts/session";
-import {STORAGE_MANAGER_PROVIDER} from "../../shared/storage/storage-manager.service";
+import {Session, Token} from "./session.service";
+import {STORAGE_MANAGER_PROVIDER} from "../storage/storage-manager.service";
 
 describe('StorageManager', () => {
   let spectator: SpectatorService<Session>;
@@ -14,6 +13,7 @@ describe('StorageManager', () => {
 
   it('should clear session and not be authenticated', () => {
     spyOn(localStorage, 'removeItem');
+    spyOn(localStorage, 'getItem').and.returnValue(null);
     spectator.service.clear();
     expect(localStorage.removeItem).toHaveBeenCalledOnceWith('token');
     expect(spectator.service.authenticated()).toBeFalse();

@@ -3,8 +3,8 @@ import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {Inject, Injectable, Provider} from "@angular/core";
 import {catchError, filter, switchMap, take} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {SESSION_TOKEN, SessionInterface, Token} from "../../contracts/session";
-import {REFRESH_TOKEN_TOKEN, RefreshToken} from "../../contracts/refresh-token";
+import {SESSION_TOKEN, SessionInterface, Token} from "../security/session.service";
+import {REFRESH_TOKEN_TOKEN, RefreshTokenInterface} from "../security/authenticator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private router: Router,
     @Inject(SESSION_TOKEN) private session: SessionInterface,
-    @Inject(REFRESH_TOKEN_TOKEN) private refreshToken: RefreshToken,
+    @Inject(REFRESH_TOKEN_TOKEN) private refreshToken: RefreshTokenInterface,
   ) {
   }
 
@@ -47,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.tokenSubject.next(null);
         if (this.session.authenticated()) {
           // @ts-ignore
-          return this.refreshToken.refreshToken(this.session.getToken().refreshToken).pipe(
+          return this.refreshToken.refreshToken(this.session.getToken()).pipe(
             switchMap((token: any) => {
               this.isRefreshing = false;
               this.tokenSubject.next(token);

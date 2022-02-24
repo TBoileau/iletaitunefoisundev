@@ -6,21 +6,20 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {of, throwError} from "rxjs";
 import {Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Credentials, Login, LOGIN_TOKEN} from "../../contracts/login";
-import {STORAGE_MANAGER_PROVIDER} from "../../../shared/storage/storage-manager.service";
-import {SESSION_PROVIDER, Token} from "../../contracts/session";
-import {AuthConsumer} from "../../consumers/auth-consumer.service";
+import {Authenticator, Credentials, LOGIN_TOKEN, LoginInterface} from "../../../core/security/authenticator.service";
+import {SESSION_PROVIDER, Token} from "../../../core/security/session.service";
+import {STORAGE_MANAGER_PROVIDER} from "../../../core/storage/storage-manager.service";
 
 describe('Login component', () => {
   let spectator: SpectatorRouting<LoginComponent>;
-  let login: SpyObject<Login>;
+  let login: SpyObject<LoginInterface>;
 
   const createComponent = createRoutingFactory({
     component: LoginComponent,
-    componentMocks: [AuthConsumer],
+    componentMocks: [Authenticator],
     componentProviders: [
       SESSION_PROVIDER,
-      {provide: LOGIN_TOKEN, useExisting: AuthConsumer},
+      {provide: LOGIN_TOKEN, useExisting: Authenticator},
       STORAGE_MANAGER_PROVIDER
     ],
     imports: [HttpClientTestingModule, RouterTestingModule, ReactiveFormsModule]
@@ -28,7 +27,7 @@ describe('Login component', () => {
 
   beforeEach(() => {
     spectator = createComponent();
-    login = spectator.inject(AuthConsumer, true);
+    login = spectator.inject(Authenticator, true);
   });
 
   describe('when login is successful', () => {
@@ -71,7 +70,7 @@ describe('Login component', () => {
 
   it('should submit form login and raise violations', () => {
     spyOn(spectator.component.loginForm, 'mergeErrors');
-    const login = spectator.inject(AuthConsumer, true);
+    const login = spectator.inject(Authenticator, true);
     login.login.and.returnValue(throwError(() => new HttpErrorResponse({
       error: {
         message: 'Invalid credentials'

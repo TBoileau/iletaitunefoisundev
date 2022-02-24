@@ -3,11 +3,11 @@ import {Validators} from "@angular/forms";
 import {ControlsOf, FormControl, FormGroup} from "@ngneat/reactive-forms";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Route, Router} from "@angular/router";
-import {Register, REGISTER_PROVIDER, REGISTER_TOKEN, Registration} from "../../contracts/register";
-import {VisitorGuard} from "../../guard/visitor.guard";
+import {REGISTER_PROVIDER, REGISTER_TOKEN, RegisterInterface, Registration} from "./register.service";
+import {VisitorGuard} from "../../../core/guard/visitor.guard";
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-security-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   providers: [REGISTER_PROVIDER]
@@ -22,9 +22,9 @@ export class RegisterComponent {
       Validators.required,
       Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
     ])
-  })
+  });
 
-  constructor(@Inject(REGISTER_TOKEN) private register: Register, private router: Router) {
+  constructor(@Inject(REGISTER_TOKEN) private register: RegisterInterface, private router: Router) {
   }
 
   onSubmit() {

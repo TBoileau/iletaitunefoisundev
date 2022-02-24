@@ -2,19 +2,19 @@ import {TestBed} from '@angular/core/testing';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {HttpClientTestingModule, HttpTestingController} from "@angular/common/http/testing";
 import {AUTH_INTERCEPTOR_PROVIDER} from "./auth.interceptor";
-import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface, Token} from "../../contracts/session";
-import {STORAGE_MANAGER_PROVIDER} from "../../../shared/storage/storage-manager.service";
-import {REFRESH_TOKEN_PROVIDER, REFRESH_TOKEN_TOKEN, RefreshToken} from "../../contracts/refresh-token";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Router} from "@angular/router";
-import {LOGIN_ROUTE} from "../../components/login/login.component";
 import {of, throwError} from "rxjs";
+import {LOGIN_ROUTE} from "../../security/components/login/login.component";
+import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface, Token} from "../security/session.service";
+import {REFRESH_TOKEN_PROVIDER, REFRESH_TOKEN_TOKEN, RefreshTokenInterface} from "../security/authenticator.service";
+import {STORAGE_MANAGER_PROVIDER} from "../storage/storage-manager.service";
 
 describe('AuthInterceptor', () => {
   let httpMock: HttpTestingController;
   let session: SessionInterface;
   let http: HttpClient;
-  let refreshToken: RefreshToken;
+  let refreshToken: RefreshTokenInterface;
   let router: Router;
 
   beforeEach(() => {

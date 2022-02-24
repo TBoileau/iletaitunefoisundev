@@ -1,10 +1,10 @@
 import {createServiceFactory, SpectatorService} from "@ngneat/spectator";
-import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface} from "../contracts/session";
 import {RouterTestingModule} from "@angular/router/testing";
-import {LOGIN_ROUTE} from "../components/login/login.component";
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
-import {STORAGE_MANAGER_PROVIDER} from "../../shared/storage/storage-manager.service";
 import {VisitorGuard} from "./visitor.guard";
+import {SESSION_PROVIDER, SESSION_TOKEN, SessionInterface} from "../security/session.service";
+import {STORAGE_MANAGER_PROVIDER} from "../storage/storage-manager.service";
+import {LOGIN_ROUTE} from "../../security/components/login/login.component";
 
 describe('VisitorGuard', () => {
   let spectator: SpectatorService<VisitorGuard>;

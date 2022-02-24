@@ -1,11 +1,9 @@
 import {createHttpFactory, HttpMethod, SpectatorHttp} from '@ngneat/spectator';
-import {Registration} from "../contracts/register";
-import {UserConsumer} from "./user-consumer.service";
+import {Register, Registration} from "./register.service";
 
-
-describe('User consumer', () => {
-  let spectator: SpectatorHttp<UserConsumer>;
-  const createHttp = createHttpFactory(UserConsumer);
+describe('Register', () => {
+  let spectator: SpectatorHttp<Register>;
+  const createHttp = createHttpFactory(Register);
 
   beforeEach(() => spectator = createHttp());
 
