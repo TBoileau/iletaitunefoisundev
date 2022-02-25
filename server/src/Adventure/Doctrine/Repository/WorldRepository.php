@@ -27,12 +27,8 @@ final class WorldRepository extends ServiceEntityRepository implements WorldGate
         return $this->createQueryBuilder('w')
             ->addSelect('c')
             ->addSelect('r')
-            ->addSelect('q')
-            ->addSelect('f')
             ->join('w.continents', 'c')
             ->join('c.regions', 'r')
-            ->leftJoin('r.quests', 'q')
-            ->leftJoin('r.firstQuest', 'f')
             ->getQuery()
             ->getResult();
     }
