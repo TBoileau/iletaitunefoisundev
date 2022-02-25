@@ -18,7 +18,7 @@ export class WorldManager implements WorldManagerInterface {
   getWorlds(): Observable<Array<World>> {
     if (!this.worlds) {
       this.worlds = merge(
-        this.http.get<Player | null>('/api/adventure/worlds'),
+        this.http.get<Array<World>>('/api/adventure/worlds'),
         this.infiniteStream
       ).pipe(shareReplay(1));
     }

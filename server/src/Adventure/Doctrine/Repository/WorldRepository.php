@@ -28,13 +28,11 @@ final class WorldRepository extends ServiceEntityRepository implements WorldGate
             ->addSelect('c')
             ->addSelect('r')
             ->addSelect('q')
-            ->addSelect('o')
-            ->addSelect('i')
+            ->addSelect('f')
             ->join('w.continents', 'c')
             ->join('c.regions', 'r')
             ->leftJoin('r.quests', 'q')
-            ->leftJoin('q.course', 'o')
-            ->leftJoin('q.quiz', 'i')
+            ->leftJoin('r.firstQuest', 'f')
             ->getQuery()
             ->getResult();
     }

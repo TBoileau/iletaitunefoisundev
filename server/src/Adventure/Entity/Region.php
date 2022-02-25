@@ -6,6 +6,7 @@ namespace App\Adventure\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -47,14 +48,11 @@ class Region implements Stringable
     /**
      * @var Collection<int, Quest>
      */
-    #[Groups('adventure')]
-    #[ApiProperty(readableLink: false)]
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
+    #[ApiSubresource]
     private Collection $quests;
 
     #[OneToOne(targetEntity: Quest::class)]
-    #[Groups('adventure')]
-    #[ApiProperty(readableLink: false)]
     private ?Quest $firstQuest = null;
 
     public function __construct()

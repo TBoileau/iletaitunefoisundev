@@ -1,18 +1,20 @@
 import {createRoutingFactory, SpectatorRouting} from "@ngneat/spectator";
-import {Location} from "@angular/common";
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {RegionComponent} from "./region.component";
 import {WORLD_MANAGER_TOKEN, WorldManager} from "../../managers/world-manager.service";
 import {Observable, of} from "rxjs";
 import {World} from "../../entities/world";
-import {ContinentComponent} from "../continent/continent.component";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+import {QUEST_MANAGER_TOKEN, QuestManager} from "../../managers/quest-manager.service";
+import {Quest} from "../../entities/quest";
+import {Region} from "../../entities/region";
 
 describe('Continent component', () => {
-  let spectator: SpectatorRouting<ContinentComponent>;
+  let spectator: SpectatorRouting<RegionComponent>;
 
   const createComponent = createRoutingFactory({
-    component: ContinentComponent,
-    componentMocks: [WorldManager],
-    params: {world: "1", continent: "1"},
+    component: RegionComponent,
+    componentMocks: [WorldManager, QuestManager],
+    params: {world: "1", continent: "1", region: "1"},
     componentProviders: [
       {
         provide: WORLD_MANAGER_TOKEN,
@@ -29,7 +31,7 @@ describe('Continent component', () => {
                     regions: [
                       {
                         id: 1,
-                        name: "Region",
+                        name: "Region"
                       }
                     ]
                   }
@@ -39,12 +41,33 @@ describe('Continent component', () => {
             return of(worlds);
           }
         }
+      },
+      {
+        provide: QUEST_MANAGER_TOKEN,
+        useValue: {
+          getQuestsByRegion(region: Region): Observable<Array<Quest>> {
+            const quests: Array<Quest> = [{
+              id: 1,
+              name: "Quest",
+              quiz: "/api/content/quizzes/1",
+              course: {
+                youtubeUrl: "",
+                description: "",
+                content: "",
+                title: "",
+              },
+              difficultyName: "Hard",
+              typeName: "Main",
+            }];
+            return of(quests);
+          }
+        }
       }
     ],
     imports: [HttpClientTestingModule]
   });
 
-  it("should show regions", async () => {
+  it("should show quests", async () => {
     spectator = createComponent();
     await spectator.fixture.whenStable();
     expect(spectator.query('ul > li')).toHaveLength(1);

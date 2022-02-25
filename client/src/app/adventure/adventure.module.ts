@@ -10,6 +10,8 @@ import {WorldsComponent} from "./components/worlds/worlds.component";
 import {WorldComponent} from "./components/world/world.component";
 import {WORLD_MANAGER_PROVIDER} from "./managers/world-manager.service";
 import {ContinentComponent} from "./components/continent/continent.component";
+import {RegionComponent} from "./components/region/region.component";
+import {QUEST_MANAGER_PROVIDER} from "./managers/quest-manager.service";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import {ContinentComponent} from "./components/continent/continent.component";
     WorldsComponent,
     WorldComponent,
     ContinentComponent,
+    RegionComponent
   ],
   imports: [
     HttpClientModule,
@@ -25,7 +28,7 @@ import {ContinentComponent} from "./components/continent/continent.component";
     BrowserModule,
     AdventureRoutingModule
   ],
-  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER],
+  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER, QUEST_MANAGER_PROVIDER],
   bootstrap: [DashboardComponent]
 })
 export class AdventureModule {
