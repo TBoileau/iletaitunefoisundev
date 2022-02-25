@@ -8,6 +8,7 @@ import {Map} from "../entities/map";
   providedIn: 'root'
 })
 export class RegionManager implements RegionManagerInterface {
+  current!: number;
   map!: Observable<Map>;
   private infiniteStream: Observable<any> = new Subject<void>().asObservable();
 
@@ -15,7 +16,8 @@ export class RegionManager implements RegionManagerInterface {
   }
 
   getMapByRegion(region: number): Observable<Map> {
-    if (!this.map) {
+    if (!this.map || this.current !== region) {
+      this.current = region;
       this.map = merge(
         this.http.get<Map>(`/api/adventure/regions/${region}/map`),
         this.infiniteStream
