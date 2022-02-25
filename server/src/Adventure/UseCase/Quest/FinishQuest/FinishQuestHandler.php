@@ -18,7 +18,7 @@ final class FinishQuestHandler implements MessageHandlerInterface
     {
     }
 
-    public function __invoke(FinishQuestInput $finishQuestInput): void
+    public function __invoke(FinishQuestInput $finishQuestInput): Checkpoint
     {
         /** @var Checkpoint $checkpoint */
         $checkpoint = $this->checkpointGateway->getCheckpointByPlayerAndQuest(
@@ -27,5 +27,6 @@ final class FinishQuestHandler implements MessageHandlerInterface
         );
         $checkpoint->setFinishedAt(new DateTimeImmutable());
         $this->checkpointGateway->save($checkpoint);
+        return $checkpoint;
     }
 }

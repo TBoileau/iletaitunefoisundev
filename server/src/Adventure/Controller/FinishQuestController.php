@@ -4,22 +4,27 @@ declare(strict_types=1);
 
 namespace App\Adventure\Controller;
 
+use App\Adventure\Entity\Checkpoint;
 use App\Adventure\Entity\Player;
 use App\Adventure\Entity\Quest;
 use App\Adventure\UseCase\Quest\FinishQuest\FinishQuestInput;
 use App\Security\Entity\User;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Security;
 
 final class FinishQuestController
 {
-    public function __construct(private MessageBusInterface $messageBus, private Security $security)
+    use HandleTrait;
+
+    public function __construct(MessageBusInterface $messageBus, private Security $security)
     {
+        $this->messageBus = $messageBus;
     }
 
-    public function __invoke(Quest $quest): JsonResponse
+    public function __invoke(Quest $quest): Checkpoint
     {
         /** @var User $user */
         $user = $this->security->getUser();
@@ -27,8 +32,9 @@ final class FinishQuestController
         /** @var Player $player */
         $player = $user->getPlayer();
 
-        $this->messageBus->dispatch(FinishQuestInput::create($player, $quest));
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $this->handle(FinishQuestInput::create($player, $quest));
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return $checkpoint;
     }
 }
