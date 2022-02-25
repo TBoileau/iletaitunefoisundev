@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Tests\Functional\Adventure;
 
 use ApiPlatform\Core\Bridge\Symfony\Bundle\Test\ApiTestCase;
-use App\Adventure\UseCase\GetMapByRegion\Map;
 use App\Tests\Functional\AuthenticatedClientTrait;
 use App\Tests\Functional\DatabaseAccessTrait;
 use Symfony\Component\HttpFoundation\Request;

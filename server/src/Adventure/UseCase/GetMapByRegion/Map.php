@@ -33,24 +33,21 @@ final class Map
 
     public function attach(int $from, int $to, string $type): void
     {
-        if (!isset($this->relations[$from])) {
-            $this->relations[$from] = [];
-        }
-
-
-        $this->relations[$from][] = new Relation($from, $to, RelationType::from($type));
+        $this->relations[] = new Relation($from, $to, RelationType::from($type));
     }
 
     public function add(Quest $quest): void
     {
-        if (!$this->has($quest->getId())) {
-            $this->quests[$quest->getId()] = $quest;
+        /** @var int $id */
+        $id = $quest->getId();
+        if (!$this->has($id)) {
+            $this->quests[$id] = $quest;
         }
     }
 
     public function has(int $id): bool
     {
-        return isset($quests[$id]);
+        return isset($this->quests[$id]);
     }
 
     /**

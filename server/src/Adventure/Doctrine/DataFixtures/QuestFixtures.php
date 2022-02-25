@@ -86,7 +86,7 @@ final class QuestFixtures extends Fixture implements DependentFixtureInterface
                 $questInfo['id'] = $quest->getId();
                 $this->neo4jClient->run('CREATE(q:Quest {id: $id, region: $region});', [
                     'id' => $quest->getId(),
-                    'region' => $region->getId()
+                    'region' => $region->getId(),
                 ]);
                 ++$nodeIndex;
             }

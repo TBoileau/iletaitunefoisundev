@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class StartQuizSessionHandler implements MessageHandlerInterface
 {
     /**
-     * @param SessionGateway<Session> $sessionGateway
+     * @param SessionGateway<Session>       $sessionGateway
      * @param CheckpointGateway<Checkpoint> $checkpointGateway
      */
     public function __construct(private SessionGateway $sessionGateway, private CheckpointGateway $checkpointGateway)

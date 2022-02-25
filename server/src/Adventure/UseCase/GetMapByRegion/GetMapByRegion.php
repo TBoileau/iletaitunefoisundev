@@ -13,13 +13,16 @@ use Laudis\Neo4j\Types\CypherMap;
 
 final class GetMapByRegion
 {
+    /**
+     * @param QuestGateway<Quest> $questGateway
+     */
     public function __construct(private ClientInterface $neo4jClient, private QuestGateway $questGateway)
     {
     }
 
     public function __invoke(Region $region): Map
     {
-        /** @var SummarizedResult<CypherMap<array{q1: string, q2: string, type: string}> $relations */
+        /** @var SummarizedResult<array{q1: string, q2: string, type: string}> $relations */
         $relations = $this->neo4jClient->run('
             MATCH (n1:Quest)-[n:NEXT|RELATIVE]-(n2:Quest) 
             WHERE n1.region=$region and n2.region=$region

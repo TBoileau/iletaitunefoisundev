@@ -7,6 +7,5 @@ namespace App\Adventure\UseCase\GetMapByRegion;
 enum RelationType: string
 {
     case Relative = 'RELATIVE';
-    
     case Next = 'NEXT';
 }
