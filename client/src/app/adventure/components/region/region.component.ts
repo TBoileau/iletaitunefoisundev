@@ -2,14 +2,15 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Route} from "@angular/router";
 import {PlayerGuard} from "../../guard/player.guard";
 import {AuthGuard} from "../../../core/guard/auth.guard";
-import {Observable, pipe, tap} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {WORLD_MANAGER_TOKEN, WorldManagerInterface} from "../../managers/world-manager.service";
 import {map} from "rxjs/operators";
 import {Continent} from "../../entities/continent";
 import {World} from "../../entities/world";
 import {Region} from "../../entities/region";
 import {Quest} from "../../entities/quest";
-import {QUEST_MANAGER_PROVIDER, QUEST_MANAGER_TOKEN, QuestManagerInterface} from "../../managers/quest-manager.service";
+import {Map} from "../../entities/map";
+import {REGION_MANAGER_TOKEN, RegionManagerInterface} from "../../managers/region-manager.service";
 
 @Component({
   selector: 'app-adventure-region',
@@ -20,12 +21,12 @@ export class RegionComponent implements OnInit{
   region: Observable<Region> = new Observable<Region>();
   continent: Observable<Continent> = new Observable<Continent>();
   world: Observable<World> = new Observable<World>();
-  quests: Observable<Array<Quest>> = new Observable<Array<Quest>>();
+  map: Observable<Map> = new Observable<Map>();
 
   constructor(
     private route: ActivatedRoute,
     @Inject(WORLD_MANAGER_TOKEN) private worldManager: WorldManagerInterface,
-    @Inject(QUEST_MANAGER_TOKEN) private questManager: QuestManagerInterface
+    @Inject(REGION_MANAGER_TOKEN) private questManager: RegionManagerInterface
   ) {
   }
 
@@ -48,7 +49,7 @@ export class RegionComponent implements OnInit{
       .pipe(
         // @ts-ignore
         map(continent => continent.regions.find(region => region.id === +(this.route.snapshot.params['region']))),
-        tap(region => this.quests = this.questManager.getQuestsByRegion(region))
+        tap(region => this.map = this.questManager.getMapByRegion(region))
       );
   }
 }

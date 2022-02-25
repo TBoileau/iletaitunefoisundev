@@ -11,7 +11,7 @@ import {WorldComponent} from "./components/world/world.component";
 import {WORLD_MANAGER_PROVIDER} from "./managers/world-manager.service";
 import {ContinentComponent} from "./components/continent/continent.component";
 import {RegionComponent} from "./components/region/region.component";
-import {QUEST_MANAGER_PROVIDER} from "./managers/quest-manager.service";
+import {REGION_MANAGER_PROVIDER} from "./managers/region-manager.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import {QUEST_MANAGER_PROVIDER} from "./managers/quest-manager.service";
     BrowserModule,
     AdventureRoutingModule
   ],
-  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER, QUEST_MANAGER_PROVIDER],
+  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER, REGION_MANAGER_PROVIDER],
   bootstrap: [DashboardComponent]
 })
 export class AdventureModule {

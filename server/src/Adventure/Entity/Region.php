@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
+use App\Adventure\UseCase\GetMapByRegion\GetMapByRegion;
+use App\Adventure\UseCase\GetMapByRegion\Map;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,8 +23,16 @@ use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    collectionOperations: [],
-    itemOperations: ['get'],
+    collectionOperations: ['get'],
+    itemOperations: [
+        'get',
+        'map' => [
+            'method' => 'GET',
+            'controller' => GetMapByRegion::class,
+            'output' => Map::class,
+            'path' => '/regions/{id}/map',
+        ],
+    ],
     normalizationContext: ['groups' => ['read']],
     routePrefix: '/adventure',
 )]
@@ -49,7 +57,6 @@ class Region implements Stringable
      * @var Collection<int, Quest>
      */
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
-    #[ApiSubresource]
     private Collection $quests;
 
     #[OneToOne(targetEntity: Quest::class)]

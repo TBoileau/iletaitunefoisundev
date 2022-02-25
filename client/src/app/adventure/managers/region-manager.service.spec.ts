@@ -1,10 +1,10 @@
 import {createHttpFactory, HttpMethod, SpectatorHttp} from '@ngneat/spectator';
-import {QuestManager} from "./quest-manager.service";
 import {Region} from "../entities/region";
+import {RegionManager} from "./region-manager.service";
 
 describe('WorldManager', () => {
-  let spectator: SpectatorHttp<QuestManager>;
-  const createHttp = createHttpFactory(QuestManager);
+  let spectator: SpectatorHttp<RegionManager>;
+  const createHttp = createHttpFactory(RegionManager);
 
   beforeEach(() => spectator = createHttp());
 
@@ -13,8 +13,8 @@ describe('WorldManager', () => {
       id: 1,
       name: 'Region'
     };
-    spectator.service.getQuestsByRegion(region).subscribe();
-    const request = spectator.expectOne('/api/adventure/regions/1/quests', HttpMethod.GET);
+    spectator.service.getMapByRegion(region).subscribe();
+    const request = spectator.expectOne('/api/adventure/regions/1/map', HttpMethod.GET);
     request.flush([]);
   });
 });

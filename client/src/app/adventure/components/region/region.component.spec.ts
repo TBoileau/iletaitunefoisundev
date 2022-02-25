@@ -4,16 +4,17 @@ import {WORLD_MANAGER_TOKEN, WorldManager} from "../../managers/world-manager.se
 import {Observable, of} from "rxjs";
 import {World} from "../../entities/world";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
-import {QUEST_MANAGER_TOKEN, QuestManager} from "../../managers/quest-manager.service";
 import {Quest} from "../../entities/quest";
 import {Region} from "../../entities/region";
+import {Map} from "../../entities/map";
+import {REGION_MANAGER_TOKEN, RegionManager} from "../../managers/region-manager.service";
 
 describe('Continent component', () => {
   let spectator: SpectatorRouting<RegionComponent>;
 
   const createComponent = createRoutingFactory({
     component: RegionComponent,
-    componentMocks: [WorldManager, QuestManager],
+    componentMocks: [WorldManager, RegionManager],
     params: {world: "1", continent: "1", region: "1"},
     componentProviders: [
       {
@@ -43,23 +44,28 @@ describe('Continent component', () => {
         }
       },
       {
-        provide: QUEST_MANAGER_TOKEN,
+        provide: REGION_MANAGER_TOKEN,
         useValue: {
-          getQuestsByRegion(region: Region): Observable<Array<Quest>> {
-            const quests: Array<Quest> = [{
-              id: 1,
-              name: "Quest",
-              quiz: "/api/content/quizzes/1",
-              course: {
-                youtubeUrl: "",
-                description: "",
-                content: "",
-                title: "",
+          getMapByRegion(region: Region): Observable<Map> {
+            const map: Map = {
+              quests: {
+                1: {
+                  id: 1,
+                  name: "Quest",
+                  quiz: "/api/content/quizzes/1",
+                  course: {
+                    youtubeUrl: "",
+                    description: "",
+                    content: "",
+                    title: "",
+                  },
+                  difficultyName: "HARD",
+                  typeName: "MAIN"
+                }
               },
-              difficultyName: "Hard",
-              typeName: "Main",
-            }];
-            return of(quests);
+              relations: []
+            };
+            return of(map);
           }
         }
       }

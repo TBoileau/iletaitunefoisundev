@@ -27,6 +27,10 @@ services:
         tags:
             - controller.service_arguments
 
+    App\Adventure\UseCase\GetMapByRegion\GetMapByRegion:
+        tags:
+            - controller.service_arguments
+
     App\Security\OpenApi\UserDecorator:
         decorates: 'api_platform.openapi.factory'
         arguments: ['@.inner']

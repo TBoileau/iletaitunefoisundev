@@ -2,7 +2,7 @@
 <a [routerLink]="['/worlds', (world|async)?.id, 'continents', (continent|async)?.id]">Retour</a>
 <br/>
 <ul>
-  <li *ngFor="let quest of (quests|async)">
+  <li *ngFor="let quest of (map|async)?.quests|keyvalue">
     <a [routerLink]="[
       '/worlds',
       (world|async)?.id,
@@ -11,7 +11,7 @@
       'regions',
       (region|async)?.id,
       'quests',
-      quest.id
-    ]">{{ quest.name }}</a>
+      quest.value.id
+    ]">{{ quest.value.name }}</a>
   </li>
 </ul>
