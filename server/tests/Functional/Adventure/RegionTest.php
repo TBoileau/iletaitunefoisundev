@@ -17,7 +17,7 @@ final class RegionTest extends ApiTestCase
     /**
      * @test
      */
-    public function getCollectionShouldReturnWorlds(): void
+    public function shouldReturnMapOfRegion(): void
     {
         $client = self::createAuthenticatedClient();
         $client->request(Request::METHOD_GET, '/api/adventure/regions/1/map');
@@ -28,7 +28,6 @@ final class RegionTest extends ApiTestCase
     "1": {
       "id": 1,
       "name": "Quest 1",
-      "region": "/api/adventure/regions/1",
       "course": {
         "youtubeUrl": "https://www.youtube.com/watch?v=-S94RNjjb4I",
         "description": "Description 1",
@@ -42,7 +41,6 @@ final class RegionTest extends ApiTestCase
     "2": {
       "id": 2,
       "name": "Quest 2",
-      "region": "/api/adventure/regions/1",
       "course": {
         "youtubeUrl": "https://www.youtube.com/watch?v=-S94RNjjb4I",
         "description": "Description 2",
@@ -56,7 +54,6 @@ final class RegionTest extends ApiTestCase
     "3": {
       "id": 3,
       "name": "Quest 3",
-      "region": "/api/adventure/regions/1",
       "course": {
         "youtubeUrl": "https://www.youtube.com/watch?v=-S94RNjjb4I",
         "description": "Description 3",
@@ -70,7 +67,6 @@ final class RegionTest extends ApiTestCase
     "4": {
       "id": 4,
       "name": "Quest 4",
-      "region": "/api/adventure/regions/1",
       "course": {
         "youtubeUrl": "https://www.youtube.com/watch?v=-S94RNjjb4I",
         "description": "Description 4",
@@ -84,7 +80,6 @@ final class RegionTest extends ApiTestCase
     "5": {
       "id": 5,
       "name": "Quest 5",
-      "region": "/api/adventure/regions/1",
       "course": {
         "youtubeUrl": "https://www.youtube.com/watch?v=-S94RNjjb4I",
         "description": "Description 5",
@@ -96,46 +91,81 @@ final class RegionTest extends ApiTestCase
       "typeName": "Side"
     }
   },
-  "relations": {
-    "1": {
-      "RELATIVE": [
-        4
-      ],
-      "NEXT": [
-        2
-      ]
+  "relations": [
+    {
+      "from": 1,
+      "to": 4,
+      "type": "RELATIVE"
     },
-    "2": {
-      "RELATIVE": [
-        5
-      ],
-      "NEXT": [
-        3,
-        1
-      ]
+    {
+      "from": 1,
+      "to": 2,
+      "type": "NEXT"
     },
-    "3": {
-      "RELATIVE": [
-        4
-      ],
-      "NEXT": [
-        2
-      ]
+    {
+      "from": 2,
+      "to": 5,
+      "type": "RELATIVE"
     },
-    "4": {
-      "RELATIVE": [
-        5,
-        3,
-        1
-      ]
+    {
+      "from": 2,
+      "to": 3,
+      "type": "NEXT"
     },
-    "5": {
-      "RELATIVE": [
-        4,
-        2
-      ]
+    {
+      "from": 2,
+      "to": 1,
+      "type": "NEXT"
+    },
+    {
+      "from": 3,
+      "to": 4,
+      "type": "RELATIVE"
+    },
+    {
+      "from": 3,
+      "to": 2,
+      "type": "NEXT"
+    },
+    {
+      "from": 4,
+      "to": 5,
+      "type": "RELATIVE"
+    },
+    {
+      "from": 4,
+      "to": 3,
+      "type": "RELATIVE"
+    },
+    {
+      "from": 4,
+      "to": 1,
+      "type": "RELATIVE"
+    },
+    {
+      "from": 5,
+      "to": 4,
+      "type": "RELATIVE"
+    },
+    {
+      "from": 5,
+      "to": 2,
+      "type": "RELATIVE"
     }
-  }
+  ],
+  "region": {
+    "id": 1,
+    "name": "Region 1",
+    "continent": {
+      "id": 1,
+      "name": "Continent 1",
+      "world": {
+        "id": 1,
+        "name": "Monde"
+      }
+    }
+  },
+  "firstQuest": 1
 }
 EOF
 );

@@ -27,6 +27,12 @@ final class QuestRepository extends ServiceEntityRepository implements QuestGate
     {
         /** @var ?Quest $quest */
         $quest = $this->createBaseQueryBuilder()
+            ->addSelect('r')
+            ->addSelect('co')
+            ->addSelect('w')
+            ->join('q.region', 'r')
+            ->join('r.continent', 'co')
+            ->join('co.world', 'w')
             ->where('q.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
