@@ -3,6 +3,16 @@
 <a
   [routerLink]="['/regions', (map|async)?.region?.id]">Retour</a>
 <br/>
-<iframe [src]="(quest|async)?.course?.youtubeUrl|youtube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"
-        height="315" title="YouTube video player"
-        width="560"></iframe>
+<a class="btn-finish" *ngIf="(checkpoint|async) !== null && (checkpoint|async)?.finishedAt === null" (click)="finish()">Terminer</a>
+<a class="btn-start" *ngIf="(checkpoint|async) === null" (click)="start()">Commencer</a>
+<br/>
+<iframe
+  *ngIf="(checkpoint|async) !== null && (checkpoint|async)?.finishedAt === null"
+  [src]="(quest|async)?.course?.youtubeUrl|youtube"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowfullscreen
+  frameborder="0"
+  height="315"
+  title="YouTube video player"
+  width="560"
+></iframe>

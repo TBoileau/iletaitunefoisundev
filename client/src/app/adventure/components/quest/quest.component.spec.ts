@@ -7,14 +7,16 @@ import {Map} from "../../entities/map";
 import {REGION_MANAGER_TOKEN, RegionManager} from "../../managers/region-manager.service";
 import {QuestComponent} from "./quest.component";
 import {YoutubePipe} from "../../pipe/youtube.pipe";
+import {QUEST_MANAGER_TOKEN, QuestManager} from "../../managers/quest-manager.service";
+import {Checkpoint} from "../../entities/checkpoint";
 
 describe('Quest component', () => {
   let spectator: SpectatorRouting<QuestComponent>;
 
   const createComponent = createRoutingFactory({
     component: QuestComponent,
-    componentMocks: [RegionManager],
-    params: {region: "1"},
+    componentMocks: [RegionManager, QuestManager],
+    params: {region: "1", quest: "1"},
     declarations: [YoutubePipe],
     componentProviders: [
       {
@@ -41,7 +43,7 @@ describe('Quest component', () => {
                   name: "Quest",
                   quiz: "/api/content/quizzes/1",
                   course: {
-                    youtubeUrl: "",
+                    youtubeUrl: "https://www.youtube.com/watch?v=-S94RNjjb4I",
                     description: "",
                     content: "",
                     title: "",
@@ -55,14 +57,46 @@ describe('Quest component', () => {
             return of(map);
           }
         }
+      },
+      {
+        provide: QUEST_MANAGER_TOKEN,
+        useValue: {
+          getCheckpoint(quest: Quest): Observable<Checkpoint|null> {
+            return of(null);
+          },
+          start(quest: Quest): Observable<Checkpoint> {
+            return of({
+              id: 1,
+              startedAt: new Date(),
+              finishedAt: null
+            });
+          },
+          finish(quest: Quest): Observable<Checkpoint> {
+            return of({
+              id: 1,
+              startedAt: new Date(),
+              finishedAt: new Date()
+            });
+          },
+        }
       }
     ],
     imports: [HttpClientTestingModule]
   });
 
-  it("should show quest and course", async () => {
+  it("should start and finish quest", async () => {
     spectator = createComponent();
     await spectator.fixture.whenStable();
+    expect(spectator.query('iframe')).toHaveLength(0);
+    expect(spectator.query('.btn-start')).toHaveLength(1);
+    spectator.click('.btn-start');
+    await spectator.fixture.whenStable();
+    expect(spectator.query('.btn-start')).toHaveLength(0);
     expect(spectator.query('iframe')).toHaveLength(1);
+    expect(spectator.query('.btn-finish')).toHaveLength(1);
+    spectator.click('.btn-finish');
+    await spectator.fixture.whenStable();
+    expect(spectator.query('.btn-start')).toHaveLength(0);
+    expect(spectator.query('.btn-finish')).toHaveLength(0);
   });
 });

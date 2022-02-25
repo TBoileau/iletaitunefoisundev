@@ -18,12 +18,13 @@ final class StartQuestHandler implements MessageHandlerInterface
     {
     }
 
-    public function __invoke(StartQuestInput $startQuestInput): void
+    public function __invoke(StartQuestInput $startQuestInput): Checkpoint
     {
         $checkpoint = new Checkpoint();
         $checkpoint->setQuest($startQuestInput->quest);
         $checkpoint->setJourney($startQuestInput->player->getJourney());
         $checkpoint->setStartedAt(new DateTimeImmutable());
         $this->checkpointGateway->save($checkpoint);
+        return $checkpoint;
     }
 }

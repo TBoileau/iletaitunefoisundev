@@ -23,6 +23,26 @@ final class QuestTest extends ApiTestCase
     /**
      * @test
      */
+    public function shouldReturnCheckpoint(): void
+    {
+        $client = self::createAuthenticatedClient();
+        $this->init($client);
+        /** @var User $user */
+        $user = $this->findOneBy(User::class, [['email' => 'user+1@email.com']]);
+        /** @var Player $player */
+        $player = $user->getPlayer();
+        /** @var Checkpoint $checkpoint */
+        $checkpoint = $player->getJourney()->getCheckpoints()->first();
+        $quest = $checkpoint->getQuest();
+
+        $client->request(Request::METHOD_GET, sprintf('/api/adventure/quests/%s/checkpoint', $quest->getId()));
+
+        self::assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    /**
+     * @test
+     */
     public function shouldStartQuest(): void
     {
         $client = self::createAuthenticatedClient();
@@ -52,7 +72,7 @@ final class QuestTest extends ApiTestCase
             ['json' => []]
         );
 
-        self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+        self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
     }
 
     /**
@@ -100,7 +120,7 @@ final class QuestTest extends ApiTestCase
             ['json' => []]
         );
 
-        self::assertResponseStatusCodeSame(Response::HTTP_NO_CONTENT);
+        self::assertResponseStatusCodeSame(Response::HTTP_ACCEPTED);
     }
 
     /**

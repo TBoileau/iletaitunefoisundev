@@ -7,6 +7,7 @@ namespace App\Adventure\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Controller\FinishQuestController;
+use App\Adventure\Controller\GetCheckpointController;
 use App\Adventure\Controller\StartQuestController;
 use App\Adventure\Doctrine\Repository\QuestRepository;
 use App\Adventure\Doctrine\Type\DifficultyType;
@@ -28,19 +29,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     itemOperations: [
         'get',
+        'checkpoint' => [
+            'controller' => GetCheckpointController::class,
+            'status' => Response::HTTP_OK,
+            'method' => Request::METHOD_GET,
+            'output' => Checkpoint::class,
+            'path' => '/quests/{id}/checkpoint',
+            'security' => 'is_granted("ROLE_PLAYER")',
+        ],
         'finish' => [
             'controller' => FinishQuestController::class,
-            'status' => Response::HTTP_NO_CONTENT,
+            'status' => Response::HTTP_ACCEPTED,
             'method' => Request::METHOD_POST,
+            'output' => Checkpoint::class,
             'path' => '/quests/{id}/finish',
             'security' => 'is_granted("ROLE_PLAYER") and is_granted("finish", object)',
         ],
         'start' => [
             'controller' => StartQuestController::class,
-            'status' => Response::HTTP_NO_CONTENT,
+            'status' => Response::HTTP_CREATED,
             'method' => Request::METHOD_POST,
+            'output' => Checkpoint::class,
             'path' => '/quests/{id}/start',
             'security' => 'is_granted("ROLE_PLAYER") and is_granted("start", object)',
+            'normalization_context' => ['groups' => ['read']],
         ],
     ],
     attributes: ['pagination_enabled' => false],
