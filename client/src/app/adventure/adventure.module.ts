@@ -14,6 +14,7 @@ import {RegionComponent} from "./components/region/region.component";
 import {REGION_MANAGER_PROVIDER} from "./managers/region-manager.service";
 import {QuestComponent} from "./components/quest/quest.component";
 import {YoutubePipe} from "./pipe/youtube.pipe";
+import {QUEST_MANAGER_PROVIDER} from "./managers/quest-manager.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import {YoutubePipe} from "./pipe/youtube.pipe";
     BrowserModule,
     AdventureRoutingModule
   ],
-  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER, REGION_MANAGER_PROVIDER],
+  providers: [PLAYER_MANAGER_PROVIDER, WORLD_MANAGER_PROVIDER, REGION_MANAGER_PROVIDER, QUEST_MANAGER_PROVIDER],
   bootstrap: [DashboardComponent]
 })
 export class AdventureModule {

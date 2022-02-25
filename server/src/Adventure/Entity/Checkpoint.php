@@ -41,8 +41,6 @@ class Checkpoint implements Stringable
 
     #[ManyToOne(targetEntity: Quest::class)]
     #[JoinColumn(nullable: false)]
-    #[Groups('read')]
-    #[ApiProperty(readableLink: false)]
     private Quest $quest;
 
     #[Column(type: Types::DATETIME_IMMUTABLE)]
