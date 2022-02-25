@@ -3,7 +3,6 @@ import {World} from "../entities/world";
 import {Injectable, InjectionToken, Provider} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {shareReplay} from "rxjs/operators";
-import {Player} from "../entities/player";
 
 @Injectable({
   providedIn: 'root'

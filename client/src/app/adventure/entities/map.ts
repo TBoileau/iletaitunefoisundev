@@ -1,7 +1,10 @@
 import {Quest} from "./quest";
 import {Relation} from "./relation";
+import {Region} from "./region";
 
 export interface Map {
-  quests: {[key: number]: Quest};
-  relations: {[key: number]: Array<Relation>};
+  region: Region,
+  firstQuest: number,
+  quests: { [key: number]: Quest };
+  relations: { [key: number]: Array<Relation> };
 }

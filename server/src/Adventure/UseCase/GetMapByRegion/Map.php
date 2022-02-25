@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Adventure\UseCase\GetMapByRegion;
 
 use App\Adventure\Entity\Quest;
+use App\Adventure\Entity\Region;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 final class Map
@@ -12,20 +13,26 @@ final class Map
     /**
      * @var array<int, Quest>
      */
-    #[Groups('read')]
+    #[Groups('map')]
     private array $quests = [];
 
     /**
      * @var array<int, Relation>
      */
-    #[Groups('read')]
+    #[Groups('map')]
     private array $relations = [];
 
-    public function __construct(private ?int $firstQuest)
+    public function __construct(private Region $region, private ?int $firstQuest)
     {
     }
 
-    #[Groups('read')]
+    #[Groups('map')]
+    public function getRegion(): Region
+    {
+        return $this->region;
+    }
+    
+    #[Groups('map')]
     public function getFirstQuest(): ?int
     {
         return $this->firstQuest;

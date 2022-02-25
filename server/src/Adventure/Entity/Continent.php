@@ -24,15 +24,16 @@ class Continent implements Stringable
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private string $name;
 
     #[ManyToOne(targetEntity: World::class, inversedBy: 'continents')]
     #[JoinColumn(nullable: false)]
+    #[Groups('map')]
     private World $world;
 
     /**

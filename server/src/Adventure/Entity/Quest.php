@@ -50,14 +50,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Entity(repositoryClass: QuestRepository::class)]
 class Quest implements Stringable
 {
-    #[Groups('read')]
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
+    #[Groups(['read', 'map'])]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     private string $name;
 
     #[ManyToOne(targetEntity: Region::class, inversedBy: 'quests')]
@@ -74,11 +74,11 @@ class Quest implements Stringable
 
     #[ManyToOne(targetEntity: Course::class)]
     #[JoinColumn(nullable: false)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     private Course $course;
 
     #[ManyToOne(targetEntity: Quiz::class)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     #[ApiProperty(readableLink: false)]
     private ?Quiz $quiz = null;
 
@@ -117,13 +117,13 @@ class Quest implements Stringable
         $this->difficulty = $difficulty;
     }
 
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     public function getDifficultyName(): string
     {
         return $this->difficulty->name;
     }
 
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     public function getTypeName(): string
     {
         return $this->type->name;

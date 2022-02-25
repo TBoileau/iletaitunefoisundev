@@ -13,7 +13,7 @@ import {World} from "../../entities/world";
   templateUrl: './continent.component.html',
   styleUrls: ['./continent.component.scss'],
 })
-export class ContinentComponent implements OnInit{
+export class ContinentComponent implements OnInit {
   continent: Observable<Continent> = new Observable<Continent>();
   world: Observable<World> = new Observable<World>();
 

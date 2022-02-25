@@ -29,7 +29,7 @@ final class GetMapByRegion
             RETURN n1.id as q1, n2.id as q2, type(n) as type
         ', ['region' => $region->getId()]);
 
-        $map = new Map(firstQuest: $region->getFirstQuest()?->getId());
+        $map = new Map(region: $region, firstQuest: $region->getFirstQuest()?->getId());
 
         foreach ($relations as $relation) {
             if (!$map->has((int) $relation['q1'])) {

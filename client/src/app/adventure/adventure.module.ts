@@ -12,6 +12,8 @@ import {WORLD_MANAGER_PROVIDER} from "./managers/world-manager.service";
 import {ContinentComponent} from "./components/continent/continent.component";
 import {RegionComponent} from "./components/region/region.component";
 import {REGION_MANAGER_PROVIDER} from "./managers/region-manager.service";
+import {QuestComponent} from "./components/quest/quest.component";
+import {YoutubePipe} from "./pipe/youtube.pipe";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {REGION_MANAGER_PROVIDER} from "./managers/region-manager.service";
     WorldsComponent,
     WorldComponent,
     ContinentComponent,
-    RegionComponent
+    RegionComponent,
+    QuestComponent,
+    YoutubePipe,
   ],
   imports: [
     HttpClientModule,

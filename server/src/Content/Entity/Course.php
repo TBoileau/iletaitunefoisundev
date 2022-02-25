@@ -18,15 +18,15 @@ class Course extends Node
     #[Url]
     #[Regex(pattern: '/^https:\/\/www\.youtube\.com\/watch\?v=(.+)$/')]
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     private string $youtubeUrl = '';
 
     #[Column(type: Types::TEXT)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     private string $description = '';
 
     #[Column(type: Types::TEXT)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     private string $content = '';
 
     public function getYoutubeUrl(): string

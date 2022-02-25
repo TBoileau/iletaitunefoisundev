@@ -8,13 +8,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 final class Relation
 {
-    #[Groups('read')]
+    #[Groups('map')]
     private int $from;
 
-    #[Groups('read')]
+    #[Groups('map')]
     private int $to;
 
-    #[Groups('read')]
+    #[Groups('map')]
     private RelationType $type;
 
     public function __construct(int $from, int $to, RelationType $type)

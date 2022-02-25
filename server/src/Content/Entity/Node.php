@@ -31,7 +31,7 @@ abstract class Node implements Stringable
     protected ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('read')]
+    #[Groups(['read', 'map'])]
     protected string $title = '';
 
     public function getId(): ?int

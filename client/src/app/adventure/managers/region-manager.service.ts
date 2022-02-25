@@ -2,7 +2,6 @@ import {merge, Observable, Subject} from "rxjs";
 import {Injectable, InjectionToken, Provider} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {shareReplay} from "rxjs/operators";
-import {Region} from "../entities/region";
 import {Map} from "../entities/map";
 
 @Injectable({
@@ -15,10 +14,10 @@ export class RegionManager implements RegionManagerInterface {
   constructor(private http: HttpClient) {
   }
 
-  getMapByRegion(region: Region): Observable<Map> {
+  getMapByRegion(region: number): Observable<Map> {
     if (!this.map) {
       this.map = merge(
-        this.http.get<Map>(`/api/adventure/regions/${region.id}/map`),
+        this.http.get<Map>(`/api/adventure/regions/${region}/map`),
         this.infiniteStream
       ).pipe(shareReplay(1));
     }
@@ -28,7 +27,7 @@ export class RegionManager implements RegionManagerInterface {
 }
 
 export interface RegionManagerInterface {
-  getMapByRegion(region: Region): Observable<Map>;
+  getMapByRegion(region: number): Observable<Map>;
 }
 
 export const REGION_MANAGER_TOKEN = new InjectionToken<RegionManagerInterface>('adventure.manager.quest_manager');

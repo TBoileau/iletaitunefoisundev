@@ -1,19 +1,21 @@
 import {createRoutingFactory, SpectatorRouting} from "@ngneat/spectator";
-import {RegionComponent} from "./region.component";
 import {Observable, of} from "rxjs";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {Quest} from "../../entities/quest";
 import {Region} from "../../entities/region";
 import {Map} from "../../entities/map";
 import {REGION_MANAGER_TOKEN, RegionManager} from "../../managers/region-manager.service";
+import {QuestComponent} from "./quest.component";
+import {YoutubePipe} from "../../pipe/youtube.pipe";
 
-describe('Region component', () => {
-  let spectator: SpectatorRouting<RegionComponent>;
+describe('Quest component', () => {
+  let spectator: SpectatorRouting<QuestComponent>;
 
   const createComponent = createRoutingFactory({
-    component: RegionComponent,
+    component: QuestComponent,
     componentMocks: [RegionManager],
     params: {region: "1"},
+    declarations: [YoutubePipe],
     componentProviders: [
       {
         provide: REGION_MANAGER_TOKEN,
@@ -58,9 +60,9 @@ describe('Region component', () => {
     imports: [HttpClientTestingModule]
   });
 
-  it("should show quests", async () => {
+  it("should show quest and course", async () => {
     spectator = createComponent();
     await spectator.fixture.whenStable();
-    expect(spectator.query('ul > li')).toHaveLength(1);
+    expect(spectator.query('iframe')).toHaveLength(1);
   });
 });

@@ -31,6 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             'controller' => GetMapByRegion::class,
             'output' => Map::class,
             'path' => '/regions/{id}/map',
+            'normalization_context' => ['groups' => ['map']],
         ],
     ],
     normalizationContext: ['groups' => ['read']],
@@ -42,15 +43,16 @@ class Region implements Stringable
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private string $name;
 
     #[ManyToOne(targetEntity: Continent::class, inversedBy: 'regions')]
     #[JoinColumn(nullable: false)]
+    #[Groups('map')]
     private Continent $continent;
 
     /**
