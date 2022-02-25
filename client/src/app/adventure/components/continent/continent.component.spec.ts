@@ -1,5 +1,4 @@
 import {createRoutingFactory, SpectatorRouting} from "@ngneat/spectator";
-import {Location} from "@angular/common";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {WORLD_MANAGER_TOKEN, WorldManager} from "../../managers/world-manager.service";
 import {Observable, of} from "rxjs";
@@ -29,7 +28,7 @@ describe('Continent component', () => {
                     regions: [
                       {
                         id: 1,
-                        name: "Region"
+                        name: "Region",
                       }
                     ]
                   }

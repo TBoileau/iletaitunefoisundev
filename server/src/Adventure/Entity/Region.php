@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Adventure\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Adventure\Doctrine\Repository\RegionRepository;
+use App\Adventure\UseCase\GetMapByRegion\GetMapByRegion;
+use App\Adventure\UseCase\GetMapByRegion\Map;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,8 +23,17 @@ use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    collectionOperations: [],
-    itemOperations: ['get'],
+    collectionOperations: ['get'],
+    itemOperations: [
+        'get',
+        'map' => [
+            'method' => 'GET',
+            'controller' => GetMapByRegion::class,
+            'output' => Map::class,
+            'path' => '/regions/{id}/map',
+            'normalization_context' => ['groups' => ['map']],
+        ],
+    ],
     normalizationContext: ['groups' => ['read']],
     routePrefix: '/adventure',
 )]
@@ -33,28 +43,25 @@ class Region implements Stringable
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private ?int $id = null;
 
     #[Column(type: Types::STRING)]
-    #[Groups('adventure')]
+    #[Groups(['adventure', 'map'])]
     private string $name;
 
     #[ManyToOne(targetEntity: Continent::class, inversedBy: 'regions')]
     #[JoinColumn(nullable: false)]
+    #[Groups('map')]
     private Continent $continent;
 
     /**
      * @var Collection<int, Quest>
      */
-    #[Groups('adventure')]
-    #[ApiProperty(readableLink: false)]
     #[OneToMany(mappedBy: 'region', targetEntity: Quest::class)]
     private Collection $quests;
 
     #[OneToOne(targetEntity: Quest::class)]
-    #[Groups('adventure')]
-    #[ApiProperty(readableLink: false)]
     private ?Quest $firstQuest = null;
 
     public function __construct()

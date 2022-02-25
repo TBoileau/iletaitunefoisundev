@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Route} from "@angular/router";
 import {PlayerGuard} from "../../guard/player.guard";
 import {AuthGuard} from "../../../core/guard/auth.guard";
-import {WORLD_MANAGER_PROVIDER, WORLD_MANAGER_TOKEN, WorldManagerInterface} from "../../managers/world-manager.service";
+import {WORLD_MANAGER_TOKEN, WorldManagerInterface} from "../../managers/world-manager.service";
 import {World} from "../../entities/world";
 import {Observable} from "rxjs";
 
@@ -11,7 +11,7 @@ import {Observable} from "rxjs";
   templateUrl: './worlds.component.html',
   styleUrls: ['./worlds.component.scss'],
 })
-export class WorldsComponent implements OnInit{
+export class WorldsComponent implements OnInit {
   worlds: Observable<Array<World>> = new Observable<Array<World>>();
 
   constructor(@Inject(WORLD_MANAGER_TOKEN) private worldManager: WorldManagerInterface) {

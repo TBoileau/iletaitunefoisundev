@@ -2,18 +2,17 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Route} from "@angular/router";
 import {PlayerGuard} from "../../guard/player.guard";
 import {AuthGuard} from "../../../core/guard/auth.guard";
-import {WORLD_MANAGER_PROVIDER, WORLD_MANAGER_TOKEN, WorldManagerInterface} from "../../managers/world-manager.service";
+import {WORLD_MANAGER_TOKEN, WorldManagerInterface} from "../../managers/world-manager.service";
 import {World} from "../../entities/world";
-import {Continent} from "../../entities/continent";
 import {map} from "rxjs/operators";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-adventure-world',
   templateUrl: './world.component.html',
   styleUrls: ['./world.component.scss'],
 })
-export class WorldComponent implements OnInit{
+export class WorldComponent implements OnInit {
   world: Observable<World> = new Observable<World>();
 
   constructor(private route: ActivatedRoute, @Inject(WORLD_MANAGER_TOKEN) private worldManager: WorldManagerInterface) {

@@ -25,9 +25,7 @@ final class WorldsProviderTest extends TestCase
             ->method('getWorlds')
             ->willReturn([$world]);
 
-        $cache = new NullAdapter();
-
-        $worldsProvider = new WorldsProvider($cache, $worldGateway);
+        $worldsProvider = new WorldsProvider($worldGateway);
 
         self::assertTrue($worldsProvider->supports(World::class));
 

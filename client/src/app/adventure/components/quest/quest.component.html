@@ -1,0 +1,8 @@
+<h1>{{ (map|async)?.region?.name }}</h1>
+<h2>{{ (quest|async)?.name }}</h2>
+<a
+  [routerLink]="['/regions', (map|async)?.region?.id]">Retour</a>
+<br/>
+<iframe [src]="(quest|async)?.course?.youtubeUrl|youtube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0"
+        height="315" title="YouTube video player"
+        width="560"></iframe>

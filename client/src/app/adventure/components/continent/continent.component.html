@@ -2,6 +2,6 @@
 <a [routerLink]="['/worlds', (world|async)?.id]">Retour</a>
 <ul>
   <li *ngFor="let region of (continent|async)?.regions">
-    <a>{{ region.name }}</a>
+    <a [routerLink]="['/regions', region.id]">{{ region.name }}</a>
   </li>
 </ul>
