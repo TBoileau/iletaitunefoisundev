@@ -1,5 +1,8 @@
 FROM nginx:alpine
 
+RUN useradd -d /home/nginx_user -m -s /bin/bash nginx_user
+USER nginx_user
+
 HEALTHCHECK CMD curl --fail http://localhost:8000/ || exit 1
 
 RUN apk update \
