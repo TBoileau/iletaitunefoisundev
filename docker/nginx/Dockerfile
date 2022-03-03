@@ -1,5 +1,7 @@
 FROM nginx:alpine
 
+HEALTHCHECK CMD curl --fail http://localhost:4200/ || exit 1
+
 RUN apk update \
     && apk add git curl vim wget bash acl
 
