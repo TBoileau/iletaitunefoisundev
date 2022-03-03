@@ -14,11 +14,11 @@ volumes:
   neo4j-dev-logs:
   neo4j-dev-plugins:
   node_modules:
-      driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: ./client/node_modules
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./client/node_modules
 
 networks:
   dev:
