@@ -106,6 +106,8 @@ services:
   php:
     build:
       context: docker/php
+      args:
+        - PHP_DOCKER_PORT=${PHP_DOCKER_PORT}
     restart: on-failure
     volumes:
       - ./server:/var/www/server:cached
@@ -119,9 +121,11 @@ services:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
+      args:
+        - NODE_DOCKER_PORT=${NODE_DOCKER_PORT}
     restart: on-failure
     ports:
-      - "4200:4200"
+      - "${NODE_DOCKER_PORT}:4200"
     volumes:
       - ./client:/var/www/client
       - node_modules:/var/www/client/node_modules
