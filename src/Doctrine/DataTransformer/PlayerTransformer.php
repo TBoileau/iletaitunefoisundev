@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace IncentiveFactory\IlEtaitUneFoisUnDev\DataTransformer;
+namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\DataTransformer;
 
 use IncentiveFactory\Domain\Player\Player as DomainPlayer;
-use IncentiveFactory\IlEtaitUneFoisUnDev\Entity\Player as EntityPlayer;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Player as EntityPlayer;
 
 /**
  * @template-implements EntityTransformer<EntityPlayer, DomainPlayer>

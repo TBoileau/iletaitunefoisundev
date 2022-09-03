@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IncentiveFactory\IlEtaitUneFoisUnDev\DataTransformer;
+namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\DataTransformer;
 
 /**
  * @template A
