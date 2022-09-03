@@ -18,7 +18,7 @@ abstract class AbstractController extends SymfonyController
             parent::getSubscribedServices(),
             [
                 CommandBus::class,
-                QueryBus::class
+                QueryBus::class,
             ]
         );
     }
@@ -34,6 +34,7 @@ abstract class AbstractController extends SymfonyController
     {
         /** @var QueryBus $queryBus */
         $queryBus = $this->container->get(QueryBus::class);
+
         return $queryBus->fetch($query);
     }
 }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 
 use IncentiveFactory\Domain\Player\Register\Registration;
-use IncentiveFactory\Domain\Shared\Command\CommandBus;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +22,7 @@ final class PlayerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->execute($registration);
+
             return $this->redirectToRoute('index');
         }
 

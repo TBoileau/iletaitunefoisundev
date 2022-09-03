@@ -25,15 +25,27 @@ abstract class AbstractEnumType extends Type
         if ($value instanceof BackedEnum) {
             return $value->value;
         }
+
         return null;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
-        if (false === enum_exists($this->getEnumsClass(), true)) {
-            throw new \LogicException("This class should be an enum");
+        if (false === enum_exists(static::getEnumsClass(), true)) {
+            throw new \LogicException('This class should be an enum');
         }
 
-        return $this::getEnumsClass()::tryFrom($value);
+        if (null === $value) {
+            return null;
+        }
+
+        if (!(is_int($value) || is_string($value))) {
+            throw new \LogicException('Value should be int or string');
+        }
+
+        return static::getEnumsClass()::tryFrom($value);
     }
 }

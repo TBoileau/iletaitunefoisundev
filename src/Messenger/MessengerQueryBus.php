@@ -23,4 +23,3 @@ final class MessengerQueryBus implements QueryBus
         return $this->handle($query);
     }
 }
-

@@ -11,14 +11,16 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\DataTransformer;
 interface EntityTransformer
 {
     /**
-     * @param D|null $entity
-     * @return A|null
+     * @param D $entity
+     *
+     * @return A
      */
-    public function transform($entity): ?object;
+    public function transform($entity);
 
     /**
-     * @param A|null $entity
-     * @return D|null
+     * @param A $entity
+     *
+     * @return D
      */
-    public function reverseTransform($entity): ?object;
+    public function reverseTransform($entity);
 }

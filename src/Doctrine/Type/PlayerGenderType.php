@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Type;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\Types;
 use IncentiveFactory\Domain\Player\Gender;
 
 final class PlayerGenderType extends AbstractEnumType

@@ -57,6 +57,7 @@ class Player
     public function setId(Ulid $id): Player
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -68,6 +69,7 @@ class Player
     public function setGender(Gender $gender): Player
     {
         $this->gender = $gender;
+
         return $this;
     }
 
@@ -79,6 +81,7 @@ class Player
     public function setEmail(string $email): Player
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -90,6 +93,7 @@ class Player
     public function setNickname(string $nickname): Player
     {
         $this->nickname = $nickname;
+
         return $this;
     }
 
@@ -101,6 +105,7 @@ class Player
     public function setPassword(string $password): Player
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -112,6 +117,7 @@ class Player
     public function setAvatar(?string $avatar): Player
     {
         $this->avatar = $avatar;
+
         return $this;
     }
 
@@ -123,6 +129,7 @@ class Player
     public function setRegistrationToken(?Uuid $registrationToken): Player
     {
         $this->registrationToken = $registrationToken;
+
         return $this;
     }
 
@@ -134,6 +141,7 @@ class Player
     public function setForgottenPasswordToken(?Uuid $forgottenPasswordToken): Player
     {
         $this->forgottenPasswordToken = $forgottenPasswordToken;
+
         return $this;
     }
 
@@ -145,6 +153,7 @@ class Player
     public function setForgottenPasswordExpiredAt(?DateTimeInterface $forgottenPasswordExpiredAt): Player
     {
         $this->forgottenPasswordExpiredAt = $forgottenPasswordExpiredAt;
+
         return $this;
     }
 
@@ -156,6 +165,7 @@ class Player
     public function setRegisteredAt(?DateTimeInterface $registeredAt): Player
     {
         $this->registeredAt = $registeredAt;
+
         return $this;
     }
 }

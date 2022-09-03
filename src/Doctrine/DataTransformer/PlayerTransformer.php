@@ -8,19 +8,15 @@ use IncentiveFactory\Domain\Player\Player as DomainPlayer;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Player as EntityPlayer;
 
 /**
- * @template-implements EntityTransformer<EntityPlayer, DomainPlayer>
+ * @template-implements EntityTransformer<DomainPlayer, EntityPlayer>
  */
 final class PlayerTransformer implements EntityTransformer
 {
     /**
-     * @param EntityPlayer|null $entity
+     * @param EntityPlayer $entity
      */
-    public function transform($entity): ?DomainPlayer
+    public function transform($entity): DomainPlayer
     {
-        if (null === $entity) {
-            return null;
-        }
-
         return DomainPlayer::create(
             $entity->getId(),
             $entity->getEmail(),
@@ -36,14 +32,10 @@ final class PlayerTransformer implements EntityTransformer
     }
 
     /**
-     * @param DomainPlayer|null $entity
+     * @param DomainPlayer $entity
      */
-    public function reverseTransform($entity): ?EntityPlayer
+    public function reverseTransform($entity): EntityPlayer
     {
-        if (null === $entity) {
-            return null;
-        }
-
         return (new EntityPlayer())
             ->setId($entity->id())
             ->setGender($entity->gender())

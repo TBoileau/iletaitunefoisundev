@@ -40,7 +40,7 @@ final class RegistrationType extends AbstractType
             ->add('gender', EnumType::class, [
                 'label' => 'Vous êtes :',
                 'class' => Gender::class,
-                'choice_label'=> static fn (Gender $choice): string => $choice->value
+                'choice_label' => static fn (Gender $choice): string => $choice->value,
             ]);
     }
 
