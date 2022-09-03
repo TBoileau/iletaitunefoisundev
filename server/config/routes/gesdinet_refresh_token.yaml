@@ -1,2 +1,0 @@
-gesdinet_jwt_refresh_token:
-  path: /api/security/token-refresh
