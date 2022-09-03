@@ -1,2 +1,0 @@
-api_login_check:
-  path: /api/security/login
