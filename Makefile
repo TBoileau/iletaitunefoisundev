@@ -14,6 +14,7 @@ install-env:
 	sed -i -e 's/DATABASE_HOST/$(db_host)/' .env.$(env).local
 	sed -i -e 's/DATABASE_NAME/$(db_name)/' .env.$(env).local
 	sed -i -e 's/ENV/$(env)/' .env.$(env).local
+	composer install --optimize-autoloader
 	make prepare env=$(env)
 
 deploy:
