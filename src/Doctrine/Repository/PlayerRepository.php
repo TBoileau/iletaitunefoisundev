@@ -52,8 +52,13 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
 
     public function findOneByEmail(string $email): ?DomainPlayer
     {
-        // TODO: Implement findOneByEmail() method.
-        return null;
+        $playerEntity = $this->findOneBy(['email' => $email]);
+
+        if (null === $playerEntity) {
+            return null;
+        }
+
+        return $this->playerTransformer->transform($playerEntity);
     }
 
     public function findOneByRegistrationToken(string $registrationToken): ?DomainPlayer
