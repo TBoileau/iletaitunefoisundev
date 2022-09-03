@@ -1,9 +1,9 @@
 # Il était une fois un dev - Domaine métier
 
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/incentive-factory/domain/Continuous%20integration/develop?style=for-the-badge)
-![GitHub](https://img.shields.io/github/license/incentive-factory/domain?style=for-the-badge)
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/incentive-factory/domain?style=for-the-badge)
-![GitHub issues](https://img.shields.io/github/issues-raw/incentive-factory/domain?style=for-the-badge)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/incentive-factory/iletaitunefoisundev/Continuous%20integration/develop?style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/incentive-factory/iletaitunefoisundev?style=for-the-badge)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/incentive-factory/iletaitunefoisundev?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues-raw/incentive-factory/iletaitunefoisundev?style=for-the-badge)
 
 ## Présentation
 **Il était une fois un dev** est une plateforme proposant une nouvelle expérience d'apprentissage.
@@ -25,7 +25,7 @@ Pour mettre en forme ce concept, nous nous appuierons sur la **gamification** af
 **Attention, il est inutile de récupérer le projet et de le lancer en local. Le projet n'a pas pour vocation d'être utilisé de cette manière. La première version sera, je l'espère très rapidement en ligne.**
 
 ## Documentation
-La documentation est disponible [ici](https://incentive-factory.github.io/domain/).
+La documentation est disponible [ici](https://incentive-factory.github.io/iletaitunefoisundev/).
 
 ## Contribuer
 Veuillez prendre un moment pour lire le [guide sur la contribution](/CONTRIBUTING.md).

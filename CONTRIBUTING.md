@@ -3,7 +3,7 @@
 Veuillez prendre un moment pour prendre connaissance de ce document afin de suivre facilement le processus de contribution.
 
 ## Issues
-[Issues](https://github.com/incentive-factory/domain/issues) est le canal idéal pour les rapports de bug, les nouvelles fonctionnalités ou pour soumettre une `pull requests`, cependant veillez à bien respecter les restrictions suivantes :
+[Issues](https://github.com/incentive-factory/iletaitunefoisundev/issues) est le canal idéal pour les rapports de bug, les nouvelles fonctionnalités ou pour soumettre une `pull requests`, cependant veillez à bien respecter les restrictions suivantes :
 * N'utiliser par ce canal pour vos demandes d'aide personnelles (utilisez [Stack Overflow](http://stackoverflow.com/)).
 * Il est interdit d'insulter ou d'offenser d'une quelconque manière en commentaire d'un `issue`. Respectez les opinions des autres et rester concentré sur la discussion principale.
 * Quand vous rédigez une issue, sélectionnez le label `En attente`. Un maintainer s'occupera de valider l'issue afin de commencer à la traiter.
