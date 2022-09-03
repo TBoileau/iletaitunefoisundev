@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IncentiveFactory\IlEtaitUneFoisUnDev\Repository;
+namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Repository;
 
 use IncentiveFactory\Domain\Path\Training;
 use IncentiveFactory\Domain\Path\TrainingGateway;
