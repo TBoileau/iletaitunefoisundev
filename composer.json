@@ -86,5 +86,9 @@
             "type": "vcs",
             "url": "https://github.com/incentive-factory/domain.git"
         }
-    ]
+    ],
+    "require-dev": {
+        "symfony/doctrine-messenger": "6.1.*",
+        "symfony/maker-bundle": "^1.45"
+    }
 }
