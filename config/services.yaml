@@ -18,6 +18,10 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: event.bus }
 
+    Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher: ~
+
+    Symfony\Component\PasswordHasher\PasswordHasherInterface: '@Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher'
+
     IncentiveFactory\Domain\:
         resource: '../vendor/incentive-factory/domain/src/'
 
