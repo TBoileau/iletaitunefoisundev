@@ -25,6 +25,15 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <file>src/Kernel.php</file>
+            <file>src/Controller/AbstractController.php</file>
+            <directory suffix=".php">src/Doctrine/DataFixtures</directory>
+        </exclude>
+        <report>
+            <clover outputFile="var/coverage/clover.xml"/>
+            <html outputDirectory="var/coverage/html" lowUpperBound="35" highLowerBound="70"/>
+        </report>
     </coverage>
 
     <listeners>

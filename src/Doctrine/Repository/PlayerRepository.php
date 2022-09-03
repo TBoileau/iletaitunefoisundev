@@ -29,8 +29,19 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
 
     public function hasEmail(string $email, ?DomainPlayer $player = null): bool
     {
-        // TODO: Implement hasEmail() method.
-        return false;
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.email = :email')
+            ->setParameter('email', $email);
+
+        if (null !== $player) {
+            $queryBuilder->andWhere('p.id != :id')->setParameter('id', $player->id());
+        }
+
+        /** @var int $numberOfUsers */
+        $numberOfUsers = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return $numberOfUsers > 0;
     }
 
     public function hasRegistrationToken(string $registrationToken): bool

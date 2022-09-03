@@ -21,7 +21,7 @@ final class PlayerFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for ($i = 1; $i <= 20; ++$i) {
+        for ($i = 1; $i <= 10; ++$i) {
             $manager->persist(
                 (new Player())
                     ->setEmail(sprintf('player+%d@email.com', $i))
