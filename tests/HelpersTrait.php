@@ -30,6 +30,11 @@ trait HelpersTrait
         self::assertEmailHtmlBodyContains($messages[0], $needle);
     }
 
+    public function assertFlashBagContains(string $type, string $message): void
+    {
+        self::assertContains($message, self::getClient()->getRequest()->getSession()->getFlashBag()->get($type));
+    }
+
     public static function assertIsAuthenticated(bool $isAuthenticated): void
     {
         /** @var Profile $profile */

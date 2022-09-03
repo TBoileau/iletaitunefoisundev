@@ -46,8 +46,7 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
 
     public function hasRegistrationToken(string $registrationToken): bool
     {
-        // TODO: Implement hasRegistrationToken() method.
-        return false;
+        return $this->count(['registrationToken' => $registrationToken]) > 0;
     }
 
     public function findOneByEmail(string $email): ?DomainPlayer
@@ -63,8 +62,13 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
 
     public function findOneByRegistrationToken(string $registrationToken): ?DomainPlayer
     {
-        // TODO: Implement findOneByRegistrationToken() method.
-        return null;
+        $playerEntity = $this->findOneBy(['registrationToken' => $registrationToken]);
+
+        if (null === $playerEntity) {
+            return null;
+        }
+
+        return $this->playerTransformer->transform($playerEntity);
     }
 
     public function findOneByForgottenPasswordToken(string $forgottenPasswordToken): ?DomainPlayer
