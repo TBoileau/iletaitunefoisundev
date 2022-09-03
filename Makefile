@@ -1,10 +1,9 @@
-.PHONY: tests install fixtures database prepare tests phpstan composer-valid doctrine fix analyse
+.PHONY: tests install fixtures database prepare migrate tests phpstan composer-valid doctrine fix analyse
 
 DISABLE_XDEBUG=XDEBUG_MODE=off
 
 install:
 	composer install
-	npm install
 	make install-env env=dev db_user=$(db_user) db_password=$(db_password) db_name=$(db_name) db_host=$(db_host)
 	make install-env env=test db_user=$(db_user) db_password=$(db_password) db_name=$(db_name) db_host=$(db_host)
 
@@ -19,9 +18,6 @@ install-env:
 
 deploy:
 	composer install
-	npm install
-	npm run build
-	$(DISABLE_XDEBUG) php bin/console cache:clear
 
 fixtures:
 	$(DISABLE_XDEBUG) php bin/console doctrine:fixtures:load -n --env=$(env)
@@ -29,11 +25,12 @@ fixtures:
 database:
 	$(DISABLE_XDEBUG) php bin/console doctrine:database:drop --if-exists --force --env=$(env)
 	$(DISABLE_XDEBUG) php bin/console doctrine:database:create --env=$(env)
-	$(DISABLE_XDEBUG) php bin/console doctrine:query:sql "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" --env=$(env)
-	$(DISABLE_XDEBUG) php bin/console doctrine:schema:update --force --env=$(env)
+	$(DISABLE_XDEBUG) php bin/console dbal:run-sql "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));" --env=$(env)
+	$(DISABLE_XDEBUG) php bin/console doctrine:migrations:migrate -n --env=$(env)
 
-update:
-	$(DISABLE_XDEBUG) php bin/console doctrine:schema:update --force --env=$(env)
+migrate:
+	$(DISABLE_XDEBUG) php bin/console make:migration
+	$(DISABLE_XDEBUG) php bin/console doctrine:migrations:migrate -n --env=$(env)
 
 prepare:
 	make database env=$(env)
@@ -65,5 +62,7 @@ yaml:
 
 container:
 	$(DISABLE_XDEBUG) php bin/console lint:container
+
+analyse: twig yaml composer-valid container doctrine phpstan
 
 qa: fix twig yaml composer-valid container doctrine phpstan
