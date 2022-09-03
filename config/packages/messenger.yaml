@@ -22,4 +22,22 @@ framework:
             sync: 'sync://'
 
         routing:
+            IncentiveFactory\Domain\Shared\Command\Command: sync
+            IncentiveFactory\Domain\Shared\Query\Query: sync
+            IncentiveFactory\Domain\Shared\Event\Event: async
 
+when@dev:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                IncentiveFactory\Domain\Shared\Event\Event: sync
+
+when@test:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                IncentiveFactory\Domain\Shared\Event\Event: sync
