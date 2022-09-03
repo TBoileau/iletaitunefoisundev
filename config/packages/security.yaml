@@ -11,6 +11,7 @@ security:
         main:
             lazy: true
             provider: user_provider
+            user_checker: IncentiveFactory\IlEtaitUneFoisUnDev\Security\UserChecker\UserChecker
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 604800
