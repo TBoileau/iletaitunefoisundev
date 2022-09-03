@@ -1,24 +1,37 @@
-# This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
 
 services:
-    # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        autowire: true
+        autoconfigure: true
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
+    _instanceof:
+        IncentiveFactory\Domain\Shared\Command\CommandHandler:
+            tags:
+                - { name: messenger.message_handler, bus: command.bus }
+
+        IncentiveFactory\Domain\Shared\Query\QueryHandler:
+            tags:
+                - { name: messenger.message_handler, bus: query.bus }
+
+        IncentiveFactory\Domain\Shared\Event\EventListener:
+            tags:
+                - { name: messenger.message_handler, bus: event.bus }
+
+        IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Type\AbstractEnumType:
+            tags:
+                - { name: 'app.doctrine_enum_type' }
+
+    Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher: ~
+
+    Symfony\Component\PasswordHasher\PasswordHasherInterface: '@Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher'
+
+    IncentiveFactory\IlEtaitUneFoisUnDev\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Doctrine/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    IncentiveFactory\Domain\:
+        resource: '../vendor/incentive-factory/domain/src/'

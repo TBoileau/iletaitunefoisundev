@@ -1,0 +1,43 @@
+framework:
+    messenger:
+        default_bus: command.bus
+
+        buses:
+            command.bus:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+
+            query.bus:
+                middleware:
+                    - validation
+
+            event.bus:
+                default_middleware: allow_no_handlers
+                middleware:
+                    - validation
+
+        transports:
+            async: "%env(MESSENGER_TRANSPORT_DSN)%"
+            sync: 'sync://'
+
+        routing:
+            IncentiveFactory\Domain\Shared\Command\Command: sync
+            IncentiveFactory\Domain\Shared\Query\Query: sync
+            IncentiveFactory\Domain\Shared\Event\Event: async
+
+when@dev:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                IncentiveFactory\Domain\Shared\Event\Event: sync
+
+when@test:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                IncentiveFactory\Domain\Shared\Event\Event: sync

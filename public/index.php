@@ -1,6 +1,6 @@
 <?php
 
-use App\Kernel;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
