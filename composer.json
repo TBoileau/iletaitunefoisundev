@@ -1,6 +1,8 @@
 {
+    "name": "incentive-factory/iletaitunefoisundev",
+    "description": "La formation dont vous êtes le héros !",
     "type": "project",
-    "license": "proprietary",
+    "license": "GPL-3.0-or-later",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
