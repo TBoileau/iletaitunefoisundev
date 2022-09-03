@@ -24,7 +24,8 @@ framework:
         routing:
             IncentiveFactory\Domain\Shared\Command\Command: sync
             IncentiveFactory\Domain\Shared\Query\Query: sync
-            IncentiveFactory\Domain\Shared\Event\Event: async
+            IncentiveFactory\Domain\Shared\Event\Event: sync
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
 
 when@dev:
     framework:
@@ -33,6 +34,7 @@ when@dev:
                 IncentiveFactory\Domain\Shared\Command\Command: sync
                 IncentiveFactory\Domain\Shared\Query\Query: sync
                 IncentiveFactory\Domain\Shared\Event\Event: sync
+                Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
 
 when@test:
     framework:
@@ -41,3 +43,4 @@ when@test:
                 IncentiveFactory\Domain\Shared\Command\Command: sync
                 IncentiveFactory\Domain\Shared\Query\Query: sync
                 IncentiveFactory\Domain\Shared\Event\Event: sync
+                Symfony\Component\Mailer\Messenger\SendEmailMessage: sync

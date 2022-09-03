@@ -32,11 +32,16 @@ final class PlayerTransformer implements EntityTransformer
     }
 
     /**
-     * @param DomainPlayer $entity
+     * @param DomainPlayer  $entity
+     * @param ?EntityPlayer $target
      */
-    public function reverseTransform($entity): EntityPlayer
+    public function reverseTransform($entity, $target = null): EntityPlayer
     {
-        return (new EntityPlayer())
+        if (null === $target) {
+            $target = new EntityPlayer();
+        }
+
+        return $target
             ->setId($entity->id())
             ->setGender($entity->gender())
             ->setEmail($entity->email())

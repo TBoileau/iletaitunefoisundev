@@ -5,28 +5,32 @@ declare(strict_types=1);
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Tests\Security;
 
 use Generator;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Tests\HelpersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 final class LoginTest extends WebTestCase
 {
+    use HelpersTrait;
+
     public function testShouldLoggedUserAndRedirectToIndex(): void
     {
         $client = static::createClient();
         $client->request(Request::METHOD_GET, '/login');
-
-        $client->enableProfiler();
-
         $client->submitForm('Se connecter', self::createFormData());
 
-        /** @var Profile $profile */
-        $profile = $client->getProfile();
-        $collector = $profile->getCollector('security');
-        self::assertInstanceOf(SecurityDataCollector::class, $collector);
-        self::assertTrue($collector->isAuthenticated());
         self::assertResponseRedirects('/');
+        self::assertIsAuthenticated(true);
+    }
+
+    public function testShouldNotLoggedAnUserThatNotValidateItsRegistrationAndRedirectToIndex(): void
+    {
+        $client = static::createClient();
+        $client->request(Request::METHOD_GET, '/login');
+        $client->submitForm('Se connecter', self::createFormData(email: 'player+11@email.com'));
+
+        self::assertIsAuthenticated(false);
+        self::assertResponseRedirects('/login');
     }
 
     /**
@@ -38,16 +42,9 @@ final class LoginTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request(Request::METHOD_GET, '/login');
-
-        $client->enableProfiler();
-
         $client->submitForm('Se connecter', $formData);
 
-        /** @var Profile $profile */
-        $profile = $client->getProfile();
-        $collector = $profile->getCollector('security');
-        self::assertInstanceOf(SecurityDataCollector::class, $collector);
-        self::assertFalse($collector->isAuthenticated());
+        self::assertIsAuthenticated(false);
         self::assertResponseRedirects('/login');
     }
 

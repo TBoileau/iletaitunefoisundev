@@ -18,6 +18,7 @@
         "symfony/flex": "^2",
         "symfony/form": "6.1.*",
         "symfony/framework-bundle": "6.1.*",
+        "symfony/mailer": "6.1.*",
         "symfony/messenger": "6.1.*",
         "symfony/password-hasher": "6.1.*",
         "symfony/proxy-manager-bridge": "6.1.*",
@@ -50,7 +51,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IncentiveFactory\\IlEtaitUneFoisUnDev\\": "tests/"
+            "IncentiveFactory\\IlEtaitUneFoisUnDev\\Tests\\": "tests/"
         }
     },
     "replace": {

@@ -18,9 +18,10 @@ interface EntityTransformer
     public function transform($entity);
 
     /**
-     * @param A $entity
+     * @param A      $entity
+     * @param D|null $target
      *
      * @return D
      */
-    public function reverseTransform($entity);
+    public function reverseTransform($entity, $target = null);
 }
