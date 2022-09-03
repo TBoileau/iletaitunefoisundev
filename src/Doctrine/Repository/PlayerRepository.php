@@ -75,6 +75,8 @@ final class PlayerRepository extends ServiceEntityRepository implements PlayerGa
 
     public function update(DomainPlayer $player): void
     {
-        // TODO: Implement update() method.
+        $playerEntity = $this->find($player->id());
+        $this->playerTransformer->reverseTransform($player, $playerEntity);
+        $this->_em->flush();
     }
 }

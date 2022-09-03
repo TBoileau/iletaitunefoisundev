@@ -18,3 +18,5 @@ parameters:
     paths:
         - src
         - tests
+    excludePaths:
+        - tests/HelpersTrait.php

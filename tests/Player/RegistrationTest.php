@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Generator;
 use IncentiveFactory\Domain\Player\Gender;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Player;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Tests\HelpersTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
 final class RegistrationTest extends WebTestCase
 {
+    use HelpersTrait;
+
     public function testShouldInsertPlayerInDbAndRedirectToIndex(): void
     {
         $client = static::createClient();
@@ -39,9 +42,11 @@ final class RegistrationTest extends WebTestCase
         self::assertSame(Gender::Female, $player->getGender());
         self::assertNull($player->getAvatar());
         self::assertNull($player->getRegisteredAt());
-        self::assertNull($player->getRegistrationToken());
+        self::assertNotNull($player->getRegistrationToken());
         self::assertNull($player->getForgottenPasswordExpiredAt());
         self::assertNull($player->getForgottenPasswordToken());
+        self::assertEmailCount(1);
+        self::assertEmailContains((string) $player->getRegistrationToken());
     }
 
     /**

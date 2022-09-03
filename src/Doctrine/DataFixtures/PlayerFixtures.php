@@ -12,7 +12,6 @@ use IncentiveFactory\Domain\Shared\Uid\UlidGeneratorInterface;
 use IncentiveFactory\Domain\Shared\Uid\UuidGeneratorInterface;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Player;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
-use Symfony\Component\Uid\Uuid;
 
 final class PlayerFixtures extends Fixture
 {

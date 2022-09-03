@@ -6,6 +6,7 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 
 use IncentiveFactory\Domain\Player\Register\Registration;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Form\RegistrationType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,5 +28,11 @@ final class PlayerController extends AbstractController
         }
 
         return $this->renderForm('player/register.html.twig', ['form' => $form]);
+    }
+
+    #[Route('/valid-registration/{registrationToken}', name: 'valid_registration', methods: [Request::METHOD_GET])]
+    public function validRegistration(): RedirectResponse
+    {
+        return $this->redirectToRoute('security_login');
     }
 }
