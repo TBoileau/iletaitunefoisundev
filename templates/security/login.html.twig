@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Connexion</h1>
+    {% if error %}
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    {% endif %}
+    <form method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="{{ last_username }}" />
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" />
+        </div>
+        <div>
+            <label for="remember_me">Se souvenir de moi ?</label>
+            <input type="checkbox" id="remember_me" name="remember_me" />
+        </div>
+        <button>Se connecter</button>
+    </form>
+{% endblock %}
