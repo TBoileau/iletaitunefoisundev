@@ -24,7 +24,10 @@ framework:
         routing:
             IncentiveFactory\Domain\Shared\Command\Command: sync
             IncentiveFactory\Domain\Shared\Query\Query: sync
-            IncentiveFactory\Domain\Shared\Event\Event: async
+            IncentiveFactory\Domain\Shared\Event\Event: sync
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+            Symfony\Component\Notifier\Message\ChatMessage: async
+            Symfony\Component\Notifier\Message\SmsMessage: async
 
 when@dev:
     framework:

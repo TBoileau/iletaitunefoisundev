@@ -24,6 +24,7 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>
+            <directory suffix=".php">vendor/incentive-factory/domain/src</directory>
         </include>
         <exclude>
             <file>src/Kernel.php</file>

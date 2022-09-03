@@ -18,7 +18,9 @@
         "symfony/flex": "^2",
         "symfony/form": "6.1.*",
         "symfony/framework-bundle": "6.1.*",
+        "symfony/mailer": "6.1.*",
         "symfony/messenger": "6.1.*",
+        "symfony/notifier": "6.1.*",
         "symfony/password-hasher": "6.1.*",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
@@ -27,7 +29,9 @@
         "symfony/twig-bundle": "6.1.*",
         "symfony/uid": "6.1.*",
         "symfony/yaml": "6.1.*",
+        "twig/cssinliner-extra": "^3.4",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/inky-extra": "^3.4",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {
@@ -50,7 +54,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "IncentiveFactory\\IlEtaitUneFoisUnDev\\": "tests/"
+            "IncentiveFactory\\IlEtaitUneFoisUnDev\\Tests\\": "tests/"
         }
     },
     "replace": {
