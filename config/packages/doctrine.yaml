@@ -10,17 +10,11 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            IncentiveFactory\IlEtaitUneFoisUnDev:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'IncentiveFactory\IlEtaitUneFoisUnDev\Entity'
+                dir: '%kernel.project_dir%/src/Doctrine/Entity'
+                prefix: 'IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity'
                 alias: IncentiveFactory\IlEtaitUneFoisUnDev
-
-when@test:
-    doctrine:
-        dbal:
-            # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:
     doctrine:

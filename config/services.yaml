@@ -18,16 +18,20 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: event.bus }
 
+        IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Type\AbstractEnumType:
+            tags:
+                - { name: 'app.doctrine_enum_type' }
+
     Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher: ~
 
     Symfony\Component\PasswordHasher\PasswordHasherInterface: '@Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher'
-
-    IncentiveFactory\Domain\:
-        resource: '../vendor/incentive-factory/domain/src/'
 
     IncentiveFactory\IlEtaitUneFoisUnDev\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Doctrine/Entity/'
             - '../src/Kernel.php'
+
+    IncentiveFactory\Domain\:
+        resource: '../vendor/incentive-factory/domain/src/'
