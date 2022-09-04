@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace IncentiveFactory\IlEtaitUneFoisUnDev\EventListener;
+namespace IncentiveFactory\IlEtaitUneFoisUnDev\EventDispatcher\EventListener;
 
 use IncentiveFactory\Domain\Player\Register\NewRegistration;
-use IncentiveFactory\Domain\Shared\Event\EventListener;
+use IncentiveFactory\Domain\Shared\EventDispatcher\EventListener;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Mailer\ValidRegistrationEmail;
 use Symfony\Component\Mailer\MailerInterface;
 

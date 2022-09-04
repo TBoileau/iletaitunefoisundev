@@ -1527,20 +1527,21 @@
         },
         {
             "name": "incentive-factory/domain",
-            "version": "0.1.7",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/incentive-factory/domain.git",
-                "reference": "a6f546f0a734e5f716125f12a422dec31fa64255"
+                "reference": "0ae629bc424993324258975ba52b3292f6f109d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/incentive-factory/domain/zipball/a6f546f0a734e5f716125f12a422dec31fa64255",
-                "reference": "a6f546f0a734e5f716125f12a422dec31fa64255",
+                "url": "https://api.github.com/repos/incentive-factory/domain/zipball/0ae629bc424993324258975ba52b3292f6f109d4",
+                "reference": "0ae629bc424993324258975ba52b3292f6f109d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.1.0",
+                "psr/event-dispatcher": "^1.0",
                 "symfony/password-hasher": "^6.1",
                 "symfony/uid": "^6.1",
                 "symfony/validator": "^6.1"
@@ -1583,10 +1584,10 @@
             ],
             "description": "Domaine du projet Il était une fois un dev",
             "support": {
-                "source": "https://github.com/incentive-factory/domain/tree/0.1.7",
+                "source": "https://github.com/incentive-factory/domain/tree/0.2.1",
                 "issues": "https://github.com/incentive-factory/domain/issues"
             },
-            "time": "2022-09-04T11:26:10+00:00"
+            "time": "2022-09-04T15:57:50+00:00"
         },
         {
             "name": "laminas/laminas-code",

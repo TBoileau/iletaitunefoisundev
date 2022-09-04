@@ -12,11 +12,6 @@ framework:
                 middleware:
                     - validation
 
-            event.bus:
-                default_middleware: allow_no_handlers
-                middleware:
-                    - validation
-
         transports:
             async: "%env(MESSENGER_TRANSPORT_DSN)%"
             sync: 'sync://'
@@ -24,7 +19,6 @@ framework:
         routing:
             IncentiveFactory\Domain\Shared\Command\Command: sync
             IncentiveFactory\Domain\Shared\Query\Query: sync
-            IncentiveFactory\Domain\Shared\Event\Event: sync
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
 
 when@dev:
@@ -33,7 +27,6 @@ when@dev:
             routing:
                 IncentiveFactory\Domain\Shared\Command\Command: sync
                 IncentiveFactory\Domain\Shared\Query\Query: sync
-                IncentiveFactory\Domain\Shared\Event\Event: sync
                 Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
 
 when@test:
@@ -42,5 +35,4 @@ when@test:
             routing:
                 IncentiveFactory\Domain\Shared\Command\Command: sync
                 IncentiveFactory\Domain\Shared\Query\Query: sync
-                IncentiveFactory\Domain\Shared\Event\Event: sync
                 Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
