@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 
 use IncentiveFactory\Domain\Path\BeginTraining\BeginningOfTraining;
+use IncentiveFactory\Domain\Path\Course;
+use IncentiveFactory\Domain\Path\GetCoursesByTraining\TrainingCourses;
 use IncentiveFactory\Domain\Path\GetTrainingBySlug\TrainingSlug;
 use IncentiveFactory\Domain\Path\GetTranings\ListOfTrainings;
 use IncentiveFactory\Domain\Path\Training;
@@ -38,8 +40,12 @@ final class PathController extends AbstractController
             throw $this->createNotFoundException('Training not found');
         }
 
+        /** @var array<array-key, Course> $courses */
+        $courses = $this->fetch(new TrainingCourses($training));
+
         return $this->render('path/training.html.twig', [
             'training' => $training,
+            'courses' => $courses,
         ]);
     }
 

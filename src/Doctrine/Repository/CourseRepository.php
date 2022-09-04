@@ -4,13 +4,25 @@ declare(strict_types=1);
 
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Repository;
 
-use IncentiveFactory\Domain\Path\Course;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use IncentiveFactory\Domain\Path\Course as DomainCourse;
 use IncentiveFactory\Domain\Path\CourseGateway;
 use IncentiveFactory\Domain\Path\Training;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\DataTransformer\CourseTransformer;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Course as EntityCourse;
 
-final class CourseRepository implements CourseGateway
+/**
+ * @template-extends ServiceEntityRepository<EntityCourse>
+ */
+final class CourseRepository extends ServiceEntityRepository implements CourseGateway
 {
-    public function getCourseBySlug(string $slug): ?Course
+    public function __construct(ManagerRegistry $registry, private CourseTransformer $courseTransformer)
+    {
+        parent::__construct($registry, EntityCourse::class);
+    }
+
+    public function getCourseBySlug(string $slug): ?DomainCourse
     {
         // TODO: Implement findOneBySlug() method.
         return null;
@@ -24,7 +36,16 @@ final class CourseRepository implements CourseGateway
 
     public function getCoursesByTraining(Training $training): array
     {
-        // TODO: Implement getCoursesByTraining() method.
-        return [];
+        /** @var array<array-key, EntityCourse> $courseEntities */
+        $courseEntities = $this->createQueryBuilder('c')
+            ->addSelect('t')
+            ->join('c.training', 't')
+            ->where('t.id = :id')
+            ->setParameter('id', $training->id()->toBinary())
+            ->orderBy('c.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return array_map([$this->courseTransformer, 'transform'], $courseEntities);
     }
 }

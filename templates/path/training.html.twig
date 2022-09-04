@@ -5,5 +5,10 @@
     {% if is_granted('begin', training) %}
         <a href="{{ path('path_begin', {slug: training.slug}) }}">Commencer</a>
     {% endif %}
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.name }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 

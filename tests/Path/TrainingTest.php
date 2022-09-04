@@ -24,9 +24,10 @@ final class TrainingTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request(Request::METHOD_GET, '/paths/trainings/training+1');
+        $crawler = $client->request(Request::METHOD_GET, '/paths/trainings/training+1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertSelectorTextContains('h1', 'Training 1');
+        self::assertCount(10, $crawler->filter('ul li'));
     }
 
     public function testShouldRaiseA404(): void
