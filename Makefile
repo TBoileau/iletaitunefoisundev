@@ -3,7 +3,6 @@
 DISABLE_XDEBUG=XDEBUG_MODE=off
 
 install:
-	composer install
 	make install-env env=dev db_user=$(db_user) db_password=$(db_password) db_name=$(db_name) db_host=$(db_host)
 	make install-env env=test db_user=$(db_user) db_password=$(db_password) db_name=$(db_name) db_host=$(db_host)
 
@@ -15,10 +14,13 @@ install-env:
 	sed -i -e 's/DATABASE_NAME/$(db_name)/' .env.$(env).local
 	sed -i -e 's/ENV/$(env)/' .env.$(env).local
 	composer install --optimize-autoloader
+	npm install
+	npm run dev
 	make prepare env=$(env)
 
 deploy:
 	composer install
+	npm install
 
 fixtures:
 	$(DISABLE_XDEBUG) php bin/console doctrine:fixtures:load -n --env=$(env)

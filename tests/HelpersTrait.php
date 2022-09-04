@@ -8,6 +8,7 @@ use ReflectionMethod;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use Symfony\Component\Mailer\DataCollector\MessageDataCollector;
 
@@ -18,6 +19,28 @@ trait HelpersTrait
         $method = new ReflectionMethod(WebTestCase::class, 'getClient');
 
         return $method->invoke(null);
+    }
+
+    public function fakeImage(): UploadedFile
+    {
+        return new UploadedFile(
+            __DIR__.'/../public/uploads/image.png',
+            'image.png',
+            'image/png',
+            null,
+            true
+        );
+    }
+
+    public function fakeFile(): UploadedFile
+    {
+        return new UploadedFile(
+            __DIR__.'/../public/uploads/file.txt',
+            'file.txt',
+            'text/plain',
+            null,
+            true
+        );
     }
 
     public function assertEmailContains(string $needle): void

@@ -1,9 +1,12 @@
 parameters:
+    uploads_directory: '%kernel.project_dir%/public/uploads'
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
+        bind:
+            string $uploadsDir: '%uploads_directory%'
 
     _instanceof:
         IncentiveFactory\Domain\Shared\Command\CommandHandler:
