@@ -19,4 +19,5 @@ Ce projet respecte [Semantic Versioning](https://semver.org/) et les [recommanda
 * Afficher les cours d'une formation [#322](https://github.com/incentive-factory/iletaitunefoisundev/issues/322)
 * Lister les parcours d'un joueur [#295](https://github.com/incentive-factory/iletaitunefoisundev/issues/295)
 * Afficher un parcours [#318](https://github.com/incentive-factory/iletaitunefoisundev/issues/318)
+* Afficher un cours [#292](https://github.com/incentive-factory/iletaitunefoisundev/issues/292)
 
