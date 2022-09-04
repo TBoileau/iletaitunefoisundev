@@ -17,4 +17,5 @@ Ce projet respecte [Semantic Versioning](https://semver.org/) et les [recommanda
 * Vérifier si l'utilisateur à valider son inscription [#310](https://github.com/incentive-factory/iletaitunefoisundev/issues/310)
 * Gérer l'erreur dans le cas ou le fetch renvoie null [#319](https://github.com/incentive-factory/iletaitunefoisundev/issues/319)
 * Afficher les cours d'une formation [#322](https://github.com/incentive-factory/iletaitunefoisundev/issues/322)
+* Lister les parcours d'un joueur [#295](https://github.com/incentive-factory/iletaitunefoisundev/issues/295)
 

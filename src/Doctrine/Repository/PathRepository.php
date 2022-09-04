@@ -39,8 +39,8 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
             ->join('p.training', 'training')
             ->where('player.id = :player_id')
             ->andWhere('training.id = :training_id')
-            ->setParameter('player_id', $player->id())
-            ->setParameter('training_id', $training->id());
+            ->setParameter('player_id', $player->id()->toBinary())
+            ->setParameter('training_id', $training->id()->toBinary());
 
         /** @var int $numberOfPaths */
         $numberOfPaths = $queryBuilder->getQuery()->getSingleScalarResult();
@@ -50,8 +50,19 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
 
     public function getPathsByPlayer(PlayerInterface $player): array
     {
-        // TODO: Implement findByPlayer() method.
-        return [];
+        /** @var array<array-key, EntityPath> $pathEntities */
+        $pathEntities = $this->createQueryBuilder('p')
+            ->addSelect('player')
+            ->addSelect('training')
+            ->join('p.player', 'player')
+            ->join('p.training', 'training')
+            ->where('player.id = :player_id')
+            ->setParameter('player_id', $player->id()->toBinary())
+            ->orderBy('p.beganAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return array_map([$this->pathTransformer, 'transform'], $pathEntities);
     }
 
     public function complete(DomainPath $path): void
