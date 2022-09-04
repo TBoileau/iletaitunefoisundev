@@ -29,6 +29,7 @@
         <exclude>
             <file>src/Kernel.php</file>
             <file>src/Controller/AbstractController.php</file>
+            <directory suffix=".php">src/DependencyInjection</directory>
             <directory suffix=".php">src/Doctrine/DataFixtures</directory>
         </exclude>
         <report>
