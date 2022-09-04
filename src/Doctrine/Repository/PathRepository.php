@@ -12,6 +12,7 @@ use IncentiveFactory\Domain\Path\Training;
 use IncentiveFactory\Domain\Shared\Entity\PlayerInterface;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\DataTransformer\PathTransformer;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Path as EntityPath;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @extends ServiceEntityRepository<EntityPath>
@@ -72,7 +73,21 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
 
     public function getPathById(string $id): ?DomainPath
     {
-        // TODO: Implement getPathById() method.
-        return null;
+        /** @var ?EntityPath $pathEntity */
+        $pathEntity = $this->createQueryBuilder('p')
+            ->addSelect('player')
+            ->addSelect('training')
+            ->join('p.player', 'player')
+            ->join('p.training', 'training')
+            ->where('p.id = :id')
+            ->setParameter('id', Ulid::fromString($id)->toBinary())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $pathEntity) {
+            return null;
+        }
+
+        return $this->pathTransformer->transform($pathEntity);
     }
 }
