@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 
+use IncentiveFactory\Domain\Path\BeginTraining\BeginningOfTraining;
 use IncentiveFactory\Domain\Path\GetTrainingBySlug\TrainingSlug;
 use IncentiveFactory\Domain\Path\GetTranings\ListOfTrainings;
 use IncentiveFactory\Domain\Path\Training;
+use IncentiveFactory\Domain\Player\Player;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,5 +37,20 @@ final class PathController extends AbstractController
         return $this->render('path/training.html.twig', [
             'training' => $training,
         ]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/trainings/{slug}/begin', name: 'begin', methods: [Request::METHOD_GET])]
+    public function begin(string $slug): Response
+    {
+        /** @var Training $training */
+        $training = $this->fetch(new TrainingSlug($slug));
+
+        /** @var Player $player */
+        $player = $this->getPlayer();
+
+        $this->execute(new BeginningOfTraining($player, $training));
+
+        return $this->redirectToRoute('path_training', ['slug' => $slug]);
     }
 }
