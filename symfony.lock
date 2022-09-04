@@ -239,6 +239,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/ux-dropzone": {
+        "version": "v2.4.0"
+    },
     "symfony/validator": {
         "version": "6.1",
         "recipe": {

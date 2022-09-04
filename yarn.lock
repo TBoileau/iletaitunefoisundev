@@ -991,6 +991,9 @@
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+"@symfony/ux-dropzone@file:vendor/symfony/ux-dropzone/Resources/assets":
+  version "1.1.0"
+
 "@symfony/webpack-encore@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-3.1.0.tgz#908f5753d85bd631d7027da9d908b3cc836156d6"
