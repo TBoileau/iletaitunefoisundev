@@ -32,6 +32,9 @@ class Path
     #[Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeInterface $beganAt;
 
+    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeInterface $completedAt = null;
+
     public function getId(): Ulid
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Path
     public function setBeganAt(DateTimeInterface $beganAt): Path
     {
         $this->beganAt = $beganAt;
+
+        return $this;
+    }
+
+    public function getCompletedAt(): ?DateTimeInterface
+    {
+        return $this->completedAt;
+    }
+
+    public function setCompletedAt(?DateTimeInterface $completedAt): Path
+    {
+        $this->completedAt = $completedAt;
 
         return $this;
     }

@@ -2,5 +2,20 @@
 
 {% block body %}
     <h1>{{ path.training.name }}</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                {% if is_granted('begin', course) %}
+                    <a href="{{ path('path_course_begin', {id: path.id, slug: course.slug}) }}">
+                        {{ course.name }}
+                    </a>
+                {% else %}
+                    <a href="{{ path('path_course_log', {id: path.id, slug: course.slug}) }}">
+                        {{ course.name }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 

@@ -1,0 +1,74 @@
+<?php
+
+declare(strict_types=1);
+
+namespace IncentiveFactory\IlEtaitUneFoisUnDev\Tests\Path;
+
+use Doctrine\ORM\EntityManagerInterface;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Course;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\CourseLog;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Path;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Entity\Training;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Security\User;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+
+final class CompletePathTest extends WebTestCase
+{
+    public function testShouldCompletePath(): void
+    {
+        $client = static::createClient();
+
+        /** @var UserProviderInterface $userProvider */
+        $userProvider = $client->getContainer()->get(UserProviderInterface::class);
+
+        /** @var User $user */
+        $user = $userProvider->loadUserByIdentifier('player+1@email.com');
+
+        $client->loginUser($user);
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get(EntityManagerInterface::class);
+
+        /** @var Training $training */
+        $training = $entityManager->getRepository(Training::class)->findOneBy(['slug' => 'training+1']);
+
+        /** @var Path $path */
+        $path = $entityManager->getRepository(Path::class)->findOneBy([
+            'player' => $user->player->id()->toBinary(),
+            'training' => $training,
+        ]);
+
+        /** @var array<array-key, Course> $courses */
+        $courses = $entityManager->getRepository(Course::class)->findBy(['training' => $training]);
+
+        foreach ($courses as $course) {
+            /** @var ?CourseLog $courseLog */
+            $courseLog = $entityManager->getRepository(CourseLog::class)->findOneBy([
+                'path' => $path,
+                'course' => $course,
+            ]);
+
+            if (null === $courseLog) {
+                $client->request(Request::METHOD_GET, sprintf('/paths/%s/courses/%s/begin', $path->getId(), $course->getSlug()));
+
+                /** @var CourseLog $courseLog */
+                $courseLog = $entityManager->getRepository(CourseLog::class)->findOneBy([
+                    'path' => $path,
+                    'course' => $course,
+                ]);
+            }
+
+            $client->request(Request::METHOD_GET, sprintf('/paths/course-logs/%s/complete', $courseLog->getId()));
+        }
+
+        /** @var Path $path */
+        $path = $entityManager->getRepository(Path::class)->findOneBy([
+            'player' => $user->player->id()->toBinary(),
+            'training' => $training,
+        ]);
+
+        self::assertNotNull($path->getCompletedAt());
+    }
+}
