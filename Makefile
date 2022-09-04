@@ -15,6 +15,7 @@ install-env:
 	sed -i -e 's/ENV/$(env)/' .env.$(env).local
 	composer install --optimize-autoloader
 	npm install
+	npm run dev
 	make prepare env=$(env)
 
 deploy:
