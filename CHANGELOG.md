@@ -4,7 +4,7 @@ Le `changelog` liste toutes les nouveautés intégrées à chaque `release`.
 
 Ce projet respecte [Semantic Versioning](https://semver.org/) et les [recommandations](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased] 0.1
+## [2022-09-04] 0.1.0
 * Installation du domaine métier [#274](https://github.com/incentive-factory/iletaitunefoisundev/issues/274)
 * Inscription [#283](https://github.com/incentive-factory/iletaitunefoisundev/issues/283)
 * Modifier le profil d'un joueur [#284](https://github.com/incentive-factory/iletaitunefoisundev/issues/284)
