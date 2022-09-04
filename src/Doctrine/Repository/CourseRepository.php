@@ -24,8 +24,20 @@ final class CourseRepository extends ServiceEntityRepository implements CourseGa
 
     public function getCourseBySlug(string $slug): ?DomainCourse
     {
-        // TODO: Implement findOneBySlug() method.
-        return null;
+        /** @var ?EntityCourse $courseEntity */
+        $courseEntity = $this->createQueryBuilder('c')
+            ->addSelect('t')
+            ->join('c.training', 't')
+            ->where('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (null === $courseEntity) {
+            return null;
+        }
+
+        return $this->courseTransformer->transform($courseEntity);
     }
 
     public function countCoursesByTraining(Training $training): int

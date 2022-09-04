@@ -31,13 +31,15 @@ final class CourseFixtures extends Fixture implements DependentFixtureInterface
     {
         $trainings = $manager->getRepository(Training::class)->findAll();
 
+        $index = 1;
+
         foreach ($trainings as $training) {
             for ($i = 1; $i <= 10; ++$i) {
                 $manager->persist(
                     (new Course())
                         ->setTraining($training)
                         ->setName(sprintf('Course %d', $i))
-                        ->setSlug(sprintf('course+%d', $i))
+                        ->setSlug(sprintf('course+%d', $index))
                         ->setContent(sprintf('Content %d', $i))
                         ->setExcerpt(sprintf('Excerpt %d', $i))
                         ->setImage('image.png')
@@ -47,6 +49,7 @@ final class CourseFixtures extends Fixture implements DependentFixtureInterface
                         ->setLevel(Level::cases()[$i % 3])
                         ->setId($this->ulidGenerator->generate())
                 );
+                ++$index;
             }
 
             $manager->flush();

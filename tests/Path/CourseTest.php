@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-final class TrainingTest extends WebTestCase
+final class CourseTest extends WebTestCase
 {
-    public function testShouldShowTrainingAndListItsCourses(): void
+    public function testShouldShowCourse(): void
     {
         $client = static::createClient();
 
@@ -24,10 +24,9 @@ final class TrainingTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $crawler = $client->request(Request::METHOD_GET, '/paths/trainings/training+1');
+        $crawler = $client->request(Request::METHOD_GET, '/paths/courses/course+1');
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
-        self::assertSelectorTextContains('h1', 'Training 1');
-        self::assertCount(10, $crawler->filter('ul li'));
+        self::assertSelectorTextContains('h1', 'Course 1');
     }
 
     public function testShouldRaiseA404(): void
@@ -42,7 +41,7 @@ final class TrainingTest extends WebTestCase
 
         $client->loginUser($user);
 
-        $client->request(Request::METHOD_GET, '/paths/trainings/fail');
+        $client->request(Request::METHOD_GET, '/paths/courses/fail');
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
     }
 }

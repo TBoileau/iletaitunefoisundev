@@ -7,7 +7,7 @@
     {% endif %}
     <ul>
         {% for course in courses %}
-            <li>{{ course.name }}</li>
+            <li><a href="{{ path('path_course', {slug: course.slug}) }}">{{ course.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
