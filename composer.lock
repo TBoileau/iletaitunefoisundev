@@ -1527,16 +1527,16 @@
         },
         {
             "name": "incentive-factory/domain",
-            "version": "0.2.1",
+            "version": "0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/incentive-factory/domain.git",
-                "reference": "0ae629bc424993324258975ba52b3292f6f109d4"
+                "reference": "2004bc79696db261a0a96d63f80b55caa1b8ceda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/incentive-factory/domain/zipball/0ae629bc424993324258975ba52b3292f6f109d4",
-                "reference": "0ae629bc424993324258975ba52b3292f6f109d4",
+                "url": "https://api.github.com/repos/incentive-factory/domain/zipball/2004bc79696db261a0a96d63f80b55caa1b8ceda",
+                "reference": "2004bc79696db261a0a96d63f80b55caa1b8ceda",
                 "shasum": ""
             },
             "require": {
@@ -1584,10 +1584,10 @@
             ],
             "description": "Domaine du projet Il était une fois un dev",
             "support": {
-                "source": "https://github.com/incentive-factory/domain/tree/0.2.1",
+                "source": "https://github.com/incentive-factory/domain/tree/0.2.4",
                 "issues": "https://github.com/incentive-factory/domain/issues"
             },
-            "time": "2022-09-04T15:57:50+00:00"
+            "time": "2022-09-04T21:10:32+00:00"
         },
         {
             "name": "laminas/laminas-code",

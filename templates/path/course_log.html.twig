@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ course_log.course.name }}</h1>
+    {% if is_granted('complete', course_log) %}
+        <a href="{{ path('path_course_log_complete', {id: course_log.id}) }}">Terminer</a>
+    {% endif %}
+{% endblock %}
+

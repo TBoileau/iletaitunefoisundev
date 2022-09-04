@@ -33,7 +33,8 @@ final class PathTransformer implements EntityTransformer
             $entity->getId(),
             $this->playerTransformer->transform($entity->getPlayer()),
             $this->trainingTransformer->transform($entity->getTraining()),
-            $entity->getBeganAt()
+            $entity->getBeganAt(),
+            $entity->getCompletedAt(),
         );
     }
 
@@ -57,6 +58,7 @@ final class PathTransformer implements EntityTransformer
             ->setId($entity->id())
             ->setPlayer($playerEntity)
             ->setTraining($trainingEntity)
-            ->setBeganAt($entity->beganAt());
+            ->setBeganAt($entity->beganAt())
+            ->setCompletedAt($entity->completedAt());
     }
 }

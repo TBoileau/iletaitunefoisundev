@@ -68,7 +68,9 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
 
     public function complete(DomainPath $path): void
     {
-        // TODO: Implement complete() method.
+        $pathEntity = $this->find($path->id());
+        $this->pathTransformer->reverseTransform($path, $pathEntity);
+        $this->_em->flush();
     }
 
     public function getPathById(string $id): ?DomainPath
