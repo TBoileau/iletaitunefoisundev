@@ -31,7 +31,7 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
         $this->_em->flush();
     }
 
-    public function hasAlreadyBegan(PlayerInterface $player, Training $training): bool
+    public function hasAlreadyBegun(PlayerInterface $player, Training $training): bool
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->select('COUNT(p.id)')
@@ -52,5 +52,16 @@ final class PathRepository extends ServiceEntityRepository implements PathGatewa
     {
         // TODO: Implement findByPlayer() method.
         return [];
+    }
+
+    public function complete(DomainPath $path): void
+    {
+        // TODO: Implement complete() method.
+    }
+
+    public function getPathById(string $id): ?DomainPath
+    {
+        // TODO: Implement getPathById() method.
+        return null;
     }
 }

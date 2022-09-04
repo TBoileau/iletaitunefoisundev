@@ -28,4 +28,20 @@ final class TrainingTest extends WebTestCase
         self::assertResponseStatusCodeSame(Response::HTTP_OK);
         self::assertSelectorTextContains('h1', 'Training 1');
     }
+
+    public function testShouldRaiseA404(): void
+    {
+        $client = static::createClient();
+
+        /** @var UserProviderInterface $userProvider */
+        $userProvider = $client->getContainer()->get(UserProviderInterface::class);
+
+        /** @var User $user */
+        $user = $userProvider->loadUserByIdentifier('player+1@email.com');
+
+        $client->loginUser($user);
+
+        $client->request(Request::METHOD_GET, '/paths/trainings/fail');
+        self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+    }
 }

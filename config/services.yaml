@@ -17,9 +17,9 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
 
-        IncentiveFactory\Domain\Shared\Event\EventListener:
+        IncentiveFactory\Domain\Shared\EventDispatcher\EventListener:
             tags:
-                - { name: messenger.message_handler, bus: event.bus }
+                - { name: kernel.event_listener }
 
         IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Type\AbstractEnumType:
             tags:
@@ -28,6 +28,11 @@ services:
     Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher: ~
 
     Symfony\Component\PasswordHasher\PasswordHasherInterface: '@Symfony\Component\PasswordHasher\Hasher\NativePasswordHasher'
+
+    IncentiveFactory\IlEtaitUneFoisUnDev\EventDispatcher\DecoratedEventDispatcher:
+        decorates: 'event_dispatcher'
+        arguments:
+            - '@.inner'
 
     IncentiveFactory\IlEtaitUneFoisUnDev\:
         resource: '../src/'

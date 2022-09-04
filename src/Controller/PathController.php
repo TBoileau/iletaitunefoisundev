@@ -9,7 +9,7 @@ use IncentiveFactory\Domain\Path\GetTrainingBySlug\TrainingSlug;
 use IncentiveFactory\Domain\Path\GetTranings\ListOfTrainings;
 use IncentiveFactory\Domain\Path\Training;
 use IncentiveFactory\Domain\Player\Player;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Security\Voter\TrainingVoter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,20 +31,25 @@ final class PathController extends AbstractController
     #[Route('/trainings/{slug}', name: 'training', methods: [Request::METHOD_GET])]
     public function training(string $slug): Response
     {
-        /** @var Training $training */
+        /** @var ?Training $training */
         $training = $this->fetch(new TrainingSlug($slug));
+
+        if (null === $training) {
+            throw $this->createNotFoundException('Training not found');
+        }
 
         return $this->render('path/training.html.twig', [
             'training' => $training,
         ]);
     }
 
-    #[IsGranted('ROLE_USER')]
     #[Route('/trainings/{slug}/begin', name: 'begin', methods: [Request::METHOD_GET])]
     public function begin(string $slug): Response
     {
         /** @var Training $training */
         $training = $this->fetch(new TrainingSlug($slug));
+
+        $this->denyAccessUnlessGranted(TrainingVoter::BEGIN, $training);
 
         /** @var Player $player */
         $player = $this->getPlayer();

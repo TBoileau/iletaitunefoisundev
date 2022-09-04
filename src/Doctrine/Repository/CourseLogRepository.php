@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace IncentiveFactory\IlEtaitUneFoisUnDev\Doctrine\Repository;
 
-use IncentiveFactory\Domain\Course\Course;
-use IncentiveFactory\Domain\Course\CourseLog;
-use IncentiveFactory\Domain\Course\CourseLogGateway;
-use IncentiveFactory\Domain\Shared\Entity\PlayerInterface;
+use IncentiveFactory\Domain\Path\Course;
+use IncentiveFactory\Domain\Path\CourseLog;
+use IncentiveFactory\Domain\Path\CourseLogGateway;
+use IncentiveFactory\Domain\Path\Path;
 
 final class CourseLogRepository implements CourseLogGateway
 {
@@ -21,9 +21,15 @@ final class CourseLogRepository implements CourseLogGateway
         // TODO: Implement complete() method.
     }
 
-    public function hasAlreadyBegan(PlayerInterface $player, Course $course): bool
+    public function hasAlreadyBegan(Path $path, Course $course): bool
     {
         // TODO: Implement hasAlreadyBegan() method.
         return false;
+    }
+
+    public function countCoursesCompletedByPath(Path $path): int
+    {
+        // TODO: Implement countCoursesCompletedByPath() method.
+        return 0;
     }
 }
