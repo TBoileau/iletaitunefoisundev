@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for training in trainings %}
+            <li><a href="">{{ training.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -33,7 +33,7 @@ final class UserProvider implements UserProviderInterface
 
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
-        $player = $this->playerGateway->findOneByEmail($identifier);
+        $player = $this->playerGateway->getPlayerByEmail($identifier);
 
         if (null === $player) {
             throw new UserNotFoundException(sprintf('User "%s" not found.', $identifier));

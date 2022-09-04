@@ -22,7 +22,7 @@ final class PathRepository implements PathGateway
         return false;
     }
 
-    public function findByPlayer(PlayerInterface $player): array
+    public function getPathsByPlayer(PlayerInterface $player): array
     {
         // TODO: Implement findByPlayer() method.
         return [];
