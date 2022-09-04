@@ -7,12 +7,14 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 use IncentiveFactory\Domain\Path\BeginTraining\BeginningOfTraining;
 use IncentiveFactory\Domain\Path\Course;
 use IncentiveFactory\Domain\Path\GetCoursesByTraining\TrainingCourses;
+use IncentiveFactory\Domain\Path\GetPathById\PathId;
 use IncentiveFactory\Domain\Path\GetPathsByPlayer\PlayerPaths;
 use IncentiveFactory\Domain\Path\GetTrainingBySlug\TrainingSlug;
 use IncentiveFactory\Domain\Path\GetTranings\ListOfTrainings;
 use IncentiveFactory\Domain\Path\Path;
 use IncentiveFactory\Domain\Path\Training;
 use IncentiveFactory\Domain\Player\Player;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Security\Voter\PathVoter;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Security\Voter\TrainingVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,5 +83,22 @@ final class PathController extends AbstractController
         $this->execute(new BeginningOfTraining($player, $training));
 
         return $this->redirectToRoute('path_training', ['slug' => $slug]);
+    }
+
+    #[Route('/{id}', name: 'show', methods: [Request::METHOD_GET])]
+    public function show(string $id): Response
+    {
+        /** @var ?Path $path */
+        $path = $this->fetch(new PathId($id));
+
+        if (null === $path) {
+            throw $this->createNotFoundException('Path not found');
+        }
+
+        $this->denyAccessUnlessGranted(PathVoter::SHOW, $path);
+
+        return $this->render('path/show.html.twig', [
+            'path' => $path,
+        ]);
     }
 }

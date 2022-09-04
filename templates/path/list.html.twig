@@ -3,7 +3,7 @@
 {% block body %}
     <ul>
         {% for path in paths %}
-            <li><a href="">{{ path.training.name }}</a></li>
+            <li><a href="{{ path('path_show', {id: path.id}) }}">{{ path.training.name }}</a></li>
         {% endfor %}
     </ul>
 {% endblock %}
