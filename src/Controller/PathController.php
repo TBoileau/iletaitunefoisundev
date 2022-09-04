@@ -34,6 +34,10 @@ final class PathController extends AbstractController
         /** @var Training $training */
         $training = $this->fetch(new TrainingSlug($slug));
 
+        if ($training === null) {
+            throw $this->createNotFoundException('Training not found');
+        }
+
         return $this->render('path/training.html.twig', [
             'training' => $training,
         ]);

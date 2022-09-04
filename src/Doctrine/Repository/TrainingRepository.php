@@ -40,6 +40,10 @@ final class TrainingRepository extends ServiceEntityRepository implements Traini
         /** @var TrainingEntity $trainingEntity */
         $trainingEntity = $this->findOneBy(['slug' => $slug]);
 
+        if (null === $trainingEntity) {
+            return null;
+        }
+
         return $this->trainingTransformer->transform($trainingEntity);
     }
 }
