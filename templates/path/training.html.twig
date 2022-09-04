@@ -2,5 +2,8 @@
 
 {% block body %}
     <h1>{{ training.name }}</h1>
+    {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('path_begin', {slug: training.slug}) }}">Commencer</a>
+    {% endif %}
 {% endblock %}
 
