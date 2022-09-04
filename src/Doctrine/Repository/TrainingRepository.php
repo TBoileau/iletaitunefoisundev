@@ -37,7 +37,9 @@ final class TrainingRepository extends ServiceEntityRepository implements Traini
 
     public function getTrainingBySlug(string $slug): ?DomainTraining
     {
-        // TODO: Implement findOneBySlug() method.
-        return null;
+        /** @var TrainingEntity $trainingEntity */
+        $trainingEntity = $this->findOneBy(['slug' => $slug]);
+
+        return $this->trainingTransformer->transform($trainingEntity);
     }
 }
