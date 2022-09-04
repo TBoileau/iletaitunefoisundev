@@ -9,7 +9,7 @@ use IncentiveFactory\Domain\Course\CourseGateway;
 
 final class CourseRepository implements CourseGateway
 {
-    public function findOneBySlug(string $slug): ?Course
+    public function getCourseBySlug(string $slug): ?Course
     {
         // TODO: Implement findOneBySlug() method.
         return null;
