@@ -7,8 +7,10 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 use Doctrine\DBAL\Types\ConversionException;
 use IncentiveFactory\Domain\Player\Player;
 use IncentiveFactory\Domain\Player\Register\Registration;
+use IncentiveFactory\Domain\Player\UpdatePassword\NewPassword;
 use IncentiveFactory\Domain\Player\UpdateProfile\Profile;
 use IncentiveFactory\Domain\Player\ValidRegistration\ValidationOfRegistration;
+use IncentiveFactory\IlEtaitUneFoisUnDev\Form\NewPasswordType;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Form\ProfileType;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Form\RegistrationType;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Http\Uploader\UploaderInterface;
@@ -77,5 +79,27 @@ final class PlayerController extends AbstractController
         }
 
         return $this->renderForm('player/update_profile.html.twig', ['form' => $form]);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/update-password', name: 'update_password', methods: [Request::METHOD_GET, Request::METHOD_POST])]
+    public function updatePassword(Request $request): Response
+    {
+        /** @var Player $player */
+        $player = $this->getPlayer();
+
+        $newPassword = new NewPassword($player);
+
+        $form = $this->createForm(NewPasswordType::class, $newPassword)->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->execute($newPassword);
+
+            $this->addFlash('success', 'Votre mot de passe a bien été mis à jour.');
+
+            return $this->redirectToRoute('player_update_password');
+        }
+
+        return $this->renderForm('player/update_password.html.twig', ['form' => $form]);
     }
 }
