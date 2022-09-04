@@ -7,11 +7,14 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 use IncentiveFactory\Domain\Path\BeginTraining\BeginningOfTraining;
 use IncentiveFactory\Domain\Path\Course;
 use IncentiveFactory\Domain\Path\GetCoursesByTraining\TrainingCourses;
+use IncentiveFactory\Domain\Path\GetPathsByPlayer\PlayerPaths;
 use IncentiveFactory\Domain\Path\GetTrainingBySlug\TrainingSlug;
 use IncentiveFactory\Domain\Path\GetTranings\ListOfTrainings;
+use IncentiveFactory\Domain\Path\Path;
 use IncentiveFactory\Domain\Path\Training;
 use IncentiveFactory\Domain\Player\Player;
 use IncentiveFactory\IlEtaitUneFoisUnDev\Security\Voter\TrainingVoter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +22,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/paths', name: 'path_')]
 final class PathController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
+    #[Route(name: 'list', methods: [Request::METHOD_GET])]
+    public function list(): Response
+    {
+        /** @var Player $player */
+        $player = $this->getPlayer();
+
+        /** @var array<array-key, Path> $paths */
+        $paths = $this->fetch(new PlayerPaths($player));
+
+        return $this->render('path/list.html.twig', [
+            'paths' => $paths,
+        ]);
+    }
+
     #[Route('/trainings', name: 'trainings', methods: [Request::METHOD_GET])]
     public function trainings(): Response
     {

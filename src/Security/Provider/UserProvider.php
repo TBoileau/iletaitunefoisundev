@@ -23,7 +23,13 @@ final class UserProvider implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', $user::class));
         }
 
-        return $user;
+        $player = $this->playerGateway->getPlayerByEmail($user->getUserIdentifier());
+
+        if (null === $player) {
+            throw new UserNotFoundException(sprintf('User "%s" not found.', $user->getUserIdentifier()));
+        }
+
+        return new User($player);
     }
 
     public function supportsClass(string $class): bool
