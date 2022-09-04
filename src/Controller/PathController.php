@@ -6,6 +6,7 @@ namespace IncentiveFactory\IlEtaitUneFoisUnDev\Controller;
 
 use IncentiveFactory\Domain\Path\BeginTraining\BeginningOfTraining;
 use IncentiveFactory\Domain\Path\Course;
+use IncentiveFactory\Domain\Path\GetCourseBySlug\CourseSlug;
 use IncentiveFactory\Domain\Path\GetCoursesByTraining\TrainingCourses;
 use IncentiveFactory\Domain\Path\GetPathById\PathId;
 use IncentiveFactory\Domain\Path\GetPathsByPlayer\PlayerPaths;
@@ -47,6 +48,21 @@ final class PathController extends AbstractController
 
         return $this->render('path/trainings.html.twig', [
             'trainings' => $trainings,
+        ]);
+    }
+
+    #[Route('/courses/{slug}', name: 'course', methods: [Request::METHOD_GET])]
+    public function course(string $slug): Response
+    {
+        /** @var ?Course $course */
+        $course = $this->fetch(new CourseSlug($slug));
+
+        if (null === $course) {
+            throw $this->createNotFoundException('Course not found');
+        }
+
+        return $this->render('path/course.html.twig', [
+            'course' => $course,
         ]);
     }
 
