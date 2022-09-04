@@ -1,0 +1,38 @@
+framework:
+    messenger:
+        default_bus: command.bus
+
+        buses:
+            command.bus:
+                middleware:
+                    - validation
+                    - doctrine_transaction
+
+            query.bus:
+                middleware:
+                    - validation
+
+        transports:
+            async: "%env(MESSENGER_TRANSPORT_DSN)%"
+            sync: 'sync://'
+
+        routing:
+            IncentiveFactory\Domain\Shared\Command\Command: sync
+            IncentiveFactory\Domain\Shared\Query\Query: sync
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: async
+
+when@dev:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                Symfony\Component\Mailer\Messenger\SendEmailMessage: sync
+
+when@test:
+    framework:
+        messenger:
+            routing:
+                IncentiveFactory\Domain\Shared\Command\Command: sync
+                IncentiveFactory\Domain\Shared\Query\Query: sync
+                Symfony\Component\Mailer\Messenger\SendEmailMessage: sync

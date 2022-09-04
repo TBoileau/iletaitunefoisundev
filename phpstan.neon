@@ -1,0 +1,22 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+
+parameters:
+    symfony:
+        container_xml_path: var/cache/dev/IncentiveFactory_IlEtaitUneFoisUnDev_KernelDevDebugContainer.xml
+        console_application_loader: bin/console
+    scanDirectories:
+        - var/cache/dev/Symfony/Config
+    level: 9
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/HelpersTrait.php
