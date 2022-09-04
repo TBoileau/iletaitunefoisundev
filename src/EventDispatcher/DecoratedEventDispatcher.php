@@ -13,8 +13,10 @@ final class DecoratedEventDispatcher implements EventDispatcher
     {
     }
 
-    public function dispatch(object $event): void
+    public function dispatch(object $event): object
     {
         $this->eventDispatcher->dispatch($event);
+
+        return $event;
     }
 }
