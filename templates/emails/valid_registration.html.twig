@@ -1,5 +1,0 @@
-{% extends 'email.html.twig' %}
-
-{% block body %}
-    Valider votre inscription en cliquant sur ce lien : <a href="{{ absolute_url(path('player_valid_registration', {registrationToken: player.registrationToken})) }}">{{ absolute_url(path('player_valid_registration', {registrationToken: player.registrationToken})) }}</a>
-{% endblock %}
